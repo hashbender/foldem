@@ -9,8 +9,12 @@ public class Card {
 	public static final char[] LABEL = { 'A', '2', '3', '4', '5', '6', '7',
 			'8', '9', 'T', 'J', 'Q', 'K' };
 	
-	// TODO consider moving to enum CardValue and having another Type Card with CardValue and SuitValue
-	
+	/*
+	 * I decided to do the enumeration like this instead of using an enum since
+	 * it simplifies string notation and also resolves namespace conflict for
+	 * the name "Card".
+	 */
+
 	/** An ace card type. **/
 	public static final int ACE = 0;
 	
