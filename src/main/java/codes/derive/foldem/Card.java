@@ -5,7 +5,7 @@ package codes.derive.foldem;
  */
 public class Card {
 	
-	/** Labels for cards **/
+	/** Labels for cards. **/
 	public static final char[] LABEL = { 'A', '2', '3', '4', '5', '6', '7',
 			'8', '9', 'T', 'J', 'Q', 'K' };
 	
@@ -15,43 +15,19 @@ public class Card {
 	 * the name "Card".
 	 */
 
-	/* An ace card type. */
+	/* Enumeration of card types. */
 	public static final int ACE = 0;
-	
-	/* A deuce card type. */
 	public static final int DEUCE = 1;
-	
-	/* A trey card type. */
 	public static final int TREY = 2;
-	
-	/* A four card type. */
 	public static final int FOUR = 3;
-	
-	/* A five card type. */
 	public static final int FIVE = 4;
-	
-	/* A six card type. */
 	public static final int SIX = 5;
-	
-	/* A seven card type. */
 	public static final int SEVEN = 6;
-	
-	/* An eight card type. */
 	public static final int EIGHT = 7;
-	
-	/* A nine card type. */
 	public static final int NINE = 8;
-	
-	/* A ten card type. */
 	public static final int TEN = 9;
-	
-	/* A jack card type. */
 	public static final int JACK = 10;
-	
-	/* A queen card type. */
 	public static final int QUEEN = 11;
-	
-	/* A king card type. */
 	public static final int KING = 12;
 	
 	/* The card value. */
