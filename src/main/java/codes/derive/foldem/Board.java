@@ -12,10 +12,10 @@ import codes.derive.foldem.hand.Hand;
  */
 public class Board {
 		
-	/* The evaluator to be used for hand comparison on boards. **/
+	/* The evaluator to be used for hand comparison on boards. */
 	private static final DefaultEvaluator eval = new DefaultEvaluator();
 	
-	/* The cards represented on this board. **/
+	/* The cards represented on this board. */
 	private final Card[] cards = new Card[Constants.BOARD_SIZE];
 
 	/**

@@ -49,14 +49,15 @@ public class DefaultEvaluator implements Evaluator {
 	private static final Map<Integer, Short> rankings = new HashMap<>();
 
 	static {
-		try (DataInputStream in = new DataInputStream(DefaultEvaluator.class.getResourceAsStream("rank_data"))) {
+		try (DataInputStream in = new DataInputStream(
+				DefaultEvaluator.class.getResourceAsStream("rank_data"))) {
 			for (short i = 0; i < DISTINCT_VALUES; i++) {
 				rankings.put(in.readInt(), i);
 			}
 			in.close();
 		} catch (IOException e) {
-			throw new RuntimeException("Could not load rank_data resource, " +
-					"make sure Foldem was built correctly", e);
+			throw new RuntimeException("Could not load rank_data resource, "
+					+ "make sure Foldem was built correctly", e);
 		}
 	}
 	

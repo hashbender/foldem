@@ -24,6 +24,8 @@ public class EquityCalculator {
 	// TODO document
 	// TODO add functionality into Foldem class
 	// TODO rename class
+	// TODO refactor
+	// TODO could move into main package
 	
 	public Map<Hand, Equity> calculate(Hand... hands) {
 		Map<Hand, Equity> equities = new HashMap<>();

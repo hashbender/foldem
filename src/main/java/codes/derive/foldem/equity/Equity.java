@@ -4,6 +4,7 @@ public class Equity {
 
 	private double win = 0.0, lose = 0.0, split = 0.0;
 	
+	// TODO rename
 	protected void applySample(double win, double lose, double split) {
 		this.win += win;
 		this.lose += lose;
@@ -23,8 +24,9 @@ public class Equity {
 	}
 	
 	public String toString() {
-		return new StringBuilder().append("[win=").append(win).append(" lose=").append(lose).append(" split=")
-				.append(split).append("]").toString();
+		return new StringBuilder().append("[win=").append(win).append(" lose=")
+				.append(lose).append(" split=").append(split).append("]")
+				.toString();
 	}
 
 }
