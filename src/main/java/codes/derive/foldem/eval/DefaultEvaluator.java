@@ -18,13 +18,13 @@ import codes.derive.foldem.hand.Hand;
  */
 public class DefaultEvaluator implements Evaluator {
 	
-	/* Bitmask for suited 5-card hand hashes */
+	/* Bitmask for suited 5-card hand hashes. */
 	private static final int SUITED_MASK = 0x80000000;
 	
 	/* The number of possible distinct 5 card hands. */
 	private static final int DISTINCT_VALUES = 7462;
 	
-	/* Prime value mappings for cards */
+	/* Prime value mappings for cards. */
 	private static final int PRIME_DEUCE = 2;
 	private static final int PRIME_TREY = 3;
 	private static final int PRIME_FOUR = 5;
@@ -39,13 +39,13 @@ public class DefaultEvaluator implements Evaluator {
 	private static final int PRIME_KING = 37;
 	private static final int PRIME_ACE = 41;
 
-	/* Contains card values ordered by rank */
+	/* Contains card values ordered by rank. */
 	protected static final int[] CARD_RANKS = { PRIME_ACE, PRIME_DEUCE,
 			PRIME_TREY, PRIME_FOUR, PRIME_FIVE, PRIME_SIX, PRIME_SEVEN,
 			PRIME_EIGHT, PRIME_NINE, PRIME_TEN, PRIME_JACK, PRIME_QUEEN,
 			PRIME_KING };
 	
-	/* Contains ranking values mapped to their respective hashes */
+	/* Contains ranking values mapped to their respective hashes. */
 	private static final Map<Integer, Short> rankings = new HashMap<>();
 
 	static {
@@ -124,7 +124,7 @@ public class DefaultEvaluator implements Evaluator {
 		for (Card[] cards : hands) {
 			
 			/*
-			 * Find the encoded value of our hand for the lookup table. ETC ETC
+			 * Find the encoded value of our hand for the lookup table. ETC ETC TODO
 			 */
 			int value = CARD_RANKS[cards[0].getValue()];
 			for (int i = 1; i < cards.length; i++) {
