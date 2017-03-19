@@ -21,16 +21,16 @@ import codes.derive.foldem.hand.HandGroup;
 public class EquityCalculator {
 
 	/* The default sample size to use for simulations. */
-	private static final int SAMPLE_SIZE = 10000;
+	private static final int DEFAULT_SAMPLE_SIZE = 10000;
 	
 	/* The default evaluator to use for simulations */
-	private static final Evaluator EVALUATOR = new DefaultEvaluator();
+	private static final Evaluator DEFAULT_EVALUATOR = new DefaultEvaluator();
 	
 	/* The sample size to use for simulations. */
-	private int sampleSize = SAMPLE_SIZE;
+	private int sampleSize = DEFAULT_SAMPLE_SIZE;
 	
 	/* The evaluator to use for simulations */
-	private Evaluator evaluator = EVALUATOR;
+	private Evaluator evaluator = DEFAULT_EVALUATOR;
 	
 	// TODO document
 	// TODO calculate(HandGroup...)
