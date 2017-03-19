@@ -4,7 +4,26 @@ package codes.derive.foldem;
  * Represents a suit for a card in a standard 52 card deck.
  */
 public enum Suit {
-	SPADES, CLUBS, HEARTS, DIAMONDS;
+	
+	/**
+	 * The spades suit.
+	 */
+	SPADES, 
+	
+	/**
+	 * The clubs suit.
+	 */
+	CLUBS, 
+	
+	/**
+	 * The hearts suit.
+	 */
+	HEARTS, 
+	
+	/**
+	 * The diamonds suit.
+	 */
+	DIAMONDS;
 	
 	/**
 	 * Obtains the shorthand character for this suit. Equivalent to
