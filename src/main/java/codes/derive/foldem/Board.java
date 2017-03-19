@@ -121,7 +121,7 @@ public class Board {
 	}
 
 	/**
-	 * Returns all cards on this board.
+	 * Obtains an unmodifiable view of all cards on this board.
 	 * @return
 	 * 		All cards on this board.
 	 */
