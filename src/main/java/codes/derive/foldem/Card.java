@@ -15,21 +15,11 @@ public class Card {
 	 * the name "Card".
 	 */
 
-	/* Enumeration of card types. */
-	public static final int ACE = 0;
-	public static final int DEUCE = 1;
-	public static final int TREY = 2;
-	public static final int FOUR = 3;
-	public static final int FIVE = 4;
-	public static final int SIX = 5;
-	public static final int SEVEN = 6;
-	public static final int EIGHT = 7;
-	public static final int NINE = 8;
-	public static final int TEN = 9;
-	public static final int JACK = 10;
-	public static final int QUEEN = 11;
-	public static final int KING = 12;
-	
+	/** Enumeration of card types. **/
+	public static final int ACE = 0, DEUCE = 1, TREY = 2, FOUR = 3, FIVE = 4,
+			SIX = 5, SEVEN = 6, EIGHT = 7, NINE = 8, TEN = 9, JACK = 10,
+			QUEEN = 11, KING = 12;
+
 	/* The card value. */
 	private final int value;
 	
