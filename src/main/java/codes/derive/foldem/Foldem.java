@@ -13,7 +13,7 @@ import codes.derive.foldem.hand.HandRange;
 // TODO also, do we want this to be the only way to use the API?
 public class Foldem {
 	
-	private static final EquityCalculator CALC = new EquityCalculator();
+	private static final EquityCalculator calc = new EquityCalculator();
 
 	public static Deck deck() {
 		return new Deck();
@@ -60,7 +60,7 @@ public class Foldem {
 	}
 
 	public static Map<Hand, Equity> equity(Hand... hands) {
-		return CALC.calculate(hands); // TODO just a thought, replacing Board with 3 alternative objects, Flop, Turn, River all implementing a base type of Board
+		return calc.calculate(hands); // TODO just a thought, replacing Board with 3 alternative objects, Flop, Turn, River all implementing a base type of Board
 	}
 	
 	public static Map<Hand, Equity> equity(Board board, Hand... hands) {
