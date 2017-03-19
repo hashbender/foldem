@@ -146,6 +146,9 @@ public class Deck {
 		throw new AssertionError("Card " + c + " was not found in the deck");
 	}
 	
-	// TODO toString, hashCode
-	
+	@Override
+	public String toString() {
+		return Deck.class.getName() + " [dealt=" + currentIndex + "]";
+	}
+
 }
