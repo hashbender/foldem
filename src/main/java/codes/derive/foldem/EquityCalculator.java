@@ -16,7 +16,7 @@ import codes.derive.foldem.hand.HandGroup;
 
 /**
  * A type that can be used to calculate equity for hands and groups of hands
- * using Monte Carlo styled simulations.
+ * using Monte Carlo simulations.
  */
 public class EquityCalculator {
 
@@ -40,9 +40,13 @@ public class EquityCalculator {
 	// TODO could move into main package
 
 	/**
+	 * Performs an equity calculation for the specified hands and return map
+	 * containing each hand mapped to its calculated equity.
 	 * 
 	 * @param hands
-	 * @return
+	 *            The hands to calculate equity for.
+	 * @return A map containing the specified hands mapped to their calculated
+	 *         equity.
 	 */
 	public Map<Hand, Equity> calculate(Hand... hands) {
 		
@@ -113,11 +117,27 @@ public class EquityCalculator {
 		return null; // TODO
 	}
 	
+	/**
+	 * Sets the number of boards to simulate for equity calculations. By default
+	 * this value is specified by <code>DEFAULT_SAMPLE_SIZE</code>.
+	 * 
+	 * @param sampleSize
+	 *            The number of boards to simulate for equity calculations.
+	 * @return the EquityCalculator instance, for chaining.
+	 */
 	public EquityCalculator setUseSampleSize(int sampleSize) {
 		this.sampleSize = sampleSize;
 		return this;
 	}
 	
+	/**
+	 * Sets the evaluator to be used to evaluate hand values during simulations.
+	 * By default this value is specified by <code>DEFAULT_EVALUATOR</code>.
+	 * 
+	 * @param evaluator
+	 *            The evaluator to be used to evaluate hands during simulations.
+	 * @return The EquityCalculator instance, for chaining.
+	 */
 	public EquityCalculator setUseEvaluator(Evaluator evaluator) {
 		this.evaluator = evaluator;
 		return this;
