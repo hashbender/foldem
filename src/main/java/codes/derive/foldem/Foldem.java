@@ -2,8 +2,7 @@ package codes.derive.foldem;
 
 import java.util.Map;
 
-import codes.derive.foldem.equity.Equity;
-import codes.derive.foldem.equity.EquityCalculator;
+import codes.derive.foldem.EquityCalculator.Equity;
 import codes.derive.foldem.hand.BasicHandGroup;
 import codes.derive.foldem.hand.Hand;
 import codes.derive.foldem.hand.HandGroup;

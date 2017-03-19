@@ -2,9 +2,9 @@ package codes.derive.foldem.examples;
 
 import java.util.Map;
 
+import codes.derive.foldem.EquityCalculator;
+import codes.derive.foldem.EquityCalculator.Equity;
 import codes.derive.foldem.Foldem;
-import codes.derive.foldem.equity.Equity;
-import codes.derive.foldem.equity.EquityCalculator;
 import codes.derive.foldem.hand.Hand;
 import codes.derive.foldem.util.NeatCards;
 
