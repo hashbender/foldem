@@ -16,7 +16,7 @@ import codes.derive.foldem.util.Probability;
  */
 public class HandRange implements HandGroup {
 
-	/* A list containing weighted hands that may not always appear within this group. */
+	/* A map containing weighted hands in lists mapped to their respective weights. */
 	private final Map<Double, List<Hand>> weighted = new HashMap<>();
 	
 	/* A list containing hands that always appear within this group. */
