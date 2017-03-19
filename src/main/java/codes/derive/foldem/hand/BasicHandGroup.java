@@ -10,7 +10,7 @@ import java.util.List;
 
 import codes.derive.foldem.Card;
 import codes.derive.foldem.Suit;
-import codes.derive.foldem.util.Probability;
+import codes.derive.foldem.util.RandomContext;
 
 /**
  * Represents a basic hand group that can represent all combinations of a hand
@@ -102,7 +102,7 @@ public class BasicHandGroup implements HandGroup {
 
 	@Override
 	public Hand get() {
-		return hands.get(Probability.random(hands.size()));
+		return hands.get(RandomContext.get().nextInt(hands.size()));
 	}
  
 }

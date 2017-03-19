@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import codes.derive.foldem.util.Probability;
+import codes.derive.foldem.util.RandomContext;
 
 /**
  * A hand group that can represent a range of hands and has functionality for
@@ -120,8 +120,8 @@ public class HandRange implements HandGroup {
 		if (constant.contains(hand)) {
 			return true;
 		}
-		for (double weight : weighted.keySet()) {
-			if (weighted.get(weight).contains(hand) && Probability.random() <= weight) {
+		for (double w : weighted.keySet()) {
+			if (weighted.get(w).contains(hand) && RandomContext.get().nextDouble() <= w) {
 				return true;
 			}
 		}
@@ -154,7 +154,7 @@ public class HandRange implements HandGroup {
 		/*
 		 * Return a random hand from our group of candidates.
 		 */
-		return candidates.get(Probability.random(candidates.size()));
+		return candidates.get(RandomContext.get().nextInt(candidates.size()));
 	}
 
 	@Override

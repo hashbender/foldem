@@ -3,7 +3,7 @@ package codes.derive.foldem;
 import java.util.Random;
 
 import codes.derive.foldem.hand.Hand;
-import codes.derive.foldem.util.Probability;
+import codes.derive.foldem.util.RandomContext;
 
 /**
  * Represents a standard 52-card deck of cards.
@@ -39,7 +39,7 @@ public class Deck {
 	 * @return The current Deck context, for chaining.
 	 */
 	public Deck shuffle() {
-		return shuffle(Probability.RNG);
+		return shuffle(RandomContext.get());
 	}
 	
 	/**
