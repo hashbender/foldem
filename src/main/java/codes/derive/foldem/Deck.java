@@ -22,7 +22,7 @@ public class Deck {
 	private int currentIndex = 0;
 
 	/**
-	 * Constructs a new deck of cards.
+	 * Constructs a new deck with the cards placed in a basic uniform order.
 	 */
 	protected Deck() {
 		int offset = 0;
