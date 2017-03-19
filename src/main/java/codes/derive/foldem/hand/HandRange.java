@@ -131,8 +131,8 @@ public class HandRange implements HandGroup {
 	@Override
 	public Hand get() {
 		if (constant.size() == 0) {
-			throw new IllegalStateException("There needs to be at least one constant hand to take a random hand from the range");
-		} // FIXME not really
+			throw new IllegalStateException("There needs to be at least one constant hand");
+		}
 		
 		/*
 		 * Create a list of candidate hands containing hands with constant even weight.
