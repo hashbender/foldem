@@ -9,13 +9,20 @@ import java.util.Map;
 
 import codes.derive.foldem.util.Probability;
 
+/**
+ * A hand group that can represent a range of hands and has functionality for
+ * having hands appear within the group at different frequencies. This type can
+ * be useful for running advanced equity calculations with weighted ranges.
+ */
 public class HandRange implements HandGroup {
 
+	/* A list containing weighted hands that may not always appear within this group. */
 	private final Map<Double, List<Hand>> weighted = new HashMap<>();
 	
+	/* A list containing hands that always appear within this group. */
 	private final List<Hand> constant = new ArrayList<>();
 	
-	public HandRange() { }
+	// TODO document
 	
 	public void define(Hand hand) {
 		if (contains(hand)) {

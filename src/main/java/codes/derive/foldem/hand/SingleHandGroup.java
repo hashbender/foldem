@@ -5,10 +5,19 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Represents a hand group containing a single hand.
+ */
 public class SingleHandGroup implements HandGroup {
 
+	/* The hand represented by this group. */
 	private final Hand hand;
 	
+	/**
+	 * Creates a new hand group containing only the specified hand.
+	 * @param hand
+	 * 		The hand to be contained in this group.
+	 */
 	public SingleHandGroup(Hand hand) {
 		this.hand = hand;
 	}

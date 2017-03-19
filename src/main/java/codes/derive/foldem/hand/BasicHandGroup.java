@@ -12,6 +12,10 @@ import codes.derive.foldem.Card;
 import codes.derive.foldem.Suit;
 import codes.derive.foldem.util.Probability;
 
+/**
+ * Represents a basic hand group that can represent all combinations of a hand
+ * specified in string notation without suit.
+ */
 public class BasicHandGroup implements HandGroup {
 	
 	/* Would rather just do this than do tricky OTF combinatorics */
@@ -26,17 +30,25 @@ public class BasicHandGroup implements HandGroup {
 
 	private final List<Hand> hands = new ArrayList<>();
 	
-	public BasicHandGroup(String name) { // TODO should high level logic be here or elsewhere?
+	/**
+	 * Constructs a new basic hand group using the specified hand in normal
+	 * string notation. TODO explain notation
+	 * 
+	 * @param hand
+	 *            The hand to create a group for, specified in normal string
+	 *            notation for hands.
+	 */
+	public BasicHandGroup(String hand) {
 		
 		/*
 		 * Find the numeric values of the card labels provided
 		 */
 		int a = -1, b = -1;
 		for (int i = 0; i < Card.LABEL.length; i++) {
-			if (Card.LABEL[i] == name.charAt(0)) {
+			if (Card.LABEL[i] == hand.charAt(0)) {
 				a = i;
 			}
-			if (Card.LABEL[i] == name.charAt(1)) {
+			if (Card.LABEL[i] == hand.charAt(1)) {
 				b = i;
 			}
 		}
@@ -44,7 +56,7 @@ public class BasicHandGroup implements HandGroup {
 		/*
 		 * If our hand is suited
 		 */
-		if (name.length() == 3 && name.charAt(2) == 's') {
+		if (hand.length() == 3 && hand.charAt(2) == 's') {
 			if (a == b) {
 				throw new IllegalArgumentException("A hand cannot have identical cards of the same suit");
 			}
@@ -69,6 +81,11 @@ public class BasicHandGroup implements HandGroup {
 		}
 	}
 	
+	/**
+	 * Constructs a basic hand group using the specified hands.
+	 * @param hands
+	 * 		The hands to be contained within this hand group.
+	 */
 	public BasicHandGroup(Hand... hands) {
 		this.hands.addAll(Arrays.asList(hands));
 	}
