@@ -146,26 +146,26 @@ public class Foldem {
 	// TODO w/ boardstage
 
 	/**
-	 * Obtains the equity that the specified hands have against each other, returning them as
-	 * keys mapped to their calculated equity.
+	 * Obtains the equity that the specified hands have against each other,
+	 * returning them as keys mapped to their calculated equity.
 	 * 
 	 * @param hands
 	 *            The hands to calculate equity for.
 	 * @return The hands mapped to their calculated equity.
 	 */
 	public static Map<Hand, Equity> equity(Hand... hands) {
-		return calc.calculate(hands); 
+		return calc.calculate(hands);
 	}
-	
-	/* TODO just a thought, replacing Board
-	 * with 3 alternative objects, Flop,
-	 * Turn, River all implementing a base
-	 * type of Board
+
+	/*
+	 * TODO just a thought, replacing Board with 3 alternative objects, Flop,
+	 * Turn, River all implementing a base type of Board
 	 */
 
 	/**
-	 * Obtains the equity that the specified hands have against each other on the specified
-	 * board, returning them as keys mapped to their calculated equity.
+	 * Obtains the equity that the specified hands have against each other on
+	 * the specified board, returning them as keys mapped to their calculated
+	 * equity.
 	 * 
 	 * @param board
 	 *            The board to calculate equity on.
@@ -178,8 +178,9 @@ public class Foldem {
 	}
 
 	/**
-	 * Obtains the equity that the specified hand groups have against each other, returning them as keys mapped to their calculated equity.
-	 *
+	 * Obtains the equity that the specified hand groups have against each
+	 * other, returning them as keys mapped to their calculated equity.
+	 * 
 	 * @param hands
 	 *            The hand groups to calculate equity for.
 	 * @return The hand groups mapped to their calculated equity.
@@ -189,14 +190,18 @@ public class Foldem {
 	}
 
 	/**
-	 * Obtains the equity that the specified hand groups have against each other on the specified board, returning them as keys mapped to their calculated equities.
+	 * Obtains the equity that the specified hand groups have against each other
+	 * on the specified board, returning them as keys mapped to their calculated
+	 * equities.
+	 * 
 	 * @param board
-	 * 		The board to calculate equity on.
+	 *            The board to calculate equity on.
 	 * @param groups
-	 * 		The hand groups to calculate equity for
+	 *            The hand groups to calculate equity for
 	 * @return The hand groups mapped to their calculated equity.
 	 */
-	public static Map<HandGroup, Equity> equity(Board board, HandGroup... groups) {
+	public static Map<HandGroup, Equity> equity(Board board,
+			HandGroup... groups) {
 		return calc.calculate(board, groups);
 	}
 
