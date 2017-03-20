@@ -2,6 +2,10 @@ package codes.derive.foldem.eval;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +13,6 @@ import java.util.Map;
 
 import codes.derive.foldem.Board;
 import codes.derive.foldem.Card;
-import codes.derive.foldem.Suit;
 import codes.derive.foldem.hand.Hand;
 
 /**
@@ -49,12 +52,27 @@ public class DefaultEvaluator implements Evaluator {
 	private static final Map<Integer, Short> rankings = new HashMap<>();
 
 	static {
-		try (DataInputStream in = new DataInputStream(
-				DefaultEvaluator.class.getResourceAsStream("rank_data"))) {
-			for (short i = 0; i < DISTINCT_VALUES; i++) {
-				rankings.put(in.readInt(), i);
+		
+		InputStream in;
+		
+		// Try to find a stream for our rank data.
+		Path path = Paths.get("rank_data");
+		if (Files.exists(path)) {
+			try {
+				in = Files.newInputStream(path);
+			} catch (IOException e) {
+				throw new RuntimeException("Could not load rank_data from local file", e);
 			}
-			in.close();
+		} else {
+			in = DefaultEvaluator.class.getResourceAsStream("rank_data");
+		}
+		
+		// Read the rank data from the stream and store it
+		try (DataInputStream din = new DataInputStream(in)) {
+			for (short i = 0; i < DISTINCT_VALUES; i++) {
+				rankings.put(din.readInt(), i);
+			}
+			din.close();
 		} catch (IOException e) {
 			throw new RuntimeException("Could not load rank_data resource, "
 					+ "make sure Foldem was built correctly", e);
@@ -150,7 +168,6 @@ public class DefaultEvaluator implements Evaluator {
 			if (r < rank) {
 				rank = r;
 			}
-			
 		}
 		return rank;
 	}
