@@ -122,24 +122,16 @@ public class DefaultEvaluator implements Evaluator {
 		 */
 		int rank = DISTINCT_VALUES;
 		for (Card[] cards : hands) {
+			boolean suited = true;
 			
 			/*
-			 * Find the encoded value of our hand for the lookup table. ETC ETC TODO
+			 * Find the encoded value of our hand for the lookup table.
 			 */
 			int value = CARD_RANKS[cards[0].getValue()];
 			for (int i = 1; i < cards.length; i++) {
 				value *= CARD_RANKS[cards[i].getValue()];
-			}
-			
-			/*
-			 * Find out if our hand is suited.
-			 */
-			boolean suited = true;
-			Suit base = cards[0].getSuit();
-			for (int i = 1; i < cards.length; i++) { // TODO move into loop that finds hand prime hash value
-				if (!cards[i].getSuit().equals(base)) {
+				if (!cards[i].getSuit().equals(cards[0].getSuit())) {
 					suited = false;
-					break;
 				}
 			}
 	
