@@ -31,13 +31,10 @@ public class EquityCalculator {
 	
 	/* The evaluator to use for simulations */
 	private Evaluator evaluator = DEFAULT_EVALUATOR;
-	
-	// TODO document
+
 	// TODO calculate(HandGroup...)
-	// TODO add functionality into Foldem class
-	// TODO rename class
+	// TODO consider renaming
 	// TODO refactor
-	// TODO could move into main package
 
 	/**
 	 * Performs an equity calculation for the specified hands and return map
@@ -88,18 +85,17 @@ public class EquityCalculator {
 			}
 			
 			// apply our sample to our equity map
-			// TODO this seems bad somehow
 			for (Hand hand : hands) {
 				if (!best.contains(hand)) {
-					equities.get(hand).applySample(0.0, (1.0 / sampleSize), 0.0);
+					equities.get(hand).addLoss();
 				}
 			}
 			if (best.size() > 1) {
 				for (Hand hand : best) {
-					equities.get(hand).applySample(0.0, 0.0, (1.0 / sampleSize));
+					equities.get(hand).addSplit();
 				}
 			} else {
-				equities.get(best.get(0)).applySample((1.0 / sampleSize), 0.0, 0.0);
+				equities.get(best.get(0)).addWin();
 			}
 		}
 		return Collections.unmodifiableMap(equities);
@@ -149,28 +145,56 @@ public class EquityCalculator {
 	 */
 	public class Equity {
 
-		/* w/l/s decimals */
 		private double win = 0.0, lose = 0.0, split = 0.0;
 		
-		// TODO rename TODO if we have one do we need the others?
-		protected void applySample(double win, double lose, double split) {
-			this.win += win;
-			this.lose += lose;
-			this.split += split;
+		private Equity() { }
+
+		private void addWin() {
+			this.win += (1.0 / sampleSize);
 		}
 		
+		private void addLoss() {
+			this.lose += (1.0 / sampleSize);
+		}
+
+		private void addSplit() {
+			this.split += (1.0 / sampleSize);
+		}
+
+		/**
+		 * Obtains how often the hand or hand group associated with this equity
+		 * will win, as a decimal.
+		 * 
+		 * @return How often the hand or hand group associated with this equity
+		 *         will win, as a decimal.
+		 */
 		public double win() {
 			return win;
 		}
-		
+
+		/**
+		 * Obtains how often the hand or hand group associated with this equity
+		 * will lose, as a decimal.
+		 * 
+		 * @return How often the hand or hand group associated with this equity
+		 *         will lose, as a decimal.
+		 */
 		public double lose() {
 			return lose;
 		}
-		
+
+		/**
+		 * Obtains how often the hand or hand group associated with this equity
+		 * will split the pot, as a decimal.
+		 * 
+		 * @return How often the hand or hand group associated with this equity
+		 *         will split the pot, as a decimal.
+		 */
 		public double split() {
 			return split;
 		}
 		
+		@Override
 		public String toString() {
 			return new StringBuilder().append("[win=").append(win).append(" lose=")
 					.append(lose).append(" split=").append(split).append("]")
