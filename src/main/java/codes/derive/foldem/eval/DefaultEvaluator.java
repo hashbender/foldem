@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import codes.derive.foldem.Board;
 import codes.derive.foldem.Card;
+import codes.derive.foldem.board.Board;
 import codes.derive.foldem.hand.Hand;
 
 /**

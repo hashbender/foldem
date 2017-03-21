@@ -1,6 +1,6 @@
 package codes.derive.foldem.eval;
 
-import codes.derive.foldem.Board;
+import codes.derive.foldem.board.Board;
 import codes.derive.foldem.hand.Hand;
 
 /**

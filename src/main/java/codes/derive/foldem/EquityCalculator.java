@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import codes.derive.foldem.board.Board;
+import codes.derive.foldem.board.Boards;
 import codes.derive.foldem.eval.DefaultEvaluator;
 import codes.derive.foldem.eval.Evaluator;
 import codes.derive.foldem.hand.Hand;
@@ -68,7 +70,7 @@ public class EquityCalculator {
 			for (Hand hand : hands) {
 				deck.pop(hand);
 			}
-			Board board = board(deck);
+			Board board = Boards.river(deck);
 			
 			// rank our hands in order for the sample
 			List<Hand> best = new LinkedList<>();
