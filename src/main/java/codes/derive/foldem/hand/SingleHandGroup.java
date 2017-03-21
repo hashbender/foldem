@@ -15,8 +15,9 @@ public class SingleHandGroup implements HandGroup {
 	
 	/**
 	 * Creates a new hand group containing only the specified hand.
+	 * 
 	 * @param hand
-	 * 		The hand to be contained in this group.
+	 *            The hand to be contained in this group.
 	 */
 	public SingleHandGroup(Hand hand) {
 		this.hand = hand;

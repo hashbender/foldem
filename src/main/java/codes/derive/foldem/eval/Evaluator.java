@@ -11,12 +11,12 @@ public interface Evaluator {
 
 	/**
 	 * Ranks the specified hand on the specified board.
+	 * 
 	 * @param h
-	 * 		The hand to rank.
+	 *            The hand to rank.
 	 * @param b
-	 * 		The board to rank it on.
-	 * @return
-	 * 		TODO
+	 *            The board to rank it on.
+	 * @return TODO
 	 */
 	public int rank(Hand h, Board b);
 	

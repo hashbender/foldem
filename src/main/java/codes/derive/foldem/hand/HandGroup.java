@@ -9,6 +9,7 @@ public interface HandGroup {
 
 	/**
 	 * TODO rename or come up with a good explanation for terrible name
+	 * 
 	 * @param h
 	 * @return
 	 */
