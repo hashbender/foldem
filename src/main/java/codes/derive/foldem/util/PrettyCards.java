@@ -1,8 +1,8 @@
 package codes.derive.foldem.util;
 
-import codes.derive.foldem.Board;
 import codes.derive.foldem.Card;
 import codes.derive.foldem.Suit;
+import codes.derive.foldem.board.Board;
 import codes.derive.foldem.hand.Hand;
 
 /**

@@ -3,6 +3,8 @@ package codes.derive.foldem;
 import java.util.Map;
 
 import codes.derive.foldem.EquityCalculator.Equity;
+import codes.derive.foldem.board.Board;
+import codes.derive.foldem.board.Boards;
 import codes.derive.foldem.hand.BasicHandGroup;
 import codes.derive.foldem.hand.Hand;
 import codes.derive.foldem.hand.HandGroup;
@@ -103,17 +105,6 @@ public class Foldem {
 	}
 
 	/**
-	 * Constructs a new board, taking cards from the specified deck.
-	 * 
-	 * @param deck
-	 *            The deck to take cards from.
-	 * @return A new board using cards popped from the specified deck.
-	 */
-	public static Board board(Deck deck) {
-		return new Board(deck);
-	}
-
-	/**
 	 * Constructs a new board using the specified cards.
 	 * 
 	 * @param cards
@@ -121,7 +112,7 @@ public class Foldem {
 	 * @return A new board using the specified cards.
 	 */
 	public static Board board(Card... cards) {
-		return new Board(cards);
+		return Boards.board(cards); // TODO consider removing or moving other functions
 	}
 
 	/**

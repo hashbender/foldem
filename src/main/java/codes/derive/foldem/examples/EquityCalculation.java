@@ -4,9 +4,9 @@ import static codes.derive.foldem.Foldem.*;
 
 import java.util.Map;
 
-import codes.derive.foldem.Board;
 import codes.derive.foldem.EquityCalculator;
 import codes.derive.foldem.EquityCalculator.Equity;
+import codes.derive.foldem.board.Board;
 import codes.derive.foldem.hand.Hand;
 import codes.derive.foldem.hand.HandGroup;
 import codes.derive.foldem.hand.HandRange;
