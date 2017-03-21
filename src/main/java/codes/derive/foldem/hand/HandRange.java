@@ -16,21 +16,41 @@ import codes.derive.foldem.util.RandomContext;
  */
 public class HandRange implements HandGroup {
 
-	/* A map containing weighted hands in lists mapped to their respective weights. */
+	/*
+	 * A map containing weighted hands in lists mapped to their respective
+	 * weights.
+	 */
 	private final Map<Double, List<Hand>> weighted = new HashMap<>();
-	
+
 	/* A list containing hands that always appear within this group. */
 	private final List<Hand> constant = new ArrayList<>();
-	
-	// TODO document
-	
-	public void define(Hand hand) {
+
+	// TODO exceptions on define when returning false on failure
+	// TODO consider changing define return value to "this" for chaining
+
+	/**
+	 * Defines a hand in this range.
+	 * 
+	 * @param hand
+	 *            The hand.
+	 * @return <code>true</code> if the hand was successfully defined within
+	 *         this range, otherwise <code>false</code>.
+	 */
+	public boolean define(Hand hand) {
 		if (contains(hand)) {
 			throw new IllegalArgumentException("Hand already exists within range");
 		}
-		constant.add(hand);
+		return constant.add(hand);
 	}
-	
+
+	/**
+	 * Defines a hand group in this range.
+	 * 
+	 * @param hand
+	 *            The hand.
+	 * @return <code>true</code> if the hand group was successfully defined
+	 *         within this range, otherwise <code>false</code>.
+	 */
 	public boolean define(HandGroup group) {
 		if (!contains(group)) {
 			for (Hand hand : group.all()) {
@@ -42,7 +62,18 @@ public class HandRange implements HandGroup {
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Defines a weighted hand in this range. TODO more weighting explanation
+	 * 
+	 * @param hand
+	 *            The hand.
+	 * @param weight
+	 *            The weight, as a decimal. This will define how often the
+	 *            specified hand should appear in the range.
+	 * @return <code>true</code> if the hand was successfully defined within
+	 *         this range, otherwise <code>false</code>.
+	 */
 	public boolean define(Hand hand, double weight) {
 		if (weight <= 0.0 || weight > 1.0) {
 			throw new IllegalArgumentException("Weight out of bounds");
@@ -54,7 +85,7 @@ public class HandRange implements HandGroup {
 				}
 			}
 		}
-		
+
 		if (!weighted.containsKey(weight)) {
 			weighted.put(weight, new ArrayList<Hand>());
 		}
@@ -65,6 +96,18 @@ public class HandRange implements HandGroup {
 		return false;
 	}
 
+	/**
+	 * Defines a weighted hand group in this range. TODO more weighting
+	 * explanation
+	 * 
+	 * @param group
+	 *            The group.
+	 * @param weight
+	 *            The weight, as a decimal. This will define how often the
+	 *            specified group should appear in the range.
+	 * @return <code>true</code> if the group was successfully defined within
+	 *         this range, otherwise <code>false</code>.
+	 */
 	public boolean define(HandGroup group, double weight) {
 		if (!contains(group)) {
 			for (Hand hand : group.all()) {
@@ -80,7 +123,17 @@ public class HandRange implements HandGroup {
 		}
 		return true;
 	}
-	
+
+	/**
+	 * Obtains whether or not the specified hand can appear within this range.
+	 * Differs from (TODO explain distinction between contains(... and matches)
+	 * (Issue #5)
+	 * 
+	 * @param hand
+	 *            The hand.
+	 * @return <code>true</code> if the specified hand can appear within this
+	 *         range, otherwise <code>false</code>.
+	 */
 	public boolean contains(Hand hand) {
 		for (List<Hand> hands : weighted.values()) {
 			if (hands.contains(hand)) {
@@ -89,8 +142,17 @@ public class HandRange implements HandGroup {
 		}
 		return constant.contains(hand);
 	}
-	
-	
+
+	/**
+	 * Obtains whether or not the specified hand group can appear within this
+	 * range. Differs from (TODO explain distinction between contains(... and
+	 * matches) (Issue #5)
+	 * 
+	 * @param group
+	 *            The group.
+	 * @return <code>true</code> if the specified hand group can appear within
+	 *         this range, otherwise <code>false</code>.
+	 */
 	public boolean contains(HandGroup group) {
 		for (List<Hand> hands : weighted.values()) {
 			for (Hand h : group.all()) {
@@ -102,6 +164,15 @@ public class HandRange implements HandGroup {
 		return true;
 	}
 
+	/**
+	 * Obtains the frequency at which the specified hand will appear within this
+	 * range, as a decimal.
+	 * 
+	 * @param hand
+	 *            The hand.
+	 * @return The frequency at which the specified hand will appear within this
+	 *         range, as a decimal.
+	 */
 	public double weight(Hand hand) {
 		for (double weight : weighted.keySet()) {
 			if (weighted.get(weight).contains(hand)) {
@@ -110,11 +181,20 @@ public class HandRange implements HandGroup {
 		}
 		return constant.contains(hand) ? 1.0 : 0;
 	}
-	
+
+	/**
+	 * Obtains the frequency at which the specified hand group will appear
+	 * within this range, as a decimal.
+	 * 
+	 * @param group
+	 *            The hand group.
+	 * @return The frequency at which the specified hand group will appear
+	 *         within this range, as a decimal.
+	 */
 	public double weight(HandGroup group) {
 		return weight(group.get());
 	}
-	
+
 	@Override
 	public boolean match(Hand hand) {
 		if (constant.contains(hand)) {
@@ -127,15 +207,16 @@ public class HandRange implements HandGroup {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public Hand get() {
 		if (constant.size() == 0) {
 			throw new IllegalStateException("There needs to be at least one constant hand");
 		}
-		
+
 		/*
-		 * Create a list of candidate hands containing hands with constant even weight.
+		 * Create a list of candidate hands containing hands with constant even
+		 * weight.
 		 */
 		List<Hand> candidates = constant;
 
@@ -150,7 +231,7 @@ public class HandRange implements HandGroup {
 				break;
 			}
 		}
-		
+
 		/*
 		 * Return a random hand from our group of candidates.
 		 */
@@ -166,5 +247,5 @@ public class HandRange implements HandGroup {
 		}
 		return Collections.unmodifiableCollection(hands);
 	}
-	
+
 }
