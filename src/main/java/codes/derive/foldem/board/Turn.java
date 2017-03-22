@@ -11,7 +11,7 @@ public class Turn extends AbstractBoard {
 	 * Constructs a new turn.
 	 * 
 	 * @param cards
-	 * 		The cards.
+	 *            The cards.
 	 */
 	public Turn(Card... cards) {
 		super(cards);
@@ -21,6 +21,5 @@ public class Turn extends AbstractBoard {
 	public Street getStreet() {
 		return Street.TURN;
 	}
-
 
 }
