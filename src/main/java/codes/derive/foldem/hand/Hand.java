@@ -66,6 +66,15 @@ public class Hand {
 		return cards.get(0).getSuit().equals(cards.get(1).getSuit());
 	}
 	
+	/**
+	 * Creates a new hand group containing only this hand.
+	 * 
+	 * @return The newly created hand group.
+	 */
+	public HandGroup toSingleHandGroup() {
+		return new BasicHandGroup(this);
+	}
+	
 	@Override
 	public String toString() {
 		return cards.get(0).toString().concat(cards.get(1).toString());
