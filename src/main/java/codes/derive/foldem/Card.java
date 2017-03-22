@@ -28,10 +28,11 @@ public class Card {
 	
 	/**
 	 * Constructs a new Card using the given card value and suit.
+	 * 
 	 * @param value
-	 * 		The card value.
+	 *            The card value.
 	 * @param suit
-	 * 		The card suit.
+	 *            The card suit.
 	 */
 	protected Card(int value, Suit suit) {
 		this.value = value;
@@ -40,8 +41,9 @@ public class Card {
 	
 	/**
 	 * Constructs a new Card using the given textual representation.
+	 * 
 	 * @param text
-	 * 		TODO explain format
+	 *            TODO explain format
 	 */
 	protected Card(String text) {
 		char[] values = text.toCharArray();
@@ -77,18 +79,18 @@ public class Card {
 	}
 	
 	/**
-	 * Gets the value of the card.
-	 * @return
-	 * 		The value of the card.
+	 * Obtains the value of the card.
+	 * 
+	 * @return The value of the card.
 	 */
 	public int getValue() {
 		return value;
 	}
 
 	/**
-	 * Gets the suit of the card.
-	 * @return
-	 * 		The suit of the card.
+	 * Obtains the suit of the card.
+	 * 
+	 * @return The suit of the card.
 	 */
 	public Suit getSuit() {
 		return suit;
