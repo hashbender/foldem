@@ -24,9 +24,27 @@ public class Hand {
 	 */
 	public Hand(Card... cards) {
 		if (cards.length != 2) {
-			throw new IllegalArgumentException("Hand length should be 2, " + cards.length + " given");
+			throw new IllegalArgumentException("Illegal number of cards");
 		}
 		this.cards.addAll(Arrays.asList(cards));
+	}
+	
+	/**
+	 * Creates a new hand with the specified string shorthand.
+	 * 
+	 * <p>
+	 * This uses the same format as single cards. For example, "AsAc" would
+	 * create a hand with the ace of spaces and the ace of clubs. For more
+	 * information on this format please refer to
+	 * {@link codes.derive.foldem.Card#Card(String)}.
+	 * </p>
+	 * 
+	 * @param cards
+	 *            The cards represented as a shorthand string.
+	 * @see codes.derive.foldem.Card#Card(String)
+	 */
+	public Hand(String cards) {
+		this(new Card(cards.substring(0, 2)), new Card(cards.substring(2, 4)));
 	}
 	
 	/**

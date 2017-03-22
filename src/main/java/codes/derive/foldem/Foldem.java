@@ -11,8 +11,10 @@ import codes.derive.foldem.hand.HandGroup;
 import codes.derive.foldem.hand.HandRange;
 import codes.derive.foldem.util.RandomContext;
 
-// TODO tidy look @ mutability stuff
-// TODO also, do we want this to be the only way to use the API?
+/**
+ * This class consists exclusively of static methods to assist in using this
+ * library.
+ */
 public class Foldem {
 
 	/* The equity calculator used in this class for lazy calculations. */
@@ -33,12 +35,14 @@ public class Foldem {
 	}
 
 	/**
-	 * Constructs a new card using the specified shorthand. TODO explain
-	 * shorthand format.
+	 * Constructs a new card using the specified shorthand string. For
+	 * information on the shorthand format see
+	 * {@link codes.derive.foldem.Card#Card(String)}.
 	 * 
 	 * @param text
 	 *            The shorthand for the card.
 	 * @return A new card using the specified shorthand.
+	 * @see codes.derive.foldem.Card#Card(String)
 	 */
 	public static Card card(String text) {
 		return new Card(text);
@@ -56,16 +60,16 @@ public class Foldem {
 	}
 
 	/**
-	 * Constructs a new hand using specified cards shorthand text. TODO explain
-	 * shorthand format.
+	 * Constructs a new hand using specified cards shorthand text. For
+	 * information on the format see
+	 * {@link codes.derive.foldem.hand.Hand#Hand(String)}.
 	 * 
 	 * @param cards
 	 *            The shorthand text.
 	 * @return A new hand using the specified shorthand text.
 	 */
 	public static Hand hand(String cards) {
-		return new Hand(card(cards.substring(0, 2)),
-				card(cards.substring(2, 4)));
+		return new Hand(cards);
 	}
 
 	/**
@@ -81,11 +85,13 @@ public class Foldem {
 
 	/**
 	 * Constructs a new basic hand group using the specified hand shorthand
-	 * text. TODO explain shorthand format.
+	 * text. For information on the shorthand format see
+	 * {@link codes.derive.foldem.hand.Hand#Hand(String)}.
 	 * 
 	 * @param hands
 	 *            The shorthand strings representing the cards to use.
 	 * @return A new hand group for the specified hand strings.
+	 * @see codes.derive.foldem.Card#Card(String)
 	 */
 	public static HandGroup basicGroup(String... hands) {
 		Hand[] h = new Hand[hands.length];
@@ -133,9 +139,6 @@ public class Foldem {
 		return new Deck().shuffle(RandomContext.get());
 	}
 
-	// TODO board with shorthand
-	// TODO w/ boardstage
-
 	/**
 	 * Obtains the equity that the specified hands have against each other,
 	 * returning them as keys mapped to their calculated equity.
@@ -147,11 +150,6 @@ public class Foldem {
 	public static Map<Hand, Equity> equity(Hand... hands) {
 		return calc.calculate(hands);
 	}
-
-	/*
-	 * TODO just a thought, replacing Board with 3 alternative objects, Flop,
-	 * Turn, River all implementing a base type of Board
-	 */
 
 	/**
 	 * Obtains the equity that the specified hands have against each other on
