@@ -21,8 +21,7 @@ public class Boards {
 				return new GenericBoard(street, cards);
 			}
 		}
-		throw new IllegalArgumentException("No board for card count "
-				+ cards.length);
+		throw new IllegalArgumentException("No board for card count " + cards.length);
 	}
 
 	/**
@@ -101,6 +100,91 @@ public class Boards {
 			cards[i] = deck.pop();
 		}
 		return new River(cards);
+	}
+	
+	// TODO consider other names (suggestions: to,switch,street,move)
+
+	/**
+	 * Moves the board specified to the specified (previous) street.
+	 * 
+	 * @param board
+	 *            The board.
+	 * @param street
+	 *            The street to move the board.
+	 * @return returns the board at the new street.
+	 */
+	public static Board convert(Board board, Street street) {
+		if (street.cardCount() > board.getStreet().cardCount()) {
+			throw new IllegalArgumentException("new street has more cards than input");
+		}
+
+		// create an array containing our new cards, truncating the old one if needed.
+		Card[] original = board.cards().toArray(new Card[0]);
+		Card[] cards = new Card[street.cardCount()];
+		for (int i = 0; i < cards.length; i++) {
+			cards[i] = original[i];
+		}
+
+		return new GenericBoard(street, cards);
+	}
+
+	/**
+	 * Moves the board specified to the specified street and uses the cards
+	 * provided as the new cards on the street.
+	 * 
+	 * @param board
+	 *            The board.
+	 * @param street
+	 *            The street to move the board to.
+	 * @param cards
+	 *            The cards to use
+	 * @return The board at the new street with the specified cards.
+	 */
+	public static Board convert(Board board, Street street, Card... cards) {
+		if (street.cardCount() < board.getStreet().cardCount()) {
+			return convert(board, street);
+		}
+
+		/*
+		 * create an array containing our new cards, copying our old cards and
+		 * adding the new ones.
+		 */
+		Card[] original = board.cards().toArray(new Card[0]);
+		Card[] newCards = new Card[street.cardCount()];
+		for (int i = 0; i < original.length; i++) {
+			newCards[i] = original[i];
+		}
+		for (int i = original.length, ib = 0; i < newCards.length; i++, ib++) {
+			newCards[i] = cards[ib];
+		}
+
+		return new GenericBoard(street, newCards);
+	}
+
+	/**
+	 * Moves the board specified to the specified street and uses the specified
+	 * deck to add any new cards.
+	 * 
+	 * @param board
+	 *            The board.
+	 * @param street
+	 *            The street to move the board to.
+	 * @param deck
+	 *            The deck to source cards from.
+	 * @return The board at the new street with cards from the specified deck.
+	 */
+	public static Board convert(Board board, Street street, Deck deck) {
+		if (street.cardCount() < board.getStreet().cardCount()) {
+			return convert(board, street);
+		}
+
+		// obtain our new cards from the deck provided.
+		Card[] cards = new Card[street.cardCount() - board.getStreet().cardCount()];
+		for (int i = 0; i < cards.length; i++) {
+			cards[i] = deck.pop();
+		}
+
+		return convert(board, street, cards);
 	}
 
 }
