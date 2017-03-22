@@ -36,7 +36,7 @@ public class Deck {
 	/**
 	 * Orders the the deck randomly using the default random number generator.
 	 * 
-	 * @return The current Deck context, for chaining.
+	 * @return The current {@link Deck} context, for chaining.
 	 */
 	public Deck shuffle() {
 		return shuffle(RandomContext.get());
@@ -47,7 +47,7 @@ public class Deck {
 	 * 
 	 * @param random
 	 *            The random number generator to use to shuffle the deck.
-	 * @return The current Deck context, for chaining.
+	 * @return The current {@link Deck} context, for chaining.
 	 */
 	public Deck shuffle(Random random)  {
 		if (currentIndex > 0) {

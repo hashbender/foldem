@@ -7,6 +7,12 @@ import java.util.List;
 
 /**
  * Represents a hand group containing a single hand.
+ * 
+ * <p>
+ * This type is redundant because {@link BasicHandGroup} accepts a single hand
+ * as an argument for construction. It has been left in, however, because in
+ * some use cases it can be faster than its counterpart.
+ * </p>
  */
 public class SingleHandGroup implements HandGroup {
 
@@ -35,7 +41,7 @@ public class SingleHandGroup implements HandGroup {
 
 	@Override
 	public Collection<Hand> all() {
-		List<Hand> h = new ArrayList<>();
+		List<Hand> h = new ArrayList<>(1);
 		h.add(hand);
 		return Collections.unmodifiableCollection(h);
 	}
