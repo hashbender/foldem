@@ -72,7 +72,7 @@ public class Hand {
 	 * @return The newly created hand group.
 	 */
 	public HandGroup toSingleHandGroup() {
-		return new BasicHandGroup(this);
+		return new SingleHandGroup(this);
 	}
 	
 	@Override
