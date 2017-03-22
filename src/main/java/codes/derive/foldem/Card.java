@@ -34,18 +34,32 @@ public class Card {
 	 * @param suit
 	 *            The card suit.
 	 */
-	protected Card(int value, Suit suit) {
+	public Card(int value, Suit suit) {
 		this.value = value;
 		this.suit = suit;
 	}
 	
 	/**
-	 * Constructs a new Card using the given textual representation.
+	 * Constructs a new Card using the given string based shorthand
+	 * representation.
+	 * 
+	 * <p>
+	 * The shorthand format is based on the loose standard used by poker players
+	 * for conveniently describing cards.
+	 * </p>
+	 * 
+	 * <p>
+	 * Using the format is relatively straightforward, each card's value is
+	 * mapped to a single upper case character in "A23456789TJQK" and the card's
+	 * suit is mapped to a single lower case letter in "hsdc" (hearts, spades,
+	 * diamonds, clubs). An example for the ten of diamonds would be Td.
+	 * </p>
 	 * 
 	 * @param text
-	 *            TODO explain format
+	 *            A string shorthand for the card (eg. Ah would be the ace of
+	 *            hearts, 7c the seven of clubs).
 	 */
-	protected Card(String text) {
+	public Card(String text) {
 		char[] values = text.toCharArray();
 		if (values.length != 2) {
 			throw new IllegalArgumentException("Invalid hand length '" + text + "'");
