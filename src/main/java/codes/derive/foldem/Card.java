@@ -34,7 +34,7 @@ public class Card {
 	 * @param suit
 	 *            The card suit.
 	 */
-	protected Card(int value, Suit suit) {
+	public Card(int value, Suit suit) {
 		this.value = value;
 		this.suit = suit;
 	}
@@ -45,7 +45,7 @@ public class Card {
 	 * @param text
 	 *            TODO explain format
 	 */
-	protected Card(String text) {
+	public Card(String text) {
 		char[] values = text.toCharArray();
 		if (values.length != 2) {
 			throw new IllegalArgumentException("Invalid hand length '" + text + "'");

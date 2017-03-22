@@ -2,6 +2,7 @@ package codes.derive.foldem;
 
 import static codes.derive.foldem.Foldem.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -11,6 +12,7 @@ import java.util.Random;
 
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
+import codes.derive.foldem.board.Street;
 import codes.derive.foldem.eval.DefaultEvaluator;
 import codes.derive.foldem.eval.Evaluator;
 import codes.derive.foldem.hand.Hand;
@@ -34,7 +36,6 @@ public class EquityCalculator {
 	/* The evaluator to use for simulations */
 	private Evaluator evaluator = DEFAULT_EVALUATOR;
 
-	// TODO calculate(HandGroup...)
 	// TODO consider renaming
 	// TODO refactor
 
@@ -111,8 +112,68 @@ public class EquityCalculator {
 		return null; // TODO
 	}
 	
-	public Map<HandGroup, Equity> calculate(Board board, HandGroup... groups) {
-		return null; // TODO
+	public Map<HandGroup, Equity> calculate(Board base, HandGroup... groups) {
+		//FIXME
+		// map base equities to respective hands
+		Map<HandGroup, Equity> equities = new HashMap<>();
+		for (HandGroup group : groups) {
+			equities.put(group, new Equity());
+		}
+		
+		// seed our RNG using the input hands for output continuity
+		long seed = 31L;
+		for (HandGroup group : groups) {
+			seed *= group.hashCode(); // TODO
+		}
+		Random random = new Random(seed);
+		
+		// begin simulating boards and sampling results
+		for (int i = 0; i < sampleSize; i++) {
+			List<Hand> hands = new ArrayList<Hand>(groups.length);
+			
+			// 
+			Deck deck = deck().shuffle(random);
+			for (HandGroup group : groups) {
+				
+				//
+				Hand hand = group.get();
+				hands.add(hand);
+				
+				//
+				deck.pop(hand);
+			}
+			
+			Board board = Boards.convert(base, Street.RIVER, deck);
+			
+			// rank our hands in order for the sample
+			List<Hand> best = new LinkedList<>();
+			int rank = Integer.MAX_VALUE;
+			for (Hand hand : hands) {
+				int r = evaluator.rank(hand, board);
+				if (r < rank) {
+					best.clear();
+					best.add(hand);
+					rank = r;
+				} else if (r == rank) {
+					best.add(hand);
+				}
+			}
+			
+			// apply our sample to our equity map
+			for (Hand hand : hands) {
+				if (!best.contains(hand)) {
+					equities.get(hand).addLoss();
+				}
+			}
+			if (best.size() > 1) {
+				for (Hand hand : best) {
+					equities.get(hand).addSplit();
+				}
+			} else {
+				equities.get(best.get(0)).addWin();
+			}
+		}
+		return Collections.unmodifiableMap(equities);
 	}
 	
 	/**
@@ -151,18 +212,6 @@ public class EquityCalculator {
 		
 		private Equity() { }
 
-		private void addWin() {
-			this.win += (1.0 / sampleSize);
-		}
-		
-		private void addLoss() {
-			this.lose += (1.0 / sampleSize);
-		}
-
-		private void addSplit() {
-			this.split += (1.0 / sampleSize);
-		}
-
 		/**
 		 * Obtains how often the hand or hand group associated with this equity
 		 * will win, as a decimal.
@@ -194,6 +243,18 @@ public class EquityCalculator {
 		 */
 		public double split() {
 			return split;
+		}
+		
+		private void addWin() {
+			this.win += (1.0 / sampleSize);
+		}
+		
+		private void addLoss() {
+			this.lose += (1.0 / sampleSize);
+		}
+
+		private void addSplit() {
+			this.split += (1.0 / sampleSize);
 		}
 		
 		@Override

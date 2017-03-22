@@ -24,7 +24,7 @@ public class Deck {
 	/**
 	 * Constructs a new deck with the cards placed in a basic uniform order.
 	 */
-	protected Deck() {
+	public Deck() {
 		int offset = 0;
 		for (Suit suit : Suit.values()) {
 			for (int num = Card.ACE; num <= Card.KING; num++) {
