@@ -1,5 +1,9 @@
 package codes.derive.foldem;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import codes.derive.foldem.hand.Hand;
@@ -42,6 +46,8 @@ public class Deck {
 		return shuffle(RandomContext.get());
 	}
 	
+	public static long elapsed = 0L;
+	
 	/**
 	 * Orders the deck randomly using the provided Random context.
 	 * 
@@ -51,16 +57,10 @@ public class Deck {
 	 */
 	public Deck shuffle(Random random)  {
 		if (currentIndex > 0) {
-			throw new IllegalStateException("Deck cannot be shuffled after a card has been pulled");
-		}	
-		for (int i = 0; i < Constants.DECK_SIZE; i++) {
-			int swap = random.nextInt(Constants.DECK_SIZE);
-			Card temp = cards[swap];
-			cards[swap] = cards[i];
-			cards[i] = temp;
+			throw new IllegalStateException("Deck cannot be shuffled after pop()");
 		}
+		Collections.shuffle(Arrays.asList(cards), random);
 		return this;
-		
 	}
 
 	/**
