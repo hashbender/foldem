@@ -79,6 +79,11 @@ public class Hand {
 	public String toString() {
 		return cards.get(0).toString().concat(cards.get(1).toString());
 	}
+	
+	@Override
+	public int hashCode() {
+		return (31 + cards.hashCode()) * 31;
+	}
 
 	@Override
 	public boolean equals(Object o) {
