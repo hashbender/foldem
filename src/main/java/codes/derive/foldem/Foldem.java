@@ -243,4 +243,20 @@ public class Foldem {
 		return PrettyCards.get(board);
 	}
 
+	/**
+	 * Formats the equity specified using percentages.
+	 * 
+	 * @param equity
+	 *            The equity to format.
+	 * @return A string containing the equities in a format of
+	 *         "Win: ww.ww% Lose: ll.ll% Split: ss.ss%".
+	 */
+	public static String format(Equity equity) {
+		StringBuilder b = new StringBuilder();
+		b.append("Win: ").append(Math.round(equity.win() * 100)).append("% ");
+		b.append("Lose: ").append(Math.round(equity.lose() * 100)).append("% ");
+		b.append("Split: ").append(Math.round(equity.split() * 100)).append("%");
+		return b.toString();
+	}
+
 }
