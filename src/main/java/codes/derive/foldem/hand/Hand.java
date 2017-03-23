@@ -82,12 +82,27 @@ public class Hand {
 	
 	@Override
 	public int hashCode() {
-		return (31 + cards.hashCode()) * 31;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cards == null) ? 0 : cards.hashCode());
+		return result;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		return (o instanceof Hand) && ((Hand) o).cards.equals(cards);
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Hand other = (Hand) obj;
+		if (cards == null) {
+			if (other.cards != null)
+				return false;
+		} else if (!cards.equals(other.cards))
+			return false;
+		return true;
 	}
 	
 }

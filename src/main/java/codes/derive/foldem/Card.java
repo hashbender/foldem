@@ -111,17 +111,28 @@ public class Card {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof Card)) {
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		}
-		Card c = (Card) o;
-		return c.suit == suit && c.value == value;
+		if (getClass() != obj.getClass())
+			return false;
+		Card other = (Card) obj;
+		if (suit != other.suit)
+			return false;
+		if (value != other.value)
+			return false;
+		return true;
 	}
 	
 	@Override
 	public int hashCode() {
-		return (31 + value) * 31 + suit.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((suit == null) ? 0 : suit.hashCode());
+		result = prime * result + value;
+		return result;
 	}
 	
 	@Override
