@@ -70,3 +70,10 @@ System.out.println(hand);
 
 
 ```
+
+
+
+### More About
+*Fold'em is a GPL licensed module in a larger proprietary project with functionality similar to projects like [GTORB](http://gtorangebuilder.com/). Among other things, it includes high-level libraries for representing and working game trees as well as improvements on this library such as faster implementations of `codes.derive.foldem.eval.Evaluator`.*
+
+*If you are interested in learning more about the expanded version of this library please direct your enquiries to mail@derive.codes.*
