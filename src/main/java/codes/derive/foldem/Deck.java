@@ -43,9 +43,7 @@ public class Deck {
 	public Deck shuffle() {
 		return shuffle(RandomContext.get());
 	}
-	
-	public static long elapsed = 0L;
-	
+
 	/**
 	 * Orders the deck randomly using the provided Random context.
 	 * 
@@ -150,6 +148,16 @@ public class Deck {
 			}
 		}
 		throw new AssertionError("Card " + c + " was not found in the deck");
+	}
+	
+	/**
+	 * Returns an array containing all cards in this deck including ones that
+	 * have already been dealt.
+	 * 
+	 * @return An array containing <b>all</b> cards in this deck.
+	 */
+	public Card[] toArray() {
+		return cards;
 	}
 	
 	@Override
