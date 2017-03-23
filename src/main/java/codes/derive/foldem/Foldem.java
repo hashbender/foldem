@@ -9,6 +9,7 @@ import codes.derive.foldem.hand.BasicHandGroup;
 import codes.derive.foldem.hand.Hand;
 import codes.derive.foldem.hand.HandGroup;
 import codes.derive.foldem.hand.HandRange;
+import codes.derive.foldem.util.PrettyCards;
 import codes.derive.foldem.util.RandomContext;
 
 /**
@@ -192,6 +193,54 @@ public class Foldem {
 	public static Map<HandGroup, Equity> equity(Board board,
 			HandGroup... groups) {
 		return calc.calculate(board, groups);
+	}
+
+	/**
+	 * Formats the suit specified using pretty formatting. Is an alias for
+	 * {@link codes.derive.foldem.util.PrettyCards#get(Suit)}
+	 * 
+	 * @param suit
+	 *            The suit to format.
+	 * @return A pretty formatted string representing the specified suit.
+	 */
+	public static char format(Suit suit) {
+		return PrettyCards.get(suit);
+	}
+
+	/**
+	 * Formats the card specified using pretty formatting. Is an alias for
+	 * {@link codes.derive.foldem.util.PrettyCards#get(Card)}
+	 * 
+	 * @param card
+	 *            The card to format.
+	 * @return A pretty formatted string representing the specified card.
+	 */
+	public static String format(Card card) {
+		return PrettyCards.get(card);
+	}
+
+	/**
+	 * Formats the hand specified using pretty formatting. Is an alias for
+	 * {@link codes.derive.foldem.util.PrettyCards#get(Hand)}
+	 * 
+	 * @param hand
+	 *            The hand to format.
+	 * @return A pretty formatted string representing the specified hand.
+	 */
+	public static String format(Hand hand) {
+		return PrettyCards.get(hand);
+	}
+
+	/**
+	 * Formats the board specified using pretty formatting. Is an alias for
+	 * {@link codes.derive.foldem.util.PrettyCards#get(Board)}
+	 * 
+	 * @param board
+	 *            The board to format.
+	 * @return A pretty formatted string representing the specified board.
+	 */
+	public static String format(Board board) {
+		return PrettyCards.get(board);
 	}
 
 }
