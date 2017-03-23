@@ -113,10 +113,9 @@ public class Deck {
 	 */
 	public Card pop() {
 		if (currentIndex >= cards.length) {
-			throw new IllegalStateException(
-					"No cards, use remaining() to check before calling pop()");
+			throw new IllegalStateException("No cards, you can use remaining() to check");
 		}
-		return currentIndex < cards.length ? cards[currentIndex++] : null;
+		return cards[currentIndex++];
 	}
 
 	/**
