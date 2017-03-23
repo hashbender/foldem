@@ -60,7 +60,7 @@ public class Foldem {
 	public static Collection<Card> cards() {
 		List<Card> cards = new ArrayList<>();
 		for (Suit suit : Suit.values()) {
-			for (int value = Card.ACE; value < Card.KING; value++) {
+			for (int value = Card.ACE; value <= Card.KING; value++) {
 				cards.add(new Card(value, suit));
 			}
 		}
