@@ -120,6 +120,15 @@ public class Deck {
 	}
 
 	/**
+	 * Obtains the next available card on the deck without popping it.
+	 * @return
+	 * 		The next available card on the deck.
+	 */
+	public Card peek() {
+		return cards[currentIndex];
+	}
+	
+	/**
 	 * Obtains the number of cards left in the deck that can be popped.
 	 * 
 	 * @return The number of cards left in the deck that can be popped.
