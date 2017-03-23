@@ -1,5 +1,8 @@
 package codes.derive.foldem;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import codes.derive.foldem.EquityCalculator.Equity;
@@ -49,6 +52,21 @@ public class Foldem {
 		return new Card(text);
 	}
 
+	/**
+	 * Creates a collection containing an unordered enumeration of all cards.
+	 * 
+	 * @return A collection containing every card.
+	 */
+	public static Collection<Card> cards() {
+		List<Card> cards = new ArrayList<>();
+		for (Suit suit : Suit.values()) {
+			for (int value = Card.ACE; value < Card.KING; value++) {
+				cards.add(new Card(value, suit));
+			}
+		}
+		return cards;
+	}
+	
 	/**
 	 * Constructs a new hand using the specified cards.
 	 * 
