@@ -1,5 +1,8 @@
 package codes.derive.foldem;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import codes.derive.foldem.EquityCalculator.Equity;
@@ -49,6 +52,21 @@ public class Foldem {
 		return new Card(text);
 	}
 
+	/**
+	 * Creates a collection containing an unordered enumeration of all cards.
+	 * 
+	 * @return A collection containing every card.
+	 */
+	public static Collection<Card> cards() {
+		List<Card> cards = new ArrayList<>();
+		for (Suit suit : Suit.values()) {
+			for (int value = Card.ACE; value < Card.KING; value++) {
+				cards.add(new Card(value, suit));
+			}
+		}
+		return cards;
+	}
+	
 	/**
 	 * Constructs a new hand using the specified cards.
 	 * 
@@ -241,6 +259,22 @@ public class Foldem {
 	 */
 	public static String format(Board board) {
 		return PrettyCards.get(board);
+	}
+
+	/**
+	 * Formats the equity specified using percentages.
+	 * 
+	 * @param equity
+	 *            The equity to format.
+	 * @return A string containing the equities in a format of
+	 *         "Win: ww.ww% Lose: ll.ll% Split: ss.ss%".
+	 */
+	public static String format(Equity equity) {
+		StringBuilder b = new StringBuilder();
+		b.append("Win: ").append(Math.round(equity.win() * 100)).append("% ");
+		b.append("Lose: ").append(Math.round(equity.lose() * 100)).append("% ");
+		b.append("Split: ").append(Math.round(equity.split() * 100)).append("%");
+		return b.toString();
 	}
 
 }

@@ -23,9 +23,6 @@ public abstract class AbstractBoard implements Board {
 	 *            The cards.
 	 */
 	public AbstractBoard(Card... cards) {
-		if (cards.length != getStreet().cardCount()) {
-			throw new IllegalArgumentException("Wrong number of cards");
-		}
 		this.cards.addAll(Arrays.asList(cards));
 	}
 

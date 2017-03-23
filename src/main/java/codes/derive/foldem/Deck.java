@@ -1,5 +1,7 @@
 package codes.derive.foldem;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 import codes.derive.foldem.hand.Hand;
@@ -41,7 +43,7 @@ public class Deck {
 	public Deck shuffle() {
 		return shuffle(RandomContext.get());
 	}
-	
+
 	/**
 	 * Orders the deck randomly using the provided Random context.
 	 * 
@@ -51,16 +53,10 @@ public class Deck {
 	 */
 	public Deck shuffle(Random random)  {
 		if (currentIndex > 0) {
-			throw new IllegalStateException("Deck cannot be shuffled after a card has been pulled");
-		}	
-		for (int i = 0; i < Constants.DECK_SIZE; i++) {
-			int swap = random.nextInt(Constants.DECK_SIZE);
-			Card temp = cards[swap];
-			cards[swap] = cards[i];
-			cards[i] = temp;
+			throw new IllegalStateException("Deck cannot be shuffled after pop()");
 		}
+		Collections.shuffle(Arrays.asList(cards), random);
 		return this;
-		
 	}
 
 	/**
@@ -113,12 +109,20 @@ public class Deck {
 	 */
 	public Card pop() {
 		if (currentIndex >= cards.length) {
-			throw new IllegalStateException(
-					"No cards, use remaining() to check before calling pop()");
+			throw new IllegalStateException("No cards, you can use remaining() to check");
 		}
-		return currentIndex < cards.length ? cards[currentIndex++] : null;
+		return cards[currentIndex++];
 	}
 
+	/**
+	 * Obtains the next available card on the deck without popping it.
+	 * @return
+	 * 		The next available card on the deck.
+	 */
+	public Card peek() {
+		return cards[currentIndex];
+	}
+	
 	/**
 	 * Obtains the number of cards left in the deck that can be popped.
 	 * 
@@ -144,6 +148,16 @@ public class Deck {
 			}
 		}
 		throw new AssertionError("Card " + c + " was not found in the deck");
+	}
+	
+	/**
+	 * Returns an array containing all cards in this deck including ones that
+	 * have already been dealt.
+	 * 
+	 * @return An array containing <b>all</b> cards in this deck.
+	 */
+	public Card[] toArray() {
+		return cards;
 	}
 	
 	@Override
