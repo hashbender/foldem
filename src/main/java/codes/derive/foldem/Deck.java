@@ -1,9 +1,7 @@
 package codes.derive.foldem;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 import codes.derive.foldem.hand.Hand;
