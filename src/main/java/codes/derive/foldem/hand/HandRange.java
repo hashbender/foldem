@@ -25,42 +25,66 @@ public class HandRange implements HandGroup {
 	/* A list containing hands that always appear within this group. */
 	private final List<Hand> constant = new ArrayList<>();
 
-	// TODO exceptions on define when returning false on failure
-	// TODO consider changing define return value to "this" for chaining
-
 	/**
 	 * Defines a hand in this range.
-	 * 
 	 * @param hand
-	 *            The hand.
-	 * @return <code>true</code> if the hand was successfully defined within
-	 *         this range, otherwise <code>false</code>.
+	 * 		The hand.
+	 * @return
+	 * 		The {@link HandRange} context, for chaining.
 	 */
-	public boolean define(Hand hand) {
+	public HandRange define(Hand hand) {
 		if (contains(hand)) {
 			throw new IllegalArgumentException("Hand already exists within range");
 		}
-		return constant.add(hand);
+		constant.add(hand);
+		return this; // TODO for contains defined
+	}
+	
+	/**
+	 * Defines a list of hands in this range.
+	 * @param hands
+	 * 		The hands.
+	 * @return
+	 * 		The {@link HandRange} context, for chaining.
+	 */
+	public HandRange define(Hand... hands) {
+		for (Hand hand : hands) {
+			define(hand);
+		}
+		return this;
 	}
 
 	/**
 	 * Defines a hand group in this range.
-	 * 
-	 * @param hand
-	 *            The hand.
-	 * @return <code>true</code> if the hand group was successfully defined
-	 *         within this range, otherwise <code>false</code>.
+	 * @param group
+	 * 		The group.
+	 * @return
+	 * 		The {@link HandRange} context, for chaining.
 	 */
-	public boolean define(HandGroup group) {
+	public HandRange define(HandGroup group) {
 		if (!contains(group)) {
 			for (Hand hand : group.all()) {
 				if (contains(hand)) {
 					throw new IllegalArgumentException("Range contains one hand from the group but not all");
 				}
 			}
-			return constant.addAll(group.all());
+			constant.addAll(group.all());
 		}
-		return false;
+		return this;
+	}
+	
+	/**
+	 * Defines a list of hand groups in this range.
+	 * @param groups
+	 * 		The groups.
+	 * @return
+	 * 		The {@link HandRange} context, for chaining.
+	 */
+	public HandRange define(HandGroup... groups) {
+		for (HandGroup group : groups) {
+			define(group);
+		}
+		return this;
 	}
 
 	/**
@@ -71,18 +95,15 @@ public class HandRange implements HandGroup {
 	 * @param weight
 	 *            The weight, as a decimal. This will define how often the
 	 *            specified hand should appear in the range.
-	 * @return <code>true</code> if the hand was successfully defined within
-	 *         this range, otherwise <code>false</code>.
+	 * @return The {@link HandRange} context, for chaining.
 	 */
-	public boolean define(Hand hand, double weight) {
+	public HandRange define(Hand hand, double weight) {
 		if (weight <= 0.0 || weight > 1.0) {
 			throw new IllegalArgumentException("Weight out of bounds");
 		}
 		for (List<Hand> hands : weighted.values()) {
 			if (hands.contains(hand)) {
-				if (!hands.remove(hand)) {
-					return false;
-				}
+				hands.remove(hand);
 			}
 		}
 
@@ -91,9 +112,9 @@ public class HandRange implements HandGroup {
 		}
 		List<Hand> hands = weighted.get(weight);
 		if (!hands.contains(hand)) {
-			return hands.add(hand);
+			hands.add(hand);
 		}
-		return false;
+		return this;
 	}
 
 	/**
@@ -105,10 +126,9 @@ public class HandRange implements HandGroup {
 	 * @param weight
 	 *            The weight, as a decimal. This will define how often the
 	 *            specified group should appear in the range.
-	 * @return <code>true</code> if the group was successfully defined within
-	 *         this range, otherwise <code>false</code>.
+	 * @return The {@link HandRange} context, for chaining.
 	 */
-	public boolean define(HandGroup group, double weight) {
+	public HandRange define(HandGroup group, double weight) {
 		if (!contains(group)) {
 			for (Hand hand : group.all()) {
 				if (contains(hand)) {
@@ -117,11 +137,9 @@ public class HandRange implements HandGroup {
 			}
 		}
 		for (Hand h : group.all()) {
-			if (!define(h, weight)) {
-				return false;
-			}
+			define(h, weight);
 		}
-		return true;
+		return this;
 	}
 
 	/**
@@ -131,8 +149,7 @@ public class HandRange implements HandGroup {
 	 * 
 	 * @param hand
 	 *            The hand.
-	 * @return <code>true</code> if the specified hand can appear within this
-	 *         range, otherwise <code>false</code>.
+	 * @return The {@link HandRange} context, for chaining.
 	 */
 	public boolean contains(Hand hand) {
 		for (List<Hand> hands : weighted.values()) {
