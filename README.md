@@ -1,5 +1,5 @@
 # Fold'em
-A Java framework for Texas Hold'em designed with an emphasis on simplicity and ease of use.
+A Java framework for Texas Hold 'em designed with an emphasis on simplicity and ease of use.
 
 ## Features
 - Hand evaluations
@@ -8,7 +8,7 @@ A Java framework for Texas Hold'em designed with an emphasis on simplicity and e
 - String based notation of cards and hands
 - Pretty text format (like in [Deuces](https://github.com/worldveil/deuces))
 
-## Getting Fold'Em
+## Getting Fold'em
 This project is available in the [Maven][mvn] Central Repository.
 
 ### Gradle
@@ -21,14 +21,14 @@ TODO
 A Javadoc for Fold'em is available [here](TODO). Additionally some examples have been provided in this repository [here](/src/main/java/codes/derive/foldem/examples). An effort has been made to keep this library as simple as possible to use, some more basic usage examples have been provided in the section below.
 
 ### Basic Usage Guide
-Most of this project's functionality is provided in the [codes.derive.foldem](src/main/java/codes/derive/foldem) package. In this package there is a helper class called [Foldem](src/main/java/codes/derive/foldem/Foldem.java) containing static functions for creating and working with the data types this project exposes. (TODO move links to point to Javadoc once its up)
+Most of this project's functionality is provided in the `codes.derive.foldem` package. In this package there is a helper class called `Foldem` containing static functions for creating and working with the data types this project exposes. (TODO move links to point to Javadoc once its up)
 
 It is recommended that you import this statically to make code less bulky:
 ```java
 import static codes.derive.foldem.Foldem
 ```
 
-From here you can easily initialize and manipulate the main data types comprising the framework:
+From here you can easily utilize the main data types comprising the framework:
 ```java
 // Create a card
 Card queenOfHearts = card(Card.QUEEN, Suit.HEARTS); 
@@ -70,8 +70,6 @@ System.out.println(hand);
 
 
 ```
-
-
 
 ### More About
 *Fold'em is a GPL licensed module in a larger proprietary project with functionality similar to projects like [GTORB](http://gtorangebuilder.com/). Among other things, it includes high-level libraries for representing and working game trees as well as improvements on this library such as faster implementations of `codes.derive.foldem.eval.Evaluator`.*
