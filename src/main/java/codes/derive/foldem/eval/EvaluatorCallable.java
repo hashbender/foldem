@@ -38,7 +38,5 @@ public class EvaluatorCallable implements Callable<Integer> {
 	public Integer call() throws Exception {
 		return evaluator.rank(hand, board);
 	}
-
-	
 	
 }
