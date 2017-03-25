@@ -275,9 +275,10 @@ public class Foldem {
 		b.append("Split: ").append(percent(equity.split() * 100)).append("%");
 		return b.toString();
 	}
-	
+
 	/**
-	 * Represents the specified decimal as a percentage rounded to two decimal places.
+	 * Represents the specified decimal as a percentage rounded to two decimal
+	 * places.
 	 * 
 	 * <p>
 	 * This may seem like a weird place to have this but it can be useful for
@@ -285,19 +286,18 @@ public class Foldem {
 	 * </p>
 	 * 
 	 * @param d
-	 * 		The decimal to convert.
-	 * @return
-	 * 		The percentage.
+	 *            The decimal to convert.
+	 * @return The percentage.
 	 */
 	public static double percent(double d) {
 		return new BigDecimal(d * 100).setScale(2, RoundingMode.HALF_UP)
 				.doubleValue();
 	}
-	
+
 	/**
 	 * Creates a new equity calculator.
-	 * @return
-	 * 		A new equity calculator.
+	 * 
+	 * @return A new equity calculator.
 	 */
 	public static EquityCalculator calculator() {
 		return new EquityCalculator();
