@@ -9,7 +9,8 @@ import java.util.List;
 import codes.derive.foldem.Card;
 
 /**
- * An abstract board that provides a basic <code>cards()</code> implementation.
+ * An abstract board that provides a basic {@link Board#cards()} implementation,
+ * using an {@link java.util.ArrayList } for backing.
  */
 public abstract class AbstractBoard implements Board {
 
