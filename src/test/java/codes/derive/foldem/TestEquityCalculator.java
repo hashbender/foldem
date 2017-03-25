@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import codes.derive.foldem.EquityCalculator.Equity;
+import codes.derive.foldem.util.EquityCalculationBuilder.Equity;
 
 public class TestEquityCalculator {
 

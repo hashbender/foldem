@@ -7,12 +7,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import codes.derive.foldem.EquityCalculator.Equity;
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
 import codes.derive.foldem.range.Range;
+import codes.derive.foldem.util.EquityCalculationBuilder;
 import codes.derive.foldem.util.PrettyCards;
 import codes.derive.foldem.util.RandomContext;
+import codes.derive.foldem.util.EquityCalculationBuilder.Equity;
 
 /**
  * This class consists exclusively of static methods to assist in using this
@@ -62,7 +63,7 @@ public class Foldem {
 		}
 		return cards;
 	}
-	
+
 	/**
 	 * Constructs a new hand using the specified cards.
 	 * 
@@ -95,7 +96,7 @@ public class Foldem {
 	public static Range range() {
 		return new Range();
 	}
-	
+
 	/**
 	 * Constructs a new range with the specified hands.
 	 * 
@@ -116,7 +117,8 @@ public class Foldem {
 	 * @return A new board using the specified cards.
 	 */
 	public static Board board(Card... cards) {
-		return Boards.board(cards); // TODO consider removing or moving other functions
+		return Boards.board(cards); // TODO consider removing or moving other
+									// functions
 	}
 
 	/**
@@ -146,7 +148,7 @@ public class Foldem {
 	 * @return The hands mapped to their calculated equity.
 	 */
 	public static Map<Hand, Equity> equity(Hand... hands) {
-		return calculator().calculate(hands);
+		return calculationBuilder().calculate(hands);
 	}
 
 	/**
@@ -161,35 +163,35 @@ public class Foldem {
 	 * @return The hands mapped to their calculated equity.
 	 */
 	public static Map<Hand, Equity> equity(Board board, Hand... hands) {
-		return calculator().calculate(board, hands);
+		return calculationBuilder().useBoard(board).calculate(hands);
 	}
 
 	/**
 	 * Obtains the equity that the specified hand groups have against each
-	 * other, returning them as keys mapped to their calculated equity.
-	 * TODO rename to range
+	 * other, returning them as keys mapped to their calculated equity. TODO
+	 * rename to range
+	 * 
 	 * @param hands
 	 *            The hand groups to calculate equity for.
 	 * @return The hand groups mapped to their calculated equity.
 	 */
 	public static Map<Range, Equity> equity(Range... groups) {
-		return calculator().calculate(groups);
+		return calculationBuilder().calculate(groups);
 	}
 
 	/**
 	 * Obtains the equity that the specified hand groups have against each other
 	 * on the specified board, returning them as keys mapped to their calculated
-	 * equities.
-	 * TODO rename to range
+	 * equities. TODO rename to range
+	 * 
 	 * @param board
 	 *            The board to calculate equity on.
 	 * @param groups
 	 *            The hand groups to calculate equity for
 	 * @return The hand groups mapped to their calculated equity.
 	 */
-	public static Map<Range, Equity> equity(Board board,
-			Range... groups) {
-		return calculator().calculate(board, groups);
+	public static Map<Range, Equity> equity(Board board, Range... groups) {
+		return calculationBuilder().useBoard(board).calculate(groups);
 	}
 
 	/**
@@ -279,8 +281,8 @@ public class Foldem {
 	 * 
 	 * @return A new equity calculator.
 	 */
-	public static EquityCalculator calculator() {
-		return new EquityCalculator();
+	public static EquityCalculationBuilder calculationBuilder() {
+		return new EquityCalculationBuilder();
 	}
 
 }

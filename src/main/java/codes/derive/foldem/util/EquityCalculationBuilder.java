@@ -1,4 +1,4 @@
-package codes.derive.foldem;
+package codes.derive.foldem.util;
 
 import static codes.derive.foldem.Foldem.*;
 
@@ -10,8 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import codes.derive.foldem.Card;
+import codes.derive.foldem.Deck;
+import codes.derive.foldem.Hand;
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
+import codes.derive.foldem.board.Street;
 import codes.derive.foldem.eval.DefaultEvaluator;
 import codes.derive.foldem.eval.Evaluator;
 import codes.derive.foldem.range.Range;
@@ -20,7 +24,9 @@ import codes.derive.foldem.range.Range;
  * A type that can be used to calculate equity for hands and groups of hands
  * using Monte Carlo simulations.
  */
-public class EquityCalculator {
+public class EquityCalculationBuilder {
+	
+	// TODO redo all comments here
 
 	/* The default sample size to use for simulations. */
 	private static final int DEFAULT_SAMPLE_SIZE = 25000;
@@ -30,6 +36,9 @@ public class EquityCalculator {
 	
 	/* A list containing cards to remove from the deck during calculations. */
 	private final List<Card> dead = new ArrayList<>();
+	
+	/* Base board. */
+	private Board board = Boards.board();
 	
 	/* The sample size to use for simulations. */
 	private int sampleSize = DEFAULT_SAMPLE_SIZE;
@@ -46,6 +55,7 @@ public class EquityCalculator {
 	 * @return A map containing the specified hands mapped to their calculated
 	 *         equity.
 	 */
+	
 	public Map<Hand, Equity> calculate(Hand... hands) {
 		
 		// map base equities to respective hands
@@ -68,16 +78,8 @@ public class EquityCalculator {
 		}
 		return equities;
 	}
-	
-	public Map<Hand, Equity> calculate(Board board, Hand... hands) {
-		return null; // TODO
-	}
-	
-	public Map<Range, Equity> calculate(Range... ranges) {
-		return null; // TODO
-	}
-	
-	public Map<Range, Equity> calculate(Board base, Range... groups) {
+
+	public Map<Range, Equity> calculate(Range... groups) {
 		
 		// map base equities to respective groups
 		Map<Range, Equity> equities = new HashMap<>();
@@ -114,9 +116,9 @@ public class EquityCalculator {
 	 * 
 	 * @param sampleSize
 	 *            The number of boards to simulate for equity calculations.
-	 * @return The {@link EquityCalculator} instance, for chaining.
+	 * @return The {@link EquityCalculationBuilder} instance, for chaining.
 	 */
-	public EquityCalculator useSampleSize(int sampleSize) {
+	public EquityCalculationBuilder useSampleSize(int sampleSize) {
 		this.sampleSize = sampleSize;
 		return this;
 	}
@@ -127,9 +129,9 @@ public class EquityCalculator {
 	 * 
 	 * @param evaluator
 	 *            The evaluator to be used to evaluate hands during simulations.
-	 * @return The {@link EquityCalculator} instance, for chaining.
+	 * @return The {@link EquityCalculationBuilder} instance, for chaining.
 	 */
-	public EquityCalculator useEvaluator(Evaluator evaluator) {
+	public EquityCalculationBuilder useEvaluator(Evaluator evaluator) {
 		this.evaluator = evaluator;
 		return this;
 	}
@@ -140,25 +142,43 @@ public class EquityCalculator {
 	 * 
 	 * @param cards
 	 *            The cards to be removed from the deck.
-	 * @return The {@link EquityCalculator} instance, for chaining.
+	 * @return The {@link EquityCalculationBuilder} instance, for chaining.
 	 */
-	public EquityCalculator dead(Card... cards) {
+	public EquityCalculationBuilder useDeadCards(Card... cards) {
 		for (Card card : cards) {
 			dead.add(card);
 		}
 		return this;
 	}
 	
+	/**
+	 * Makes the calculator use the specified board during calculations.
+	 * @param board
+	 * 		The board to use during calculations.
+	 * @return The {@link EquityCalculationBuilder} instance, for chaining.
+	 */
+	public EquityCalculationBuilder useBoard(Board board) {
+		this.board = board;
+		return this;
+	}
+	
 	private void simulate(Map<Hand, Equity> equities, Random random) {
-		
-		// TODO refactor
 		
 		// take our hands and board from a randomized deck
 		Deck deck = deck().shuffle(random);
+		
+		// remove our hands
 		for (Hand hand : equities.keySet()) {
 			deck.pop(hand);
 		}
-		Board board = Boards.river(deck);
+		
+		// remove our dead cards
+		for (Card card : dead) {
+			deck.pop(card);
+		}
+		
+		// board
+		Board board = Boards.convert(this.board, Street.RIVER, deck);
 		
 		// rank our hands in order for the sample
 		List<Hand> best = new LinkedList<>();
