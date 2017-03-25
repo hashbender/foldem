@@ -7,15 +7,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import codes.derive.foldem.hand.Hand;
-
 public class TestHand {
-
-	@Test
-	public void testToGroup() {
-		Hand hand = hand("AcAh");
-		assertTrue(hand.toSingleHandGroup().match(hand));
-	}
 	
 	@Test
 	public void testSuited() {

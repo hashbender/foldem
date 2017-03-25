@@ -3,7 +3,7 @@ package codes.derive.foldem;
 import static codes.derive.foldem.Foldem.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,11 +12,9 @@ import java.util.Random;
 
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
-import codes.derive.foldem.board.Street;
 import codes.derive.foldem.eval.DefaultEvaluator;
 import codes.derive.foldem.eval.Evaluator;
-import codes.derive.foldem.hand.Hand;
-import codes.derive.foldem.hand.HandGroup;
+import codes.derive.foldem.range.Range;
 
 /**
  * A type that can be used to calculate equity for hands and groups of hands
@@ -25,19 +23,19 @@ import codes.derive.foldem.hand.HandGroup;
 public class EquityCalculator {
 
 	/* The default sample size to use for simulations. */
-	private static final int DEFAULT_SAMPLE_SIZE = 10000;
+	private static final int DEFAULT_SAMPLE_SIZE = 25000;
 	
-	/* The default evaluator to use for simulations */
+	/* The default evaluator to use for simulations. */
 	private static final Evaluator DEFAULT_EVALUATOR = new DefaultEvaluator();
+	
+	/* A list containing cards to remove from the deck during calculations. */
+	private final List<Card> dead = new ArrayList<>();
 	
 	/* The sample size to use for simulations. */
 	private int sampleSize = DEFAULT_SAMPLE_SIZE;
 	
 	/* The evaluator to use for simulations */
 	private Evaluator evaluator = DEFAULT_EVALUATOR;
-
-	// TODO consider renaming
-	// TODO refactor
 
 	/**
 	 * Performs an equity calculation for the specified hands and return map
@@ -57,123 +55,57 @@ public class EquityCalculator {
 		}
 		
 		// seed our RNG using the input hands for output continuity
-		long seed = 31L;
-		for (Hand hand : hands) {
-			seed *= hand.hashCode();
-		}
-		Random random = new Random(seed);
+		Random random = new Random(Arrays.hashCode(hands));
 		
 		// begin simulating boards and sampling results
 		for (int i = 0; i < sampleSize; i++) {
-			
-			// take our hands and board from a randomized deck
-			Deck deck = deck().shuffle(random);
-			for (Hand hand : hands) {
-				deck.pop(hand);
-			}
-			Board board = Boards.river(deck);
-			
-			// rank our hands in order for the sample
-			List<Hand> best = new LinkedList<>();
-			int rank = Integer.MAX_VALUE;
-			for (Hand hand : hands) {
-				int r = evaluator.rank(hand, board);
-				if (r < rank) {
-					best.clear();
-					best.add(hand);
-					rank = r;
-				} else if (r == rank) {
-					best.add(hand);
-				}
-			}
-			
-			// apply our sample to our equity map
-			for (Hand hand : hands) {
-				if (!best.contains(hand)) {
-					equities.get(hand).addLoss();
-				}
-			}
-			if (best.size() > 1) {
-				for (Hand hand : best) {
-					equities.get(hand).addSplit();
-				}
-			} else {
-				equities.get(best.get(0)).addWin();
-			}
+			simulate(equities, random);
 		}
-		return Collections.unmodifiableMap(equities);
+		
+		// 
+		for (Equity equity : equities.values()) {
+			equity.adjustForSample(); // TODO needed?
+		}
+		return equities;
 	}
 	
 	public Map<Hand, Equity> calculate(Board board, Hand... hands) {
 		return null; // TODO
 	}
 	
-	public Map<HandGroup, Equity> calculate(HandGroup... groups) {
+	public Map<Range, Equity> calculate(Range... ranges) {
 		return null; // TODO
 	}
 	
-	public Map<HandGroup, Equity> calculate(Board base, HandGroup... groups) {
-		//FIXME
-		// map base equities to respective hands
-		Map<HandGroup, Equity> equities = new HashMap<>();
-		for (HandGroup group : groups) {
+	public Map<Range, Equity> calculate(Board base, Range... groups) {
+		
+		// map base equities to respective groups
+		Map<Range, Equity> equities = new HashMap<>();
+		for (Range group : groups) {
 			equities.put(group, new Equity());
 		}
 		
-		// seed our RNG using the input hands for output continuity
-		long seed = 31L;
-		for (HandGroup group : groups) {
-			seed *= group.hashCode(); // TODO
-		}
-		Random random = new Random(seed);
+		// seed our RNG using the input hands for more output continuity
+		Random random = new Random(Arrays.hashCode(groups));
 		
 		// begin simulating boards and sampling results
 		for (int i = 0; i < sampleSize; i++) {
-			List<Hand> hands = new ArrayList<Hand>(groups.length);
 			
-			// 
-			Deck deck = deck().shuffle(random);
-			for (HandGroup group : groups) {
-				
-				//
-				Hand hand = group.get();
-				hands.add(hand);
-				
-				//
-				deck.pop(hand);
+			// we should take one hand from each of our groups and use that for the simulation
+			Map<Hand, Equity> hands = new HashMap<>();
+			for (Range group : equities.keySet()) {
+				hands.put(group.sample(), equities.get(group));
 			}
 			
-			Board board = Boards.convert(base, Street.RIVER, deck);
-			
-			// rank our hands in order for the sample
-			List<Hand> best = new LinkedList<>();
-			int rank = Integer.MAX_VALUE;
-			for (Hand hand : hands) {
-				int r = evaluator.rank(hand, board);
-				if (r < rank) {
-					best.clear();
-					best.add(hand);
-					rank = r;
-				} else if (r == rank) {
-					best.add(hand);
-				}
-			}
-			
-			// apply our sample to our equity map
-			for (Hand hand : hands) {
-				if (!best.contains(hand)) {
-					equities.get(hand).addLoss();
-				}
-			}
-			if (best.size() > 1) {
-				for (Hand hand : best) {
-					equities.get(hand).addSplit();
-				}
-			} else {
-				equities.get(best.get(0)).addWin();
-			}
+			// run simulation with our hands
+			simulate(hands, random);
 		}
-		return Collections.unmodifiableMap(equities);
+		
+		//
+		for (Equity equity : equities.values()) {
+			equity.adjustForSample();
+		}
+		return equities;
 	}
 	
 	/**
@@ -182,9 +114,9 @@ public class EquityCalculator {
 	 * 
 	 * @param sampleSize
 	 *            The number of boards to simulate for equity calculations.
-	 * @return the EquityCalculator instance, for chaining.
+	 * @return The {@link EquityCalculator} instance, for chaining.
 	 */
-	public EquityCalculator setUseSampleSize(int sampleSize) {
+	public EquityCalculator useSampleSize(int sampleSize) {
 		this.sampleSize = sampleSize;
 		return this;
 	}
@@ -195,13 +127,76 @@ public class EquityCalculator {
 	 * 
 	 * @param evaluator
 	 *            The evaluator to be used to evaluate hands during simulations.
-	 * @return The EquityCalculator instance, for chaining.
+	 * @return The {@link EquityCalculator} instance, for chaining.
 	 */
-	public EquityCalculator setUseEvaluator(Evaluator evaluator) {
+	public EquityCalculator useEvaluator(Evaluator evaluator) {
 		this.evaluator = evaluator;
 		return this;
 	}
 
+	/**
+	 * Makes the calculator remove the specified cards from the deck during
+	 * calculations.
+	 * 
+	 * @param cards
+	 *            The cards to be removed from the deck.
+	 * @return The {@link EquityCalculator} instance, for chaining.
+	 */
+	public EquityCalculator dead(Card... cards) {
+		for (Card card : cards) {
+			dead.add(card);
+		}
+		return this;
+	}
+	
+	private void simulate(Map<Hand, Equity> equities, Random random) {
+		
+		// TODO refactor
+		
+		// take our hands and board from a randomized deck
+		Deck deck = deck().shuffle(random);
+		for (Hand hand : equities.keySet()) {
+			deck.pop(hand);
+		}
+		Board board = Boards.river(deck);
+		
+		// rank our hands in order for the sample
+		List<Hand> best = new LinkedList<>();
+		int currentBest = Integer.MAX_VALUE;
+		for (Hand hand : equities.keySet()) {
+			
+			// see if this hand is the best one so far
+			int r = evaluator.rank(hand, board);
+			if (r < currentBest) {
+				
+				// clear the previous best hands and add this one
+				best.clear();
+				best.add(hand);
+				
+				// update our current best ranking
+				currentBest = r;
+			} else if (r == currentBest) {
+				best.add(hand);
+			}
+		}
+		
+		// apply losing hands to the sample
+		for (Hand hand : equities.keySet()) {
+			if (!best.contains(hand)) {
+				equities.get(hand).lose += 1;;
+			}
+		}
+		
+		// apply winning hands to the sample
+		if (best.size() > 1) {
+			for (Hand hand : best) {
+				equities.get(hand).split += 1;
+			}
+		} else {
+			equities.get(best.get(0)).win += 1;
+		}
+	}
+	
 	/**
 	 * Represents a hand's equity in a pot. With decimals representing win, loss,
 	 * and split pot rates.
@@ -245,16 +240,10 @@ public class EquityCalculator {
 			return split;
 		}
 		
-		private void addWin() {
-			this.win += (1.0 / sampleSize);
-		}
-		
-		private void addLoss() {
-			this.lose += (1.0 / sampleSize);
-		}
-
-		private void addSplit() {
-			this.split += (1.0 / sampleSize);
+		private void adjustForSample() {
+			this.win /= sampleSize;
+			this.lose /= sampleSize;
+			this.split /= sampleSize;
 		}
 		
 		@Override

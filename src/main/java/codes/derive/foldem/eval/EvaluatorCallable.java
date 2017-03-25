@@ -2,8 +2,8 @@ package codes.derive.foldem.eval;
 
 import java.util.concurrent.Callable;
 
+import codes.derive.foldem.Hand;
 import codes.derive.foldem.board.Board;
-import codes.derive.foldem.hand.Hand;
 
 /**
  * An implementation of {@link Callable} that can be used to evaluate a hand.

@@ -8,9 +8,9 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import codes.derive.foldem.Hand;
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
-import codes.derive.foldem.hand.Hand;
 
 public class TestDefaultEvaluator {
 	

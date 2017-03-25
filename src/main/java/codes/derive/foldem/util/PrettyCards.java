@@ -1,9 +1,9 @@
 package codes.derive.foldem.util;
 
 import codes.derive.foldem.Card;
+import codes.derive.foldem.Hand;
 import codes.derive.foldem.Suit;
 import codes.derive.foldem.board.Board;
-import codes.derive.foldem.hand.Hand;
 
 /**
  * Contains functions for pretty string formatting cards, similar to the Deuces

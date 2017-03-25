@@ -1,4 +1,4 @@
-package codes.derive.foldem.hand;
+package codes.derive.foldem.range;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,15 +6,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
+import codes.derive.foldem.Hand;
 import codes.derive.foldem.util.RandomContext;
 
-/**
- * A hand group that can represent a range of hands and has functionality for
- * having hands appear within the group at different frequencies. This type can
- * be useful for running advanced equity calculations with weighted ranges.
- */
-public class HandRange implements HandGroup {
+public class Range {
 
 	/*
 	 * A map containing weighted hands in lists mapped to their respective
@@ -30,9 +27,9 @@ public class HandRange implements HandGroup {
 	 * @param hand
 	 * 		The hand.
 	 * @return
-	 * 		The {@link HandRange} context, for chaining.
+	 * 		The {@link Range} context, for chaining.
 	 */
-	public HandRange define(Hand hand) {
+	public Range define(Hand hand) {
 		if (contains(hand)) {
 			throw new IllegalArgumentException("Hand already exists within range");
 		}
@@ -45,9 +42,9 @@ public class HandRange implements HandGroup {
 	 * @param hands
 	 * 		The hands.
 	 * @return
-	 * 		The {@link HandRange} context, for chaining.
+	 * 		The {@link Range} context, for chaining.
 	 */
-	public HandRange define(Hand... hands) {
+	public Range define(Hand... hands) {
 		for (Hand hand : hands) {
 			define(hand);
 		}
@@ -55,49 +52,16 @@ public class HandRange implements HandGroup {
 	}
 
 	/**
-	 * Defines a hand group in this range.
-	 * @param group
-	 * 		The group.
-	 * @return
-	 * 		The {@link HandRange} context, for chaining.
-	 */
-	public HandRange define(HandGroup group) {
-		if (!contains(group)) {
-			for (Hand hand : group.all()) {
-				if (contains(hand)) {
-					throw new IllegalArgumentException("Range contains one hand from the group but not all");
-				}
-			}
-			constant.addAll(group.all());
-		}
-		return this;
-	}
-	
-	/**
-	 * Defines a list of hand groups in this range.
-	 * @param groups
-	 * 		The groups.
-	 * @return
-	 * 		The {@link HandRange} context, for chaining.
-	 */
-	public HandRange define(HandGroup... groups) {
-		for (HandGroup group : groups) {
-			define(group);
-		}
-		return this;
-	}
-
-	/**
 	 * Defines a weighted hand in this range. TODO more weighting explanation
 	 * 
-	 * @param hand
-	 *            The hand.
 	 * @param weight
 	 *            The weight, as a decimal. This will define how often the
 	 *            specified hand should appear in the range.
-	 * @return The {@link HandRange} context, for chaining.
+	 * @param hand
+	 *            The hand.
+	 * @return The {@link Range} context, for chaining.
 	 */
-	public HandRange define(Hand hand, double weight) {
+	public Range define(double weight, Hand hand) {
 		if (weight <= 0.0 || weight > 1.0) {
 			throw new IllegalArgumentException("Weight out of bounds");
 		}
@@ -118,26 +82,18 @@ public class HandRange implements HandGroup {
 	}
 
 	/**
-	 * Defines a weighted hand group in this range. TODO more weighting
-	 * explanation
+	 * Defines the specified weighted hands in this range.
 	 * 
-	 * @param group
-	 *            The group.
 	 * @param weight
 	 *            The weight, as a decimal. This will define how often the
-	 *            specified group should appear in the range.
-	 * @return The {@link HandRange} context, for chaining.
+	 *            specified hands will appear in the range. TODO rephrase.
+	 * @param hands
+	 *            The hands.
+	 * @return The {@link Range} context, for chaining.
 	 */
-	public HandRange define(HandGroup group, double weight) {
-		if (!contains(group)) {
-			for (Hand hand : group.all()) {
-				if (contains(hand)) {
-					throw new IllegalArgumentException("Range contains one hand from the group but not all");
-				}
-			}
-		}
-		for (Hand h : group.all()) {
-			define(h, weight);
+	public Range define(double weight, Hand... hands) {
+		for (Hand hand : hands) {
+			define(weight, hand);
 		}
 		return this;
 	}
@@ -149,7 +105,7 @@ public class HandRange implements HandGroup {
 	 * 
 	 * @param hand
 	 *            The hand.
-	 * @return The {@link HandRange} context, for chaining.
+	 * @return The {@link Range} context, for chaining.
 	 */
 	public boolean contains(Hand hand) {
 		for (List<Hand> hands : weighted.values()) {
@@ -158,27 +114,6 @@ public class HandRange implements HandGroup {
 			}
 		}
 		return constant.contains(hand);
-	}
-
-	/**
-	 * Obtains whether or not the specified hand group can appear within this
-	 * range. Differs from (TODO explain distinction between contains(... and
-	 * matches) (Issue #5)
-	 * 
-	 * @param group
-	 *            The group.
-	 * @return <code>true</code> if the specified hand group can appear within
-	 *         this range, otherwise <code>false</code>.
-	 */
-	public boolean contains(HandGroup group) {
-		for (List<Hand> hands : weighted.values()) {
-			for (Hand h : group.all()) {
-				if (hands.contains(h)) {
-					return true;
-				}
-			}
-		}
-		return true;
 	}
 
 	/**
@@ -199,20 +134,6 @@ public class HandRange implements HandGroup {
 		return constant.contains(hand) ? 1.0 : 0;
 	}
 
-	/**
-	 * Obtains the frequency at which the specified hand group will appear
-	 * within this range, as a decimal.
-	 * 
-	 * @param group
-	 *            The hand group.
-	 * @return The frequency at which the specified hand group will appear
-	 *         within this range, as a decimal.
-	 */
-	public double weight(HandGroup group) {
-		return weight(group.get());
-	}
-
-	@Override
 	public boolean match(Hand hand) {
 		if (constant.contains(hand)) {
 			return true;
@@ -225,8 +146,7 @@ public class HandRange implements HandGroup {
 		return false;
 	}
 
-	@Override
-	public Hand get() {
+	public Hand sample(Random random) {
 		if (constant.size() == 0) {
 			throw new IllegalStateException("There needs to be at least one constant hand");
 		}
@@ -252,10 +172,13 @@ public class HandRange implements HandGroup {
 		/*
 		 * Return a random hand from our group of candidates.
 		 */
-		return candidates.get(RandomContext.get().nextInt(candidates.size()));
+		return candidates.get(random.nextInt(candidates.size()));
 	}
-
-	@Override
+	
+	public Hand sample() {
+		return sample(RandomContext.get());
+	}
+	
 	public Collection<Hand> all() {
 		List<Hand> hands = new ArrayList<>();
 		hands.addAll(constant);

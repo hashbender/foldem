@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-import codes.derive.foldem.hand.Hand;
 import codes.derive.foldem.util.RandomContext;
 
 /**

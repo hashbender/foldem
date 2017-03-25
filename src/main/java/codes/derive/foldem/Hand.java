@@ -1,4 +1,4 @@
-package codes.derive.foldem.hand;
+package codes.derive.foldem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,10 +6,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import codes.derive.foldem.Card;
-
 /**
- * Represents a single hand.
+ * Represents a hand.
  */
 public class Hand {
 
@@ -64,15 +62,6 @@ public class Hand {
 	 */
 	public boolean suited() {
 		return cards.get(0).getSuit().equals(cards.get(1).getSuit());
-	}
-	
-	/**
-	 * Creates a new hand group containing only this hand.
-	 * 
-	 * @return The newly created hand group.
-	 */
-	public HandGroup toSingleHandGroup() {
-		return new SingleHandGroup(this);
 	}
 	
 	@Override
