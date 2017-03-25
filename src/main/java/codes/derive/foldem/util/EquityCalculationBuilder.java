@@ -21,12 +21,10 @@ import codes.derive.foldem.eval.Evaluator;
 import codes.derive.foldem.range.Range;
 
 /**
- * A type that can be used to calculate equity for hands and groups of hands
- * using Monte Carlo simulations.
+ * A type that can be used to calculate equity for hands and ranges using Monte
+ * Carlo simulations.
  */
 public class EquityCalculationBuilder {
-	
-	// TODO redo all comments here
 
 	/* The default sample size to use for simulations. */
 	private static final int DEFAULT_SAMPLE_SIZE = 25000;
@@ -37,7 +35,7 @@ public class EquityCalculationBuilder {
 	/* A list containing cards to remove from the deck during calculations. */
 	private final List<Card> dead = new ArrayList<>();
 	
-	/* Base board. */
+	/* The base board to use during calculations. */
 	private Board board = Boards.board();
 	
 	/* The sample size to use for simulations. */
@@ -47,7 +45,7 @@ public class EquityCalculationBuilder {
 	private Evaluator evaluator = DEFAULT_EVALUATOR;
 
 	/**
-	 * Performs an equity calculation for the specified hands and return map
+	 * Performs an equity calculation for the specified hands and returns a map
 	 * containing each hand mapped to its calculated equity.
 	 * 
 	 * @param hands
@@ -55,57 +53,86 @@ public class EquityCalculationBuilder {
 	 * @return A map containing the specified hands mapped to their calculated
 	 *         equity.
 	 */
-	
 	public Map<Hand, Equity> calculate(Hand... hands) {
 		
-		// map base equities to respective hands
-		Map<Hand, Equity> equities = new HashMap<>();
-		for (Hand hand : hands) {
-			equities.put(hand, new Equity());
-		}
+		/*
+		 * Create a base map containing our input hands mapped to their
+		 * equities.
+		 */
+		Map<Hand, Equity> equities = createBaseEquityMap(hands);
 		
-		// seed our RNG using the input hands for output continuity
+		/*
+		 * We should create a Random context for deck shuffling that uses a hash
+		 * of our input for seeding. This allows for more output continuity
+		 * between simulations, especially when the sample size being used is
+		 * smaller.
+		 */
 		Random random = new Random(Arrays.hashCode(hands));
-		
-		// begin simulating boards and sampling results
+
+		/*
+		 * Run our simulations.
+		 */
 		for (int i = 0; i < sampleSize; i++) {
 			simulate(equities, random);
 		}
-		
-		// 
+
+		/*
+		 * Now just call complete() on all of our generated equities to convert
+		 * them to the correct decimal format, and we're done.
+		 */
 		for (Equity equity : equities.values()) {
-			equity.adjustForSample(); // TODO needed?
+			equity.complete();
 		}
 		return equities;
 	}
 
-	public Map<Range, Equity> calculate(Range... groups) {
+	/**
+	 * Performs an equity calculation for the specified ranges and returns a map
+	 * containing each range mapped to its calculated equity.
+	 * 
+	 * @param ranges
+	 *            The ranges to calculate equity for.
+	 * @return A map containing the specified ranges mapped to their calculated
+	 *         equity.
+	 */
+	public Map<Range, Equity> calculate(Range... range) {
 		
-		// map base equities to respective groups
-		Map<Range, Equity> equities = new HashMap<>();
-		for (Range group : groups) {
-			equities.put(group, new Equity());
-		}
+		/*
+		 * Create a base map containing our input ranges mapped to their
+		 * equities.
+		 */
+		Map<Range, Equity> equities = createBaseEquityMap(range);
 		
-		// seed our RNG using the input hands for more output continuity
-		Random random = new Random(Arrays.hashCode(groups));
+		/*
+		 * We should create a Random context for deck shuffling that uses a hash
+		 * of our input for seeding. This allows for more output continuity
+		 * between simulations, especially when the sample size being used is
+		 * smaller.
+		 */
+		Random random = new Random(Arrays.hashCode(range));
 		
-		// begin simulating boards and sampling results
+		/*
+		 * Run our simulations.
+		 */
 		for (int i = 0; i < sampleSize; i++) {
 			
-			// we should take one hand from each of our groups and use that for the simulation
+			/*
+			 * We'll take a random hand from our range and map that to our
+			 * entire range's equity, then pass it on for the simulation.
+			 */
 			Map<Hand, Equity> hands = new HashMap<>();
 			for (Range group : equities.keySet()) {
-				hands.put(group.sample(), equities.get(group));
+				hands.put(group.sample(random), equities.get(group));
 			}
-			
-			// run simulation with our hands
 			simulate(hands, random);
 		}
 		
-		//
+		/*
+		 * Now just call complete() on all of our generated equities to convert
+		 * them to the correct decimal format, and we're done.
+		 */
 		for (Equity equity : equities.values()) {
-			equity.adjustForSample();
+			equity.complete();
 		}
 		return equities;
 	}
@@ -162,25 +189,60 @@ public class EquityCalculationBuilder {
 		return this;
 	}
 	
+	/*
+	 * Creates a map containing empty equities as values mapped to the entries
+	 * of the specified array. for the specified array.
+	 * 
+	 * @param data The array whose content should be used as keys for equities.
+	 * 
+	 * @return A map containing the contents of the array mapped to new
+	 * equities.
+	 */
+	private <T> Map<T, Equity> createBaseEquityMap(T[] data) {
+		HashMap<T, Equity> equities = new HashMap<>();
+		for (T t : data) {
+			equities.put(t, new Equity());
+		}
+		return equities;
+	}
+	
+	/*
+	 * Simulates a river and evaluates each of the specified hands on it. The
+	 * result will be applied to each hand's respective equity.
+	 * 
+	 * @param equities The hands mapped to their respective equities.
+	 * 
+	 * @param random The {@link java.util.Random } context to use to shuffle the
+	 * deck.
+	 */
 	private void simulate(Map<Hand, Equity> equities, Random random) {
 		
-		// take our hands and board from a randomized deck
+		/*
+		 * Create a randomized deck.
+		 */
 		Deck deck = deck().shuffle(random);
 		
-		// remove our hands
+		/*
+		 * Deal out the hands being used during the simulation, as well as our
+		 * dead cards.
+		 */
 		for (Hand hand : equities.keySet()) {
 			deck.pop(hand);
 		}
-		
-		// remove our dead cards
 		for (Card card : dead) {
 			deck.pop(card);
 		}
-		
-		// board
+
+		/*
+		 * Generate a random river using our shuffled deck for our hands to be
+		 * evaluated on.
+		 */
 		Board board = Boards.convert(this.board, Street.RIVER, deck);
-		
-		// rank our hands in order for the sample
+
+		/*
+		 * Evaluate our input hands our newly created board to it to see who the
+		 * winners were.
+		 */
 		List<Hand> best = new LinkedList<>();
 		int currentBest = Integer.MAX_VALUE;
 		for (Hand hand : equities.keySet()) {
@@ -200,14 +262,14 @@ public class EquityCalculationBuilder {
 			}
 		}
 		
-		// apply losing hands to the sample
+		/*
+		 * Finally, apply our evaluation results to the sample.
+		 */
 		for (Hand hand : equities.keySet()) {
 			if (!best.contains(hand)) {
 				equities.get(hand).lose += 1;;
 			}
 		}
-		
-		// apply winning hands to the sample
 		if (best.size() > 1) {
 			for (Hand hand : best) {
 				equities.get(hand).split += 1;
@@ -218,13 +280,18 @@ public class EquityCalculationBuilder {
 	}
 	
 	/**
-	 * Represents a hand's equity in a pot. With decimals representing win, loss,
-	 * and split pot rates.
+	 * Represents a hand's equity against one or more other hands.
 	 */
 	public class Equity {
 
+		/*
+		 * Win, loss, and split decimals. These will not be set to their correct
+		 * values until right at the very end of calculation, after a call to
+		 * complete().
+		 */
 		private double win = 0.0, lose = 0.0, split = 0.0;
 		
+		/* No external instantiation. */
 		private Equity() { }
 
 		/**
@@ -259,8 +326,12 @@ public class EquityCalculationBuilder {
 		public double split() {
 			return split;
 		}
-		
-		private void adjustForSample() {
+
+		/*
+		 * Completes the {@link Equity} object by dividing the win/lose/split
+		 * numbers by the sample size to create a decimal average of each.
+		 */
+		private void complete() {
 			this.win /= sampleSize;
 			this.lose /= sampleSize;
 			this.split /= sampleSize;
