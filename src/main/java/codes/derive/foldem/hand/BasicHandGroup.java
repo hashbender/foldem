@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import codes.derive.foldem.Card;
+import codes.derive.foldem.Hand;
 import codes.derive.foldem.Suit;
 import codes.derive.foldem.util.RandomContext;
 
@@ -16,7 +17,9 @@ import codes.derive.foldem.util.RandomContext;
  * Represents a basic hand group that can represent all combinations of a hand
  * specified in string notation without suit.
  */
-public class BasicHandGroup implements HandGroup {
+public class BasicHandGroup {
+	
+	// TODO remove, only still here because of the usefulness of constructor
 	
 	/* Would rather just do this than do tricky OTF combinatorics */
 	private static final Suit[][] OFFSUIT_COMBINATIONS = {
@@ -90,18 +93,15 @@ public class BasicHandGroup implements HandGroup {
 		this.hands.addAll(Arrays.asList(hands));
 	}
 	
-	@Override
 	public Collection<Hand> all() {
 		return Collections.unmodifiableCollection(hands);
 	}
 
-	@Override
 	public boolean match(Hand h) {
 		return hands.contains(h);
 	}
 
-	@Override
-	public Hand get() {
+	public Hand sample() {
 		return hands.get(RandomContext.get().nextInt(hands.size()));
 	}
  

@@ -10,10 +10,7 @@ import java.util.Map;
 import codes.derive.foldem.EquityCalculator.Equity;
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
-import codes.derive.foldem.hand.BasicHandGroup;
-import codes.derive.foldem.hand.Hand;
-import codes.derive.foldem.hand.HandGroup;
-import codes.derive.foldem.hand.HandRange;
+import codes.derive.foldem.range.Range;
 import codes.derive.foldem.util.PrettyCards;
 import codes.derive.foldem.util.RandomContext;
 
@@ -80,7 +77,7 @@ public class Foldem {
 	/**
 	 * Constructs a new hand using specified cards shorthand text. For
 	 * information on the format see
-	 * {@link codes.derive.foldem.hand.Hand#Hand(String)}.
+	 * {@link codes.derive.foldem.Hand#Hand(String)}.
 	 * 
 	 * @param cards
 	 *            The shorthand text.
@@ -91,41 +88,24 @@ public class Foldem {
 	}
 
 	/**
-	 * Constructs a new basic hand group that will contain the specified hands.
-	 * 
-	 * @param hands
-	 *            The hands to be contained by the group.
-	 * @return A new hand group containing the specified hands.
-	 */
-	public static HandGroup basicGroup(Hand... hands) {
-		return new BasicHandGroup(hands);
-	}
-
-	/**
-	 * Constructs a new basic hand group using the specified hand shorthand
-	 * text. For information on the shorthand format see
-	 * {@link codes.derive.foldem.hand.Hand#Hand(String)}.
-	 * 
-	 * @param hands
-	 *            The shorthand strings representing the cards to use.
-	 * @return A new hand group for the specified hand strings.
-	 * @see codes.derive.foldem.Card#Card(String)
-	 */
-	public static HandGroup basicGroup(String... hands) {
-		Hand[] h = new Hand[hands.length];
-		for (int i = 0; i < h.length; i++) {
-			h[i] = hand(hands[i]);
-		}
-		return new BasicHandGroup(h);
-	}
-
-	/**
 	 * Constructs a new empty range.
 	 * 
 	 * @return A new empty range.
 	 */
-	public static HandRange rangeGroup() {
-		return new HandRange();
+	public static Range range() {
+		return new Range();
+	}
+	
+	/**
+	 * Constructs a new range with the specified hands.
+	 * 
+	 * @param hands
+	 *            The hands.
+	 * @return The new range containing the specified hands.
+	 */
+	public static Range range(Hand... hands) {
+		return new Range().define(hands);
+
 	}
 
 	/**
@@ -187,12 +167,12 @@ public class Foldem {
 	/**
 	 * Obtains the equity that the specified hand groups have against each
 	 * other, returning them as keys mapped to their calculated equity.
-	 * 
+	 * TODO rename to range
 	 * @param hands
 	 *            The hand groups to calculate equity for.
 	 * @return The hand groups mapped to their calculated equity.
 	 */
-	public static Map<HandGroup, Equity> equity(HandGroup... groups) {
+	public static Map<Range, Equity> equity(Range... groups) {
 		return calculator().calculate(groups);
 	}
 
@@ -200,15 +180,15 @@ public class Foldem {
 	 * Obtains the equity that the specified hand groups have against each other
 	 * on the specified board, returning them as keys mapped to their calculated
 	 * equities.
-	 * 
+	 * TODO rename to range
 	 * @param board
 	 *            The board to calculate equity on.
 	 * @param groups
 	 *            The hand groups to calculate equity for
 	 * @return The hand groups mapped to their calculated equity.
 	 */
-	public static Map<HandGroup, Equity> equity(Board board,
-			HandGroup... groups) {
+	public static Map<Range, Equity> equity(Board board,
+			Range... groups) {
 		return calculator().calculate(board, groups);
 	}
 

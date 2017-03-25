@@ -9,14 +9,24 @@ import java.util.Map;
 import org.junit.Test;
 
 import codes.derive.foldem.EquityCalculator.Equity;
-import codes.derive.foldem.hand.Hand;
 
 public class TestEquityCalculator {
 
 	// I wish all unit tests were this ugly ¯\_(ツ)_/¯
 	
 	@Test
-	public void testMultiway() {
+	public void testWithHandGroups() {
+		
+		
+		
+		//private Map<HandGroup, Double> winrates = new HashMap<>();
+		
+		
+		
+	}
+	
+	@Test
+	public void testWithHands() {
 
 		// initialize winning rates test cases
 		Map<Hand, Double> winrate = new HashMap<>();

@@ -1,7 +1,7 @@
 package codes.derive.foldem.eval;
 
+import codes.derive.foldem.Hand;
 import codes.derive.foldem.board.Board;
-import codes.derive.foldem.hand.Hand;
 
 /**
  * A type that performs evaluations by returning a rank for a specified

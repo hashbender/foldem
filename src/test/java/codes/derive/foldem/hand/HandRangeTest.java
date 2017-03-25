@@ -8,7 +8,7 @@ public class HandRangeTest {
 
 	@Test
 	public void testWeightedRanges() {
-		HandRange range = new HandRange();
+		/*HandRange range = new HandRange();
 		
 		range.define(Foldem.hand("AhAs"));
 		
@@ -17,7 +17,7 @@ public class HandRangeTest {
 		
 		range.define(kings, 0.5);
 		range.define(queens, 0.5);
-		
+		*/
 	}
 	
 	@Test

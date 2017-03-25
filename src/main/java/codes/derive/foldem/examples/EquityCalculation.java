@@ -7,8 +7,7 @@ import java.util.Map;
 import codes.derive.foldem.EquityCalculator;
 import codes.derive.foldem.EquityCalculator.Equity;
 import codes.derive.foldem.board.Board;
-import codes.derive.foldem.hand.HandRange;
-import codes.derive.foldem.hand.SingleHandGroup;
+import codes.derive.foldem.range.Range;
 
 public class EquityCalculation {
 
@@ -27,10 +26,10 @@ public class EquityCalculation {
 		printEquities(calc.calculate(board, hand("AhAd"), hand("5d5c")));
 		
 		// group calculations
-		HandRange range = new HandRange();
+		Range range = new Range();
 		range.define(hand("AsAd")); // TODO change once refactored
 		range.define(hand("QsQd"));
-		printEquities(calc.calculate(range, new SingleHandGroup(hand("KhKs"))));
+		//printEquities(calc.calculate(range, new SingleHandGroup(hand("KhKs"))));
 		
 	}
 	

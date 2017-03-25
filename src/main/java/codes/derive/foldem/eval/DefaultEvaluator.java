@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 import codes.derive.foldem.Card;
+import codes.derive.foldem.Hand;
 import codes.derive.foldem.board.Board;
-import codes.derive.foldem.hand.Hand;
 
 /**
  * A hand evaluator using Cactus Kev's 5 card system adopted for 7 card hands
