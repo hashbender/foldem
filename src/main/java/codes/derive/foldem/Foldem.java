@@ -1,5 +1,7 @@
 package codes.derive.foldem;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -20,9 +22,6 @@ import codes.derive.foldem.util.RandomContext;
  * library.
  */
 public class Foldem {
-
-	/* The equity calculator used in this class for lazy calculations. */
-	private static final EquityCalculator calc = new EquityCalculator();
 
 	/**
 	 * Constructs a card with the specified card value and suit.
@@ -167,7 +166,7 @@ public class Foldem {
 	 * @return The hands mapped to their calculated equity.
 	 */
 	public static Map<Hand, Equity> equity(Hand... hands) {
-		return calc.calculate(hands);
+		return calculator().calculate(hands);
 	}
 
 	/**
@@ -182,7 +181,7 @@ public class Foldem {
 	 * @return The hands mapped to their calculated equity.
 	 */
 	public static Map<Hand, Equity> equity(Board board, Hand... hands) {
-		return calc.calculate(board, hands);
+		return calculator().calculate(board, hands);
 	}
 
 	/**
@@ -194,7 +193,7 @@ public class Foldem {
 	 * @return The hand groups mapped to their calculated equity.
 	 */
 	public static Map<HandGroup, Equity> equity(HandGroup... groups) {
-		return calc.calculate(groups);
+		return calculator().calculate(groups);
 	}
 
 	/**
@@ -210,7 +209,7 @@ public class Foldem {
 	 */
 	public static Map<HandGroup, Equity> equity(Board board,
 			HandGroup... groups) {
-		return calc.calculate(board, groups);
+		return calculator().calculate(board, groups);
 	}
 
 	/**
@@ -271,10 +270,37 @@ public class Foldem {
 	 */
 	public static String format(Equity equity) {
 		StringBuilder b = new StringBuilder();
-		b.append("Win: ").append(Math.round(equity.win() * 100)).append("% ");
-		b.append("Lose: ").append(Math.round(equity.lose() * 100)).append("% ");
-		b.append("Split: ").append(Math.round(equity.split() * 100)).append("%");
+		b.append("Win: ").append(percent(equity.win())).append("% ");
+		b.append("Lose: ").append(percent(equity.lose() * 100)).append("% ");
+		b.append("Split: ").append(percent(equity.split() * 100)).append("%");
 		return b.toString();
+	}
+	
+	/**
+	 * Represents the specified decimal as a percentage rounded to two decimal places.
+	 * 
+	 * <p>
+	 * This may seem like a weird place to have this but it can be useful for
+	 * quickly generating percentages from equities.
+	 * </p>
+	 * 
+	 * @param d
+	 * 		The decimal to convert.
+	 * @return
+	 * 		The percentage.
+	 */
+	public static double percent(double d) {
+		return new BigDecimal(d * 100).setScale(2, RoundingMode.HALF_UP)
+				.doubleValue();
+	}
+	
+	/**
+	 * Creates a new equity calculator.
+	 * @return
+	 * 		A new equity calculator.
+	 */
+	public static EquityCalculator calculator() {
+		return new EquityCalculator();
 	}
 
 }

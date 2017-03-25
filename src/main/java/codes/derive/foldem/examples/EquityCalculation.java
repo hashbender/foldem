@@ -7,11 +7,8 @@ import java.util.Map;
 import codes.derive.foldem.EquityCalculator;
 import codes.derive.foldem.EquityCalculator.Equity;
 import codes.derive.foldem.board.Board;
-import codes.derive.foldem.hand.Hand;
-import codes.derive.foldem.hand.HandGroup;
 import codes.derive.foldem.hand.HandRange;
 import codes.derive.foldem.hand.SingleHandGroup;
-import codes.derive.foldem.util.PrettyCards;
 
 public class EquityCalculation {
 
@@ -26,31 +23,22 @@ public class EquityCalculation {
 		printEquities(calc.calculate(hand("AsQs"), hand("6s7s"), hand("2h7c")));
 	
 		// pot with a board
-		Board board = board(card("As"), card("5h"), card("Td"));
+		Board board = board(card("Ah"), card("5h"), card("Td"));
 		printEquities(calc.calculate(board, hand("AhAd"), hand("5d5c")));
 		
 		// group calculations
 		HandRange range = new HandRange();
 		range.define(hand("AsAd")); // TODO change once refactored
 		range.define(hand("QsQd"));
-		printGroupEquities(calc.calculate(range, new SingleHandGroup(hand("KhKs"))));
+		printEquities(calc.calculate(range, new SingleHandGroup(hand("KhKs"))));
 		
 	}
 	
-	private static void printEquities(Map<Hand, Equity> e) {
+	private static <T> void printEquities(Map<T, Equity> e) {
 		StringBuilder bldr = new StringBuilder();
-		for (Hand h : e.keySet()) {
-			bldr.append("[").append(PrettyCards.get(h)).append(" ");
+		for (T h : e.keySet()) {
+			bldr.append("[").append(h).append(" ");
 			bldr.append((int) (e.get(h).win() * 100)).append("%] ");
-		}
-		System.out.println(bldr.toString());
-	}
-	
-	private static void printGroupEquities(Map<HandGroup, Equity> e) {
-		StringBuilder bldr = new StringBuilder();
-		for (HandGroup g : e.keySet()) {
-			bldr.append("[").append(g).append(" ");
-			bldr.append((int) (e.get(g).win() * 100)).append("%] ");
 		}
 		System.out.println(bldr.toString());
 	}
