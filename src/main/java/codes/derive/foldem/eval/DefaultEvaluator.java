@@ -164,21 +164,9 @@ public class DefaultEvaluator implements Evaluator {
 			/*
 			 * Finally, we obtain our rank from the hash map.
 			 */
-			
-
-			
-			try {
-				int r = rankings.get(value);
-				if (r < rank) {
-					rank = r;
-				}
-			} catch (NullPointerException e) {
-
-				for (Card c : cards) {
-					System.out.print(c);
-				}
-				System.out.println();
-				throw e;
+			int r = rankings.get(value);
+			if (r < rank) {
+				rank = r;
 			}
 		}
 		return rank;
