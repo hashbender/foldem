@@ -17,11 +17,7 @@ public class EquityCalculationTest {
 	
 	@Test
 	public void testHandBasedEquityCalculation() {
-
-		/*
-		 * Though this is only win percentages, incorrect loss/split should
-		 * generally also manifest in win-rates.
-		 */
+		
 		Map<Hand, Double> rates = new HashMap<>();
 		rates.put(hand("AcAs"), 0.36);
 		rates.put(hand("KcKs"), 0.18);
