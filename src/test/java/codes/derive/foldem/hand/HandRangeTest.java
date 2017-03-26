@@ -2,8 +2,6 @@ package codes.derive.foldem.hand;
 
 import org.junit.Test;
 
-import codes.derive.foldem.Foldem;
-
 public class HandRangeTest {
 
 	@Test

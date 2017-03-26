@@ -6,8 +6,8 @@ import java.util.Map;
 
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.range.Range;
-import codes.derive.foldem.util.EquityCalculationBuilder;
-import codes.derive.foldem.util.EquityCalculationBuilder.Equity;
+import codes.derive.foldem.tool.EquityCalculationBuilder;
+import codes.derive.foldem.tool.EquityCalculationBuilder.Equity;
 
 public class EquityCalculation {
 

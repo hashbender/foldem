@@ -8,21 +8,20 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import codes.derive.foldem.util.EquityCalculationBuilder.Equity;
+import codes.derive.foldem.range.Range;
+import codes.derive.foldem.tool.EquityCalculationBuilder.Equity;
 
 public class TestEquityCalculator {
 
 	// I wish all unit tests were this ugly ¯\_(ツ)_/¯
 	
 	@Test
-	public void testWithHandGroups() {
+	public void testWithRanges() {
 		
-		
-		
-		//private Map<HandGroup, Double> winrates = new HashMap<>();
-		
-		
-		
+		Range b = range(hand("KsKd"), hand("JsJd"));
+
+		Range a = range().define(0.1, hand("AsAc")).define(hand("QsQc"));
+		Map<Range, Equity> equities = calculationBuilder().calculate(a, b);
 	}
 	
 	@Test

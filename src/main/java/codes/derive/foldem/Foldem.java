@@ -10,10 +10,10 @@ import java.util.Map;
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
 import codes.derive.foldem.range.Range;
-import codes.derive.foldem.util.EquityCalculationBuilder;
+import codes.derive.foldem.tool.EquityCalculationBuilder;
+import codes.derive.foldem.tool.EquityCalculationBuilder.Equity;
 import codes.derive.foldem.util.PrettyCards;
 import codes.derive.foldem.util.RandomContext;
-import codes.derive.foldem.util.EquityCalculationBuilder.Equity;
 
 /**
  * This class consists exclusively of static methods to assist in using this
