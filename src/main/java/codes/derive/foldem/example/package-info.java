@@ -1,4 +1,4 @@
 /**
  * Contains usage examples for Fold'em.
  */
-package codes.derive.foldem.examples;
+package codes.derive.foldem.example;

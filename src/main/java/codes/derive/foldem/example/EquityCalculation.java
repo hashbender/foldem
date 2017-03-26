@@ -1,4 +1,4 @@
-package codes.derive.foldem.examples;
+package codes.derive.foldem.example;
 
 import static codes.derive.foldem.Foldem.*;
 
