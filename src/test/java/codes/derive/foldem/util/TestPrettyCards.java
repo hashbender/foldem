@@ -1,11 +1,11 @@
-package codes.derive.foldem;
+package codes.derive.foldem.util;
 
 import static codes.derive.foldem.Foldem.*;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class FormatTest {
+public class TestPrettyCards {
 
 	@Test
 	public void testPrettyCards() {

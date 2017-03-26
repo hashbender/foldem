@@ -187,5 +187,54 @@ public class Range {
 		}
 		return Collections.unmodifiableCollection(hands);
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder bldr = new StringBuilder().append(Range.class.getName());
+		bldr.append("[ ");
+		for (Hand hand : constant) {
+			bldr.append(hand);
+			bldr.append(",");
+		}
+		for (double weight : weighted.keySet()) {
+			bldr.append(weighted.get(weight)).append(" ").append(weight);
+			bldr.append(",");
+		}
+		bldr.deleteCharAt(bldr.length() - 1);
+		return bldr.append("]").toString();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((constant == null) ? 0 : constant.hashCode());
+		result = prime * result
+				+ ((weighted == null) ? 0 : weighted.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Range other = (Range) obj;
+		if (constant == null) {
+			if (other.constant != null)
+				return false;
+		} else if (!constant.equals(other.constant))
+			return false;
+		if (weighted == null) {
+			if (other.weighted != null)
+				return false;
+		} else if (!weighted.equals(other.weighted))
+			return false;
+		return true;
+	}
 
 }

@@ -1,17 +1,17 @@
-package codes.derive.foldem.examples;
+package codes.derive.foldem.example;
 
 import static codes.derive.foldem.Foldem.*;
 
 import java.util.Map;
 
-import codes.derive.foldem.EquityCalculator;
-import codes.derive.foldem.EquityCalculator.Equity;
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.range.Range;
+import codes.derive.foldem.tool.EquityCalculationBuilder;
+import codes.derive.foldem.tool.EquityCalculationBuilder.Equity;
 
 public class EquityCalculation {
 
-	private static EquityCalculator calc = new EquityCalculator();
+	private static EquityCalculationBuilder calc = new EquityCalculationBuilder();
 	
 	public static void main(String... args) {
 		
@@ -23,7 +23,7 @@ public class EquityCalculation {
 	
 		// pot with a board
 		Board board = board(card("Ah"), card("5h"), card("Td"));
-		printEquities(calc.calculate(board, hand("AhAd"), hand("5d5c")));
+		//printEquities(calc.calculate(board, hand("AhAd"), hand("5d5c")));
 		
 		// group calculations
 		Range range = new Range();

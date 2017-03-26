@@ -183,7 +183,6 @@ public class Boards {
 		for (int i = 0; i < cards.length; i++) {
 			cards[i] = deck.pop();
 		}
-
 		return convert(board, street, cards);
 	}
 
