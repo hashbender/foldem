@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Represents a hand.
+ * Represents ax` hand.
  */
 public class Hand {
 
@@ -89,7 +89,7 @@ public class Hand {
 		if (cards == null) {
 			if (other.cards != null)
 				return false;
-		} else if (!cards.equals(other.cards))
+		} else if (!cards.containsAll(other.cards))
 			return false;
 		return true;
 	}
