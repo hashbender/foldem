@@ -448,8 +448,8 @@ public class Poker {
 	public static String format(Equity equity) {
 		StringBuilder b = new StringBuilder();
 		b.append("Win: ").append(percent(equity.win())).append("% ");
-		b.append("Lose: ").append(percent(equity.lose() * 100)).append("% ");
-		b.append("Split: ").append(percent(equity.split() * 100)).append("%");
+		b.append("Lose: ").append(percent(equity.lose())).append("% ");
+		b.append("Split: ").append(percent(equity.split())).append("%");
 		return b.toString();
 	}
 
