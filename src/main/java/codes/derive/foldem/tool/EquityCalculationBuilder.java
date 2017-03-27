@@ -99,8 +99,8 @@ public class EquityCalculationBuilder {
 	public Map<Range, Equity> calculate(Range... ranges) {
 
 		/*
-		 * It may be possible that two or more ranges can a card in common in
-		 * all of their hands or with the board, making it impossible to deal
+		 * It may be possible that two or more ranges can have a card in common
+		 * in all of their hands or with the board, making it impossible to deal
 		 * for a sample.
 		 */
 		List<Range> unchecked = new CopyOnWriteArrayList<>();
@@ -112,8 +112,8 @@ public class EquityCalculationBuilder {
 			/*
 			 * Check range a with all other unchecked raises.
 			 */
-			boolean usable = false;
-			check: for (Range b : unchecked) {
+			for (Range b : unchecked) {
+				boolean usable = false;
 				if (a.equals(b)) {
 					continue;
 				}
@@ -127,39 +127,38 @@ public class EquityCalculationBuilder {
 
 				/*
 				 * If range a and b have no hand without a card in common then
-				 * they are not usable.
+				 * they are not usable together.
 				 */
-				for (Card card : cards()) {
+				cards: for (Card card : cards()) {
 					for (Hand hand : combined) {
 						if (!hand.cards().contains(card)) {
 							usable = true;
-							break check;
+							break cards;
 						}
 					}
 				}
-			}
-			
-			/*
-			 * Also make sure we have a hand available with no card that isn't
-			 * on the preset board.
-			 */
-			if (usable) {
-				for (Hand hand : a.all()) {
-					if (Collections.disjoint(hand.cards(), board.cards())) {
-						break;
-					}
-					usable = false;
+				if (!usable) {
+					throw new IllegalArgumentException(
+							"These ranges cannot be used beause all hands in one or more of them have a card in common");
 				}
 			}
 			
 			/*
-			 * Throw and exception if the range isn't usable.
+			 * Also make sure we have a hand available with no card that is
+			 * on the preset board.
 			 */
+			boolean usable = false;
+			for (Hand hand : a.all()) {
+				if (Collections.disjoint(hand.cards(), board.cards())) {
+					usable = true;
+					break;
+				}
+			}
 			if (!usable) {
 				throw new IllegalArgumentException(
-						"These ranges cannot be used beause all hands in one or more of them have a card in common");
+						"A provided range does not have any hands with cards that are not the set board");
 			}
-			
+
 			/*
 			 * We can now remove our range from the list of unchecked ranges.
 			 */
