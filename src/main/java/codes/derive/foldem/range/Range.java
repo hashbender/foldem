@@ -122,7 +122,7 @@ public class Range {
 	 * @return The {@link Range} context, for chaining.
 	 */
 	public Range define(double weight, Collection<Hand> hands) {
-		return define(hands.toArray(new Hand[0]));
+		return define(weight, hands.toArray(new Hand[0]));
 	}
 	
 	/**
