@@ -1,6 +1,22 @@
+/*
+ * This file is part of Fold'em, a Java library for Texas Hold 'em Poker.
+ *
+ * Fold'em is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Fold'em is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Fold'em.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package codes.derive.foldem.tool;
 
-import static codes.derive.foldem.Foldem.*;
+import static codes.derive.foldem.Poker.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,10 +33,10 @@ import codes.derive.foldem.Deck;
 import codes.derive.foldem.Hand;
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
+import codes.derive.foldem.board.Range;
 import codes.derive.foldem.board.Street;
 import codes.derive.foldem.eval.DefaultEvaluator;
 import codes.derive.foldem.eval.Evaluator;
-import codes.derive.foldem.range.Range;
 
 /**
  * A type that can be used to calculate equity for hands and ranges using Monte
@@ -29,10 +45,10 @@ import codes.derive.foldem.range.Range;
 public class EquityCalculationBuilder {
 
 	/* The default sample size to use for simulations. */
-	private static final int DEFAULT_SAMPLE_SIZE = 25000;
+	public static final int DEFAULT_SAMPLE_SIZE = 25000;
 
 	/* The default evaluator to use for simulations. */
-	private static final Evaluator DEFAULT_EVALUATOR = new DefaultEvaluator();
+	public static final Evaluator DEFAULT_EVALUATOR = new DefaultEvaluator();
 
 	/* A list containing cards to remove from the deck during calculations. */
 	private final List<Card> dead = new ArrayList<>();
@@ -257,7 +273,8 @@ public class EquityCalculationBuilder {
 
 	/**
 	 * Sets the number of boards to simulate for equity calculations. By default
-	 * this value is specified by {@link DEFAULT_SAMPLE_SIZE }.
+	 * this value is specified by
+	 * {@link EquityCalculationBuilder#DEFAULT_SAMPLE_SIZE}.
 	 * 
 	 * @param sampleSize
 	 *            The number of boards to simulate for equity calculations.
@@ -269,8 +286,9 @@ public class EquityCalculationBuilder {
 	}
 
 	/**
-	 * Sets the evaluator to be used to evaluate hand values during simulations.
-	 * By default this value is specified by <code>DEFAULT_EVALUATOR</code>.
+	 * Sets the {@link Evaluator} to be used to evaluate hand values during
+	 * simulations. By default this value is specified by
+	 * {@link EquityCalculationBuilder#DEFAULT_EVALUATOR}.
 	 * 
 	 * @param evaluator
 	 *            The evaluator to be used to evaluate hands during simulations.
@@ -297,7 +315,7 @@ public class EquityCalculationBuilder {
 	}
 
 	/**
-	 * Makes the calculator use the specified board during calculations.
+	 * Makes the calculator use the specified {@link Board} during calculations.
 	 * 
 	 * @param board
 	 *            The board to use during calculations.

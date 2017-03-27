@@ -1,3 +1,19 @@
+/*
+ * This file is part of Fold'em, a Java library for Texas Hold 'em Poker.
+ *
+ * Fold'em is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Fold'em is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Fold'em.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package codes.derive.foldem;
 
 import java.util.ArrayList;
@@ -7,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Represents a hand.
+ * Represents a hand in Texas Hold 'em.
  */
 public class Hand {
 
@@ -89,7 +105,7 @@ public class Hand {
 		if (cards == null) {
 			if (other.cards != null)
 				return false;
-		} else if (!cards.equals(other.cards))
+		} else if (!cards.containsAll(other.cards))
 			return false;
 		return true;
 	}

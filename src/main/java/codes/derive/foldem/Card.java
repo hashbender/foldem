@@ -1,3 +1,19 @@
+/*
+ * This file is part of Fold'em, a Java library for Texas Hold 'em Poker.
+ *
+ * Fold'em is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Fold'em is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Fold'em.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package codes.derive.foldem;
 
 /**
@@ -25,9 +41,9 @@ public class Card {
 	
 	/* The suit of the card. */
 	private final Suit suit;
-	
+
 	/**
-	 * Constructs a new Card using the given card value and suit.
+	 * Constructs a new {@link Card} using the given card value and suit.
 	 * 
 	 * @param value
 	 *            The card value.
@@ -65,7 +81,9 @@ public class Card {
 			throw new IllegalArgumentException("Invalid hand length '" + text + "'");
 		}
 		
-		// parse card value
+		/*
+		 * Parse the card value.
+		 */
 		int value = -1;
 		for (int i = 0; i < LABEL.length; i++) {
 			if (LABEL[i] == values[0]) {
@@ -78,7 +96,9 @@ public class Card {
 		}
 		this.value = value;
 		
-		// parse card suit
+		/*
+		 * Parse the card suit.
+		 */
 		Suit suit = null;
 		for (Suit s : Suit.values()) {
 			if (s.getShorthand() == values[1]) {

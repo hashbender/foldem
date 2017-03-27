@@ -1,3 +1,19 @@
+/*
+ * This file is part of Fold'em, a Java library for Texas Hold 'em Poker.
+ *
+ * Fold'em is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Fold'em is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Fold'em.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package codes.derive.foldem.tool;
 
 import java.util.Collections;
@@ -8,11 +24,11 @@ import java.util.Random;
 import codes.derive.foldem.Hand;
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
+import codes.derive.foldem.board.Range;
 import codes.derive.foldem.board.Street;
 import codes.derive.foldem.eval.DefaultEvaluator;
 import codes.derive.foldem.eval.Evaluator;
 import codes.derive.foldem.eval.HandValue;
-import codes.derive.foldem.range.Range;
 
 /**
  * A type that can analyze a board texture and provide an estimation of what
@@ -22,10 +38,10 @@ import codes.derive.foldem.range.Range;
 public class TextureAnalysisBuilder {
 
 	/* The default sample size to use. */
-	private static final int DEFAULT_SAMPLE_SIZE = 25000;
+	public static final int DEFAULT_SAMPLE_SIZE = 25000;
 
 	/* The default evaluator to use. */
-	private static final Evaluator DEFAULT_EVALUATOR = new DefaultEvaluator();
+	public static final Evaluator DEFAULT_EVALUATOR = new DefaultEvaluator();
 
 	/* The board to use. */
 	private Board board = Boards.board();
@@ -42,7 +58,7 @@ public class TextureAnalysisBuilder {
 	 * 
 	 * @param range
 	 *            The range.
-	 * @return Hand values mapped to their respective frequencies.
+	 * @return {@link Hand} values mapped to their respective frequencies.
 	 */
 	public Map<HandValue, Double> frequencies(Range range) {
 
@@ -120,7 +136,7 @@ public class TextureAnalysisBuilder {
 
 	/**
 	 * Sets the number of boards to simulate for analysis. By default this value
-	 * is specified by {@link DEFAULT_SAMPLE_SIZE }.
+	 * is specified by {@link TextureAnalysisBuilder#DEFAULT_SAMPLE_SIZE}.
 	 * 
 	 * @param sampleSize
 	 *            The number of boards to simulate for analysis.
@@ -132,8 +148,9 @@ public class TextureAnalysisBuilder {
 	}
 
 	/**
-	 * Sets the evaluator to be used to evaluate hand values during simulations.
-	 * By default this value is specified by <code>DEFAULT_EVALUATOR</code>.
+	 * Sets the {@link Evaluator} to be used to evaluate hand values during
+	 * simulations. By default this value is specified by
+	 * {@link TextureAnalysisBuilder#DEFAULT_EVALUATOR}.
 	 * 
 	 * @param evaluator
 	 *            The evaluator to be used to evaluate hands during simulations.
@@ -145,7 +162,7 @@ public class TextureAnalysisBuilder {
 	}
 
 	/**
-	 * Makes the analysis use the specified board.
+	 * Makes the analysis use the specified {@link Board}.
 	 * 
 	 * @param board
 	 *            The board to use during analysis.

@@ -14,34 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Fold'em.  If not, see <http://www.gnu.org/licenses/>.
  */
-package codes.derive.foldem.board;
-
-import codes.derive.foldem.Card;
-
 /**
- * A basic board type with a constructor that specifies the street.
+ * Contains tools that can be used to easily perform advanced tasks using this library.
  */
-public class GenericBoard extends AbstractBoard {
-
-	/* The board's street. */
-	private final Street street;
-
-	/**
-	 * Constructs a new board using the specified street and cards.
-	 * 
-	 * @param street
-	 *            The street.
-	 * @param cards
-	 *            The cards.
-	 */
-	public GenericBoard(Street street, Card... cards) {
-		super(cards);
-		this.street = street;
-	}
-
-	@Override
-	public Street getStreet() {
-		return street;
-	}
-
-}
+package codes.derive.foldem.tool;

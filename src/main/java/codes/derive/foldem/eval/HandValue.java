@@ -1,3 +1,19 @@
+/*
+ * This file is part of Fold'em, a Java library for Texas Hold 'em Poker.
+ *
+ * Fold'em is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Fold'em is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Fold'em.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package codes.derive.foldem.eval;
 
 /**
@@ -49,17 +65,17 @@ public enum HandValue {
 	}
 
 	/**
-	 * Obtains the rank for this hand, where a straight flush (the best possible
-	 * hand) is 9, and no hand (the worst possible hand) is is 0.
+	 * Obtains the rank for this {@link HandValue}, where a straight flush (the
+	 * best possible hand) is 9, and no hand (the worst possible hand) is is 0.
 	 * 
-	 * @return The rank of this hand value.
+	 * @return The rank of this {@link HandValue}.
 	 */
 	public int rank() {
 		return rank;
 	}
 
 	/**
-	 * Compares this hand value to another hand value.
+	 * Compares this {@link Hand} value to another {@link Hand} value.
 	 * 
 	 * @param v
 	 *            The value to compare to.
