@@ -108,7 +108,7 @@ public class EquityCalculationBuilder {
 		for (Card card : cards()) {
 			boolean usable = false;
 			for (Hand hand : allHands) {
-				if (!hand.cards().contains(card)) {
+				if (!hand.cards().contains(card) && !board.cards().contains(card)) {
 					usable = true;
 					break;
 				}
@@ -170,6 +170,16 @@ public class EquityCalculationBuilder {
 							collision = true;
 							break;
 						}
+						
+						/*
+						 * Check for a collision with the board.
+						 */
+						for (Card card : board.cards()) {
+							if (hand.cards().contains(card)) {
+								collision = true;
+								break;
+							}
+						}
 					}
 					
 					/*
@@ -180,6 +190,7 @@ public class EquityCalculationBuilder {
 					}
 				}
 			}
+			
 			
 			/*
 			 * Run the simulation.
