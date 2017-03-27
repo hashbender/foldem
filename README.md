@@ -1,21 +1,21 @@
-# Fold 'em
-[![Build Status](https://travis-ci.com/ableiten/foldem.svg?token=BhqqkCqh5epy6HEo9gsq&branch=master)](https://travis-ci.com/ableiten/foldem) [![Maven Central](https://img.shields.io/maven-central/v/org.apache.maven/apache-maven.svg)](https://TODO)
+# Fold'em
+[![Build Status](https://travis-ci.com/ableiten/foldem.svg?token=BhqqkCqh5epy6HEo9gsq&branch=master)](https://travis-ci.com/ableiten/foldem) TODO:mvncentral
 
 A Java framework for Texas Hold 'em designed with an emphasis on simplicity and ease of use.
 
 ![generated](https://cloud.githubusercontent.com/assets/22860251/24349083/7085e25a-133a-11e7-8649-f0a3ab6bcd58.png)
 
 ## Features
-- Hand evaluations
+- Hand evaluator
 - Equity calculation for both hands and ranges for any number of players
 - High level types for working with ranges
 - String based notation of cards and hands
 - Pretty text format (like in [Deuces](https://github.com/worldveil/deuces))
-- Ranges represented as (images)[https://cloud.githubusercontent.com/assets/22860251/24349083/7085e25a-133a-11e7-8649-f0a3ab6bcd58.png]
+- Ranges represented as [images](https://cloud.githubusercontent.com/assets/22860251/24349083/7085e25a-133a-11e7-8649-f0a3ab6bcd58.png)
 - Post flop analysis for hand value probabilities
 
 ## Getting Fold'em
-This project is available in the [Maven][mvn] Central Repository.
+This project may available in the [Maven](TODO) Central Repository shortly. (TODO)
 
 ### Gradle
 TODO
@@ -35,8 +35,6 @@ import static codes.derive.foldem.Poker
 ```
 
 **From here you can easily utilize the main data types comprising the framework:**
-
-Create cards
 ```java
 /* Create a card. */
 Card aceOfHearts = card(Card.ACE, Suit.HEARTS);
