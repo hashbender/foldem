@@ -59,7 +59,7 @@ public class EquityCalculationBuilder {
 	/* The sample size to use for simulations. */
 	private int sampleSize = DEFAULT_SAMPLE_SIZE;
 
-	/* The evaluator to use for simulations */
+	/* The evaluator to use for simulations. */
 	private Evaluator evaluator = DEFAULT_EVALUATOR;
 
 	/**
