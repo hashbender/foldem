@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import codes.derive.foldem.Card;
 import codes.derive.foldem.Deck;
@@ -98,24 +99,72 @@ public class EquityCalculationBuilder {
 	public Map<Range, Equity> calculate(Range... ranges) {
 
 		/*
-		 * It may be possible that two or more ranges can a card in common in
-		 * all of their hands, making it impossible to deal for a sample.
+		 * It may be possible that two or more ranges can have a card in common
+		 * in all of their hands or with the board, making it impossible to deal
+		 * for a sample.
 		 */
-		List<Hand> allHands = new ArrayList<>();
+		List<Range> unchecked = new CopyOnWriteArrayList<>();
 		for (Range range : ranges) {
-			allHands.addAll(range.all());
+			unchecked.add(range);
 		}
-		for (Card card : cards()) {
+		for (Range a : unchecked) {
+			
+			/*
+			 * Check range a with all other unchecked raises.
+			 */
+			for (Range b : unchecked) {
+				boolean usable = false;
+				if (a.equals(b)) {
+					continue;
+				}
+
+				/*
+				 * Combine hands from our ranges.
+				 */
+				List<Hand> combined = new ArrayList<>();
+				combined.addAll(a.all());
+				combined.addAll(b.all());
+
+				/*
+				 * If range a and b have no hand without a card in common then
+				 * they are not usable together.
+				 */
+				cards: for (Card card : cards()) {
+					for (Hand hand : combined) {
+						if (!hand.cards().contains(card)) {
+							usable = true;
+							break cards;
+						}
+					}
+				}
+				if (!usable) {
+					throw new IllegalArgumentException(
+							"These ranges cannot be used beause all hands in one or more of them have a card in common");
+				}
+			}
+			
+			/*
+			 * Also make sure we have a hand available with no card that is
+			 * on the preset board.
+			 */
 			boolean usable = false;
-			for (Hand hand : allHands) {
-				if (!hand.cards().contains(card)) {
+			for (Hand hand : a.all()) {
+				if (Collections.disjoint(hand.cards(), board.cards())) {
 					usable = true;
 					break;
 				}
 			}
 			if (!usable) {
 				throw new IllegalArgumentException(
-						"These ranges cannot be used beause all hands in them have a card in common");
+						"A provided range does not have any hands with cards that are not the set board");
+			}
+
+			/*
+			 * We can now remove our range from the list of unchecked ranges.
+			 */
+			unchecked.remove(a);
+			if (unchecked.size() == 1) {
+				break;
 			}
 		}
 
@@ -170,6 +219,14 @@ public class EquityCalculationBuilder {
 							collision = true;
 							break;
 						}
+						
+						/*
+						 * Check for a collision with the board.
+						 */
+						if (!Collections.disjoint(board.cards(), hand.cards())) {
+							collision = true;
+							break;
+						}
 					}
 					
 					/*
@@ -180,6 +237,7 @@ public class EquityCalculationBuilder {
 					}
 				}
 			}
+			
 			
 			/*
 			 * Run the simulation.
