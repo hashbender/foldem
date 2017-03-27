@@ -39,6 +39,24 @@ public class Boards {
 	}
 
 	/**
+	 * Constructs a new {@link Board} containing cards dealt from the specified
+	 * {@link Deck}.
+	 * 
+	 * @param deck
+	 *            The deck to deal from.
+	 * @param street
+	 *            The street to deal.
+	 * @return A new {@link Board} using cards from the specified {@link Deck}.
+	 */
+	public static Board board(Deck deck, Street street) {
+		Card[] cards = new Card[street.cardCount()];
+		for (int i = 0; i < cards.length; i++) {
+			cards[i] = deck.pop();
+		}
+		return board(cards);
+	}
+	
+	/**
 	 * Constructs a new flop containing the specified cards.
 	 * 
 	 * @param cards

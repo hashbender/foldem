@@ -9,6 +9,7 @@ import java.util.Map;
 
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
+import codes.derive.foldem.board.Street;
 import codes.derive.foldem.range.Range;
 import codes.derive.foldem.tool.EquityCalculationBuilder;
 import codes.derive.foldem.tool.EquityCalculationBuilder.Equity;
@@ -47,6 +48,21 @@ public class Foldem {
 	 */
 	public static Card card(String text) {
 		return new Card(text);
+	}
+	
+	/**
+	 * Constructs a new {@link Card} dealt from the specified {@link Deck}.
+	 * 
+	 * <p>
+	 * Alias for {@link Deck.pop()}.
+	 * </p>
+	 * 
+	 * @param deck
+	 *            The deck to deal from
+	 * @return The card dealt from the specified deck.
+	 */
+	public static Card card(Deck deck) {
+		return deck.pop();
 	}
 
 	/**
@@ -95,6 +111,18 @@ public class Foldem {
 	 */
 	public static Hand hand(Card... cards) {
 		return new Hand(cards);
+	}
+
+	/**
+	 * Constructs a new {@link Hand} by dealing it from the specified
+	 * {@link Deck}.
+	 * 
+	 * @param deck
+	 *            The deck to deal the hand from.
+	 * @return A hand containing cards dealt from the specified deck.
+	 */
+	public static Hand hand(Deck deck) {
+		return hand(deck.pop(), deck.pop());
 	}
 
 	/**
@@ -230,6 +258,24 @@ public class Foldem {
 	 */
 	public static Board board(String cards) {
 		return Boards.board(cards);
+	}
+	
+	/**
+	 * Constructs a new {@link Board}, dealing the cards from the specified
+	 * {@link Deck}.
+	 * 
+	 * <p>
+	 * Alias for {@link Boards#board(Deck, Street)}
+	 * </p>
+	 * 
+	 * @param deck
+	 *            The deck to deal from.
+	 * @param street
+	 *            The street to deal.
+	 * @return A new {@link Board} using cards from the specified {@link Deck}.
+	 */
+	public static Board board(Deck deck, Street street) {
+		return Boards.board(deck, street);
 	}
 
 	/**

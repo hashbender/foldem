@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import codes.derive.foldem.Card;
+import codes.derive.foldem.Deck;
+
 public class TestBoard {
 
 	@Test
@@ -15,7 +18,6 @@ public class TestBoard {
 	
 	@Test
 	public void testConversion() {
-		
 		Board board = Boards.board(card("Ac"), card("Ad"), card("Ah"));
 		
 		// flop -> turn
@@ -37,6 +39,15 @@ public class TestBoard {
 		assertEquals(true, a.cards().contains(card("Ac")));
 		assertEquals(true, a.cards().contains(card("Ad")));
 		assertEquals(true, a.cards().contains(card("Ah")));
+	}
+	
+	@Test
+	public void testDeal() {
+		Board board = Boards.board(deck(), Street.RIVER);
+		Deck comparison = deck();
+		for (Card card : board.cards()) {
+			assertEquals(comparison.pop(), card);
+		}
 	}
 	
 }

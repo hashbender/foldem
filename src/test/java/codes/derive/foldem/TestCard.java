@@ -12,4 +12,9 @@ public class TestCard {
 		assertEquals(card("Ac"), card(Card.ACE, Suit.CLUBS));
 	}
 	
+	@Test
+	public void testDeal() {
+		assertEquals(card(deck()), deck().pop());
+	}
+	
 }
