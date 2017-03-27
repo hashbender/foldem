@@ -41,6 +41,8 @@ import codes.derive.foldem.util.RandomContext;
  */
 public class Foldem {
 
+	private Foldem() { /* No external instantiation */ }
+	
 	/**
 	 * Constructs a {@link Card} with the specified card value and suit.
 	 * 
@@ -172,7 +174,7 @@ public class Foldem {
 	 * Additionally, you can specify hands be suited using the "s" modifier.
 	 * This will produce only suited combinations of the specified hand. For
 	 * example, "TJs" would produce TJ of hearts, spaces, clubs and diamonds
-	 * only.
+	 * only. Conversely "TJo" would produce only off-suited hands. TODO
 	 * </p>
 	 * 
 	 * @param shorthand
