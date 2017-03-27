@@ -113,11 +113,11 @@ public class EquityCalculationBuilder {
 			 * Check range a with all other unchecked raises.
 			 */
 			boolean usable = false;
-			for (Range b : unchecked) {
+			check: for (Range b : unchecked) {
 				if (a.equals(b)) {
 					continue;
 				}
-				
+
 				/*
 				 * Combine hands from our ranges.
 				 */
@@ -133,11 +133,8 @@ public class EquityCalculationBuilder {
 					for (Hand hand : combined) {
 						if (!hand.cards().contains(card)) {
 							usable = true;
-							break;
+							break check;
 						}
-					}
-					if (!usable) {
-						break;
 					}
 				}
 			}
