@@ -101,7 +101,7 @@ public class EquityCalculationTest {
 		Equity equityB = equities.get(b);
 		assertEquals(1.0, equityB.win() + equityB.lose() + equityB.split(), 0.01);
 		assertEquals(0.09, equityB.win(), 0.01);
-		assertEquals(1.0 - 0., equityB.lose(), 0.01);
+		assertEquals(1.0 - 0.09, equityB.lose(), 0.01);
 		
 	}
 
