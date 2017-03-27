@@ -201,7 +201,7 @@ public class Foldem {
 
 	}
 
-/**
+	/**
 	 * Constructs a new {@link Board} using the specified cards.
 	 * 
 	 * <p>
