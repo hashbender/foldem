@@ -16,7 +16,7 @@
  */
 package codes.derive.foldem.tool;
 
-import static codes.derive.foldem.Foldem.*;
+import static codes.derive.foldem.Poker.*;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
@@ -26,7 +26,7 @@ import java.util.Map;
 
 import codes.derive.foldem.Hand;
 import codes.derive.foldem.board.Boards;
-import codes.derive.foldem.range.Range;
+import codes.derive.foldem.board.Range;
 import codes.derive.foldem.tool.EquityCalculationBuilder.Equity;
 
 public class EquityCalculationTest {

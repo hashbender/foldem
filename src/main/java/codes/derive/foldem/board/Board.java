@@ -21,21 +21,21 @@ import java.util.Collection;
 import codes.derive.foldem.Card;
 
 /**
- * Represents a board.
+ * Represents a board in Texas Hold 'em.
  */
 public interface Board {
 
 	/**
-	 * Obtains an unmodifiable view of the cards on this board.
+	 * Obtains an unmodifiable view of the cards on this {@link Board}.
 	 * 
-	 * @return An unmodifiable view of the cards on this board.
+	 * @return An unmodifiable view of the cards on this {@link Board}.
 	 */
 	public Collection<Card> cards();
 
 	/**
-	 * Represents the street that this board is on.
+	 * Represents the street that this {@link Board} is on.
 	 * 
-	 * @return The street that this board is on.
+	 * @return The street that this {@link Board} is on.
 	 */
 	public Street getStreet();
 

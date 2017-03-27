@@ -25,24 +25,25 @@ import java.util.Map;
 
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
+import codes.derive.foldem.board.Range;
 import codes.derive.foldem.board.Street;
 import codes.derive.foldem.eval.DefaultEvaluator;
 import codes.derive.foldem.eval.Evaluator;
 import codes.derive.foldem.eval.HandValue;
-import codes.derive.foldem.range.Range;
 import codes.derive.foldem.tool.EquityCalculationBuilder;
 import codes.derive.foldem.tool.EquityCalculationBuilder.Equity;
-import codes.derive.foldem.util.PrettyCards;
+import codes.derive.foldem.util.PrettyFormat;
 import codes.derive.foldem.util.RandomContext;
 
 /**
  * This class consists of static methods, a lot of them just aliases, to aid in
  * using this library.
  */
-public class Foldem {
+public class Poker {
 
-	private Foldem() { /* No external instantiation */ }
-	
+	private Poker() { /* No external instantiation */
+	}
+
 	/**
 	 * Constructs a {@link Card} with the specified card value and suit.
 	 * 
@@ -51,7 +52,7 @@ public class Foldem {
 	 *            defined in {@link Card}.
 	 * @param suit
 	 *            The suit.
-	 * @return A new card with the specified value and suit.
+	 * @return A new {@link Card} with the specified value and suit.
 	 */
 	public static Card card(int value, Suit suit) {
 		return new Card(value, suit);
@@ -64,13 +65,13 @@ public class Foldem {
 	 * 
 	 * @param text
 	 *            The shorthand for the card.
-	 * @return A new card using the specified shorthand.
+	 * @return A new {@link Card} using the specified shorthand.
 	 * @see codes.derive.foldem.Card#Card(String)
 	 */
 	public static Card card(String text) {
 		return new Card(text);
 	}
-	
+
 	/**
 	 * Constructs a new {@link Card} dealt from the specified {@link Deck}.
 	 * 
@@ -80,17 +81,18 @@ public class Foldem {
 	 * 
 	 * @param deck
 	 *            The deck to deal from
-	 * @return The card dealt from the specified deck.
+	 * @return The {@link Card} dealt from the specified deck.
 	 */
 	public static Card card(Deck deck) {
 		return deck.pop();
 	}
 
 	/**
-	 * Constructs a new {@link Collection} containing an unordered enumeration
-	 * of all cards.
+	 * Constructs a new {@link java.util.Collection} containing an unordered
+	 * enumeration of all cards.
 	 * 
-	 * @return A {@link Collection} containing every card, in no specific order.
+	 * @return A {@link java.util.Collection} containing every {@link Card}, in
+	 *         no specific order.
 	 */
 	public static Collection<Card> cards() {
 		List<Card> cards = new ArrayList<>();
@@ -103,14 +105,14 @@ public class Foldem {
 	}
 
 	/**
-	 * Creates a {@link Collection} containing cards for the specified
+	 * Creates a {@link java.util.Collection} containing cards for the specified
 	 * sequential shorthand. for example, "Ac2d3h4s", would return a
-	 * {@link Collection} containing the ace of spades, deuce of diamonds, trey
-	 * of hearts, and the four of spaces.
+	 * {@link java.util.Collection} containing the ace of spades, deuce of
+	 * diamonds, trey of hearts, and the four of spaces.
 	 * 
 	 * @param shorthand
 	 *            The shorthand.
-	 * @return A {@link Collection} containing the created cards.
+	 * @return A {@link java.util.Collection} containing the created cards.
 	 */
 	public static Collection<Card> cards(String shorthand) {
 		if (shorthand.length() % 2 != 0) {
@@ -140,7 +142,7 @@ public class Foldem {
 	 * 
 	 * @param deck
 	 *            The deck to deal the hand from.
-	 * @return A hand containing cards dealt from the specified deck.
+	 * @return A {@link Hand} containing cards dealt from the specified deck.
 	 */
 	public static Hand hand(Deck deck) {
 		return hand(deck.pop(), deck.pop());
@@ -160,8 +162,8 @@ public class Foldem {
 	}
 
 	/**
-	 * Constructs a new {@link Collection} containing a group of hands specified
-	 * by shorthand with no suit information.
+	 * Constructs a new {@link java.util.Collection} containing a group of hands
+	 * specified by shorthand with no suit information.
 	 * 
 	 * <p>
 	 * The syntax is the same as creating hands, except you do not need to
@@ -179,8 +181,8 @@ public class Foldem {
 	 * 
 	 * @param shorthand
 	 *            The shorthand to use to generate the hands.
-	 * @return A new {@link Collection } containing the hands specified in
-	 *         shorthand format.
+	 * @return A new {@link java.util.Collection} containing the hands specified
+	 *         in shorthand format.
 	 */
 	public static Collection<Hand> handGroup(String shorthand) {
 		List<Hand> hands = new ArrayList<>();
@@ -232,7 +234,7 @@ public class Foldem {
 	/**
 	 * Constructs a new {@link Range} with no hands.
 	 * 
-	 * @return A new empty range.
+	 * @return A new empty {@link Range}.
 	 */
 	public static Range range() {
 		return new Range();
@@ -243,7 +245,7 @@ public class Foldem {
 	 * 
 	 * @param hands
 	 *            The hands.
-	 * @return The new range containing the specified hands.
+	 * @return The new {@link Range} containing the specified hands.
 	 */
 	public static Range range(Hand... hands) {
 		return range().define(hands);
@@ -280,7 +282,7 @@ public class Foldem {
 	public static Board board(String cards) {
 		return Boards.board(cards);
 	}
-	
+
 	/**
 	 * Constructs a new {@link Board}, dealing the cards from the specified
 	 * {@link Deck}.
@@ -330,7 +332,7 @@ public class Foldem {
 	public static HandValue value(Hand hand, Board board) {
 		return new DefaultEvaluator().value(hand, board);
 	}
-	
+
 	/**
 	 * Obtains the equity that the specified hands have against each other,
 	 * returning them as keys mapped to their calculated equity.
@@ -373,7 +375,7 @@ public class Foldem {
 	/**
 	 * Obtains the equity that the specified hand ranges have against each other
 	 * on the specified board, returning them as keys mapped to their calculated
-	 * equities.
+	 * equity.
 	 * 
 	 * @param board
 	 *            The board to calculate equity on.
@@ -387,58 +389,60 @@ public class Foldem {
 
 	/**
 	 * Formats the {@link Suit} specified using pretty formatting. Is an alias
-	 * for {@link codes.derive.foldem.util.PrettyCards#get(Suit)}
+	 * for {@link codes.derive.foldem.util.PrettyFormat#get(Suit)}
 	 * 
 	 * @param suit
-	 *            The suit to format.
-	 * @return A pretty formatted string representing the specified suit.
+	 *            The {@link Suit} to format.
+	 * @return A pretty formatted {@link String} representing the specified {@link Suit}
+	 *         .
 	 */
 	public static char format(Suit suit) {
-		return PrettyCards.get(suit);
+		return PrettyFormat.get(suit);
 	}
 
 	/**
 	 * Formats the {@link Card} specified using pretty formatting. Is an alias
-	 * for {@link codes.derive.foldem.util.PrettyCards#get(Card)}
+	 * for {@link codes.derive.foldem.util.PrettyFormat#get(Card)}
 	 * 
 	 * @param card
-	 *            The card to format.
-	 * @return A pretty formatted string representing the specified card.
+	 *            The {@link Card} to format.
+	 * @return A pretty formatted {@link String} representing the specified {@link Card}
+	 *         .
 	 */
 	public static String format(Card card) {
-		return PrettyCards.get(card);
+		return PrettyFormat.get(card);
 	}
 
 	/**
-	 * Formats the hand specified using pretty formatting. Is an alias for
-	 * {@link codes.derive.foldem.util.PrettyCards#get(Hand)}
+	 * Formats the {@link Hand} specified using pretty formatting. Is an alias for
+	 * {@link codes.derive.foldem.util.PrettyFormat#get(Hand)}
 	 * 
 	 * @param hand
 	 *            The hand to format.
-	 * @return A pretty formatted string representing the specified hand.
+	 * @return A pretty formatted {@link String} representing the specified {@link Hand}.
 	 */
 	public static String format(Hand hand) {
-		return PrettyCards.get(hand);
+		return PrettyFormat.get(hand);
 	}
 
 	/**
 	 * Formats the {@link Board} specified using pretty formatting. Is an alias
-	 * for {@link codes.derive.foldem.util.PrettyCards#get(Board)}
+	 * for {@link codes.derive.foldem.util.PrettyFormat#get(Board)}
 	 * 
 	 * @param board
-	 *            The board to format.
-	 * @return A pretty formatted string representing the specified board.
+	 *            The {@link Board} to format.
+	 * @return A pretty formatted string representing the specified {@link Board}.
 	 */
 	public static String format(Board board) {
-		return PrettyCards.get(board);
+		return PrettyFormat.get(board);
 	}
 
 	/**
-	 * Formats the equity specified using percentages.
+	 * Formats the {@link Equity} specified using percentages.
 	 * 
 	 * @param equity
 	 *            The equity to format.
-	 * @return A string containing the equities in a format of
+	 * @return A string containing the w/l/s in a format of
 	 *         "Win: ww.ww% Lose: ll.ll% Split: ss.ss%".
 	 */
 	public static String format(Equity equity) {

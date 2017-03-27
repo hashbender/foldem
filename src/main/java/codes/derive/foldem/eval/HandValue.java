@@ -65,17 +65,17 @@ public enum HandValue {
 	}
 
 	/**
-	 * Obtains the rank for this hand, where a straight flush (the best possible
-	 * hand) is 9, and no hand (the worst possible hand) is is 0.
+	 * Obtains the rank for this {@link HandValue}, where a straight flush (the
+	 * best possible hand) is 9, and no hand (the worst possible hand) is is 0.
 	 * 
-	 * @return The rank of this hand value.
+	 * @return The rank of this {@link HandValue}.
 	 */
 	public int rank() {
 		return rank;
 	}
 
 	/**
-	 * Compares this hand value to another hand value.
+	 * Compares this {@link Hand} value to another {@link Hand} value.
 	 * 
 	 * @param v
 	 *            The value to compare to.

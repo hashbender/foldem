@@ -16,5 +16,10 @@
  */
 /**
  * Defines interfaces and classes for Fold'em boards.
+ * 
+ * <p>
+ * A helper class named {@link Boards} can be used to initialize and easily work with the types exposed by this package.
+ * </p>
+ * 
  */
 package codes.derive.foldem.board;

@@ -16,7 +16,7 @@
  */
 package codes.derive.foldem.example;
 
-import static codes.derive.foldem.Foldem.*;
+import static codes.derive.foldem.Poker.*;
 
 import codes.derive.foldem.Hand;
 import codes.derive.foldem.board.Board;

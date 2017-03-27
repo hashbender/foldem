@@ -14,19 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Fold'em.  If not, see <http://www.gnu.org/licenses/>.
  */
-package codes.derive.foldem.util;
-
-import java.util.Collection;
-
-import codes.derive.foldem.Card;
-
-public class Shorthand {
-
-	public static Collection<Card> cards(String shorthand) {
-		
-		return null;
-		
-		
-	}
-	
-}
+/**
+ * Contains tools that can be used to easily perform advanced tasks using this library.
+ */
+package codes.derive.foldem.tool;

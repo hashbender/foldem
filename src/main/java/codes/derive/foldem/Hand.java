@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Represents ax` hand.
+ * Represents a hand in Texas Hold 'em.
  */
 public class Hand {
 

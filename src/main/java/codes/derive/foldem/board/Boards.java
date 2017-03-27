@@ -16,13 +16,13 @@
  */
 package codes.derive.foldem.board;
 
-import static codes.derive.foldem.Foldem.*;
+import static codes.derive.foldem.Poker.*;
 
 import codes.derive.foldem.Card;
 import codes.derive.foldem.Deck;
 
 /**
- * Helper class containing functions for working with boards.
+ * Helper class containing functions for working with {@link Board}.
  */
 public class Boards {
 
@@ -41,7 +41,7 @@ public class Boards {
 		}
 		throw new IllegalArgumentException("No board for card count " + cards.length);
 	}
-	
+
 	/**
 	 * Constructs a new {@link Board} containing the specified cards represented
 	 * in shorthand.
@@ -71,46 +71,48 @@ public class Boards {
 		}
 		return board(cards);
 	}
-	
+
 	/**
-	 * Constructs a new flop containing the specified cards.
+	 * Constructs a new {@link Flop} containing the specified cards.
 	 * 
 	 * @param cards
 	 *            The cards.
-	 * @return A new flop containing the specified cards.
+	 * @return A new {@link Flop} containing the specified cards.
 	 */
-	public static Board flop(Card... cards) {
+	public static Flop flop(Card... cards) {
 		return new Flop(cards);
 	}
 
 	/**
-	 * Constructs a new turn containing the specified cards.
+	 * Constructs a new {@link Turn} containing the specified cards.
 	 * 
 	 * @param cards
 	 *            The cards.
-	 * @return A new turn containing the specified cards.
+	 * @return A new {@link Turn} containing the specified cards.
 	 */
-	public static Board turn(Card... cards) {
+	public static Turn turn(Card... cards) {
 		return new Turn(cards);
 	}
 
 	/**
-	 * Constructs a new river containing the specified cards.
+	 * Constructs a new {@link River} containing the specified cards.
 	 * 
 	 * @param cards
 	 *            The cards.
-	 * @return A new river containing the specified cards.
+	 * @return A new {@link River} containing the specified cards.
 	 */
-	public static Board river(Card... cards) {
+	public static River river(Card... cards) {
 		return new River(cards);
 	}
 
 	/**
-	 * Constructs a new flop sourced from cards popped from the specified deck.
+	 * Constructs a new {@link Flop} sourced from cards popped from the
+	 * specified {@link Deck}.
 	 * 
 	 * @param deck
 	 *            The deck.
-	 * @return A new flop sourced from cards popped from the specified deck.
+	 * @return A new {@link Flop} sourced from cards popped from the specified
+	 *         {@link Deck}.
 	 */
 	public static Board flop(Deck deck) {
 		Card[] cards = new Card[3];
@@ -121,11 +123,13 @@ public class Boards {
 	}
 
 	/**
-	 * Constructs a new turn sourced from cards popped from the specified deck.
+	 * Constructs a new {@link Turn} sourced from cards popped from the
+	 * specified {@link Deck}.
 	 * 
 	 * @param deck
 	 *            The deck.
-	 * @return A new turn sourced from cards popped from the specified deck.
+	 * @return A new {@link Turn} sourced from cards popped from the specified
+	 *         {@link Deck}.
 	 */
 	public static Board turn(Deck deck) {
 		Card[] cards = new Card[4];
@@ -136,11 +140,13 @@ public class Boards {
 	}
 
 	/**
-	 * Constructs a new river sourced from cards popped from the specified deck.
+	 * Constructs a new {@link River} sourced from cards popped from the
+	 * specified {@link Deck}.
 	 * 
 	 * @param deck
 	 *            The deck.
-	 * @return A new river sourced from cards popped from the specified deck.
+	 * @return A new {@link River} sourced from cards popped from the specified
+	 *         {@link Deck}.
 	 */
 	public static Board river(Deck deck) {
 		Card[] cards = new Card[5];
@@ -149,24 +155,26 @@ public class Boards {
 		}
 		return new River(cards);
 	}
-	
-	// TODO consider other names (suggestions: to,switch,street,move)
 
 	/**
-	 * Moves the board specified to the specified (previous) street.
+	 * Moves the {@link Board} specified to the specified (previous)
+	 * {@link Street}.
 	 * 
 	 * @param board
 	 *            The board.
 	 * @param street
 	 *            The street to move the board.
-	 * @return returns the board at the new street.
+	 * @return returns the {@link Board} at the new {@link Street}.
 	 */
 	public static Board convert(Board board, Street street) {
 		if (street.cardCount() > board.getStreet().cardCount()) {
 			throw new IllegalArgumentException("new street has more cards than input");
 		}
-
-		// create an array containing our new cards, truncating the old one if needed.
+		
+		/*
+		 * Create an arrow containing our new cards, truncating the old one if
+		 * need be.
+		 */
 		Card[] original = board.cards().toArray(new Card[0]);
 		Card[] cards = new Card[street.cardCount()];
 		for (int i = 0; i < cards.length; i++) {
@@ -177,8 +185,8 @@ public class Boards {
 	}
 
 	/**
-	 * Moves the board specified to the specified street and uses the cards
-	 * provided as the new cards on the street.
+	 * Moves the {@link Board} specified to the specified {@link Street} and
+	 * uses the cards provided as the additional cards.
 	 * 
 	 * @param board
 	 *            The board.
@@ -186,7 +194,8 @@ public class Boards {
 	 *            The street to move the board to.
 	 * @param cards
 	 *            The cards to use
-	 * @return The board at the new street with the specified cards.
+	 * @return The {@link Board} at the new {@link Street} with the specified
+	 *         cards.
 	 */
 	public static Board convert(Board board, Street street, Card... cards) {
 		if (street.cardCount() < board.getStreet().cardCount()) {
@@ -210,8 +219,8 @@ public class Boards {
 	}
 
 	/**
-	 * Moves the board specified to the specified street and uses the specified
-	 * deck to add any new cards.
+	 * Moves the {@link Board} specified to the specified {@link Street} and
+	 * uses the specified {@link Deck} to add any new cards.
 	 * 
 	 * @param board
 	 *            The board.
@@ -219,14 +228,17 @@ public class Boards {
 	 *            The street to move the board to.
 	 * @param deck
 	 *            The deck to source cards from.
-	 * @return The board at the new street with cards from the specified deck.
+	 * @return The {@link Board} at the new {@link Street} with cards from the
+	 *         specified {@link Deck}.
 	 */
 	public static Board convert(Board board, Street street, Deck deck) {
 		if (street.cardCount() < board.getStreet().cardCount()) {
 			return convert(board, street);
 		}
 
-		// obtain our new cards from the deck provided.
+		/*
+		 * Obtain our new cards from the deck provided.
+		 */
 		Card[] cards = new Card[street.cardCount() - board.getStreet().cardCount()];
 		for (int i = 0; i < cards.length; i++) {
 			cards[i] = deck.pop();

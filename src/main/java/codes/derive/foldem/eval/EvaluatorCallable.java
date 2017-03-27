@@ -22,7 +22,8 @@ import codes.derive.foldem.Hand;
 import codes.derive.foldem.board.Board;
 
 /**
- * An implementation of {@link Callable} that can be used to evaluate a hand.
+ * An implementation of {@link java.util.concurrent.Callable} that can be used
+ * to evaluate a hand.
  */
 public class EvaluatorCallable implements Callable<Integer> {
 
@@ -36,7 +37,7 @@ public class EvaluatorCallable implements Callable<Integer> {
 	private final Board board;
 	
 	/**
-	 * Constructs a new evaluator callable.
+	 * Constructs a new {@link EvaluatorCallable}.
 	 * @param evaluator
 	 * 		The evaluator to use.
 	 * @param hand

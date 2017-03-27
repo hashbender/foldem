@@ -16,7 +16,7 @@
  */
 package codes.derive.foldem.hand;
 
-import static codes.derive.foldem.Foldem.*;
+import static codes.derive.foldem.Poker.*;
 import static codes.derive.foldem.Card.*;
 import static codes.derive.foldem.Suit.*;
 import static org.junit.Assert.*;

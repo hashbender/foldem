@@ -16,7 +16,7 @@
  */
 package codes.derive.foldem.tool;
 
-import static codes.derive.foldem.Foldem.*;
+import static codes.derive.foldem.Poker.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,10 +33,10 @@ import codes.derive.foldem.Deck;
 import codes.derive.foldem.Hand;
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
+import codes.derive.foldem.board.Range;
 import codes.derive.foldem.board.Street;
 import codes.derive.foldem.eval.DefaultEvaluator;
 import codes.derive.foldem.eval.Evaluator;
-import codes.derive.foldem.range.Range;
 
 /**
  * A type that can be used to calculate equity for hands and ranges using Monte
@@ -45,10 +45,10 @@ import codes.derive.foldem.range.Range;
 public class EquityCalculationBuilder {
 
 	/* The default sample size to use for simulations. */
-	private static final int DEFAULT_SAMPLE_SIZE = 25000;
+	public static final int DEFAULT_SAMPLE_SIZE = 25000;
 
 	/* The default evaluator to use for simulations. */
-	private static final Evaluator DEFAULT_EVALUATOR = new DefaultEvaluator();
+	public static final Evaluator DEFAULT_EVALUATOR = new DefaultEvaluator();
 
 	/* A list containing cards to remove from the deck during calculations. */
 	private final List<Card> dead = new ArrayList<>();
@@ -273,7 +273,8 @@ public class EquityCalculationBuilder {
 
 	/**
 	 * Sets the number of boards to simulate for equity calculations. By default
-	 * this value is specified by {@link DEFAULT_SAMPLE_SIZE }.
+	 * this value is specified by
+	 * {@link EquityCalculationBuilder#DEFAULT_SAMPLE_SIZE}.
 	 * 
 	 * @param sampleSize
 	 *            The number of boards to simulate for equity calculations.
@@ -285,8 +286,9 @@ public class EquityCalculationBuilder {
 	}
 
 	/**
-	 * Sets the evaluator to be used to evaluate hand values during simulations.
-	 * By default this value is specified by <code>DEFAULT_EVALUATOR</code>.
+	 * Sets the {@link Evaluator} to be used to evaluate hand values during
+	 * simulations. By default this value is specified by
+	 * {@link EquityCalculationBuilder#DEFAULT_EVALUATOR}.
 	 * 
 	 * @param evaluator
 	 *            The evaluator to be used to evaluate hands during simulations.
@@ -313,7 +315,7 @@ public class EquityCalculationBuilder {
 	}
 
 	/**
-	 * Makes the calculator use the specified board during calculations.
+	 * Makes the calculator use the specified {@link Board} during calculations.
 	 * 
 	 * @param board
 	 *            The board to use during calculations.

@@ -19,12 +19,12 @@ package codes.derive.foldem.board;
 import codes.derive.foldem.Card;
 
 /**
- * Represents a flop.
+ * Represents a flop in Texas Hold'em.
  */
 public class Flop extends AbstractBoard {
 
 	/**
-	 * Constructs a new flop.
+	 * Constructs a new {link Flop}.
 	 * 
 	 * @param cards
 	 *            The cards.

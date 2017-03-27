@@ -16,5 +16,8 @@
  */
 /**
  * Defines classes for evaluating Hold'em hands.
+ * 
+ * The {@link Evaluator} interface is the crux of this package. You can find the main evaluator shipped with this library {@link DefaultEvaluator}.
+ * 
  */
 package codes.derive.foldem.eval;

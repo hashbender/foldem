@@ -28,11 +28,18 @@ public interface Evaluator {
 	/**
 	 * Ranks the specified hand on the specified board.
 	 * 
+	 * <p>
+	 * The rank numbers can be different per-implementation but the general
+	 * contract is that 0 should be the worst possible hand, 1 the second worse,
+	 * and so on.
+	 * </p>
+	 * 
 	 * @param h
 	 *            The hand to rank.
 	 * @param b
 	 *            The board to rank it on.
-	 * @return TODO
+	 * @return The rank of the specified {@link Hand} on the specified
+	 *         {@link Board}. Higher numbers = better hands.
 	 */
 	public int rank(Hand h, Board b);
 

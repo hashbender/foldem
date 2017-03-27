@@ -19,12 +19,12 @@ package codes.derive.foldem.board;
 import codes.derive.foldem.Card;
 
 /**
- * Represents a river.
+ * Represents a river in Texas hold 'em
  */
 public class River extends AbstractBoard {
 
 	/**
-	 * Constructs a new river.
+	 * Constructs a new {@link River}.
 	 * 
 	 * @param cards
 	 *            The cards.

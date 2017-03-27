@@ -21,16 +21,16 @@ package codes.derive.foldem;
  */
 public class Constants {
 
-	/** A standard deck size.  **/
+	/** A standard {@link Deck} size.  **/
 	public static final int DECK_SIZE = 52;
 	
-	/** The number of cards in a standard Hold'em board. **/
+	/** The number of cards in a standard Hold 'em board. **/
 	public static final int BOARD_SIZE = 5;
 
-	/** The number of cards in a standard Hold'em hand. **/
+	/** The number of cards in a standard Hold 'em hand. **/
 	public static final int HAND_SIZE = 2;
 
-	/** Contains an enumeration of off-suit card combinations. **/
+	/** Contains an enumeration of off-suit {@link Card} combinations. **/
 	public static final Suit[][] OFFSUIT_COMBINATIONS = {
 		{ Suit.SPADES, Suit.CLUBS }, { Suit.SPADES, Suit.HEARTS },
 		{ Suit.SPADES, Suit.DIAMONDS }, { Suit.CLUBS, Suit.HEARTS },

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Fold'em.  If not, see <http://www.gnu.org/licenses/>.
  */
-package codes.derive.foldem.range;
+package codes.derive.foldem.board;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +27,9 @@ import java.util.Random;
 import codes.derive.foldem.Hand;
 import codes.derive.foldem.util.RandomContext;
 
+/**
+ * A type representing a range of hands.
+ */
 public class Range {
 
 	/*
@@ -39,7 +42,7 @@ public class Range {
 	private final List<Hand> constant = new ArrayList<>();
 
 	/**
-	 * Defines a hand in this range.
+	 * Defines a {@link Hand} in this {@link Range}.
 	 * 
 	 * @param hand
 	 *            The hand.
@@ -47,15 +50,14 @@ public class Range {
 	 */
 	public Range define(Hand hand) {
 		if (contains(hand)) {
-			throw new IllegalArgumentException(
-					"Hand already exists within range");
+			throw new IllegalArgumentException("Hand already exists within range");
 		}
 		constant.add(hand);
 		return this;
 	}
 
 	/**
-	 * Defines a series of hands in this range.
+	 * Defines a series of hands in this {@link Range}.
 	 * 
 	 * @param hands
 	 *            The hands.
@@ -69,7 +71,7 @@ public class Range {
 	}
 
 	/**
-	 * Defines a {@link Collection } of hands in this range.
+	 * Defines a {@link java.util.Collection } of hands in this {@link Range}.
 	 * 
 	 * @param hands
 	 *            The hands
@@ -80,7 +82,13 @@ public class Range {
 	}
 
 	/**
-	 * Defines a weighted hand in this range. TODO more weighting explanation
+	 * Defines a weighted {@link Hand} in this range.
+	 * 
+	 * <p>
+	 * The weight of a {@link Hand} defines how often it should be used instead
+	 * of skipped by {@link Range#sample(Random)}. A {@link Hand} with a weight
+	 * of 1.0 will always be used, 0.5 half the time, 0.0 never.
+	 * </p>
 	 * 
 	 * @param weight
 	 *            The weight, as a decimal. This will define how often the
@@ -112,6 +120,12 @@ public class Range {
 	/**
 	 * Defines the specified weighted hands in this range.
 	 * 
+	 * <p>
+	 * The weight of a {@link Hand} defines how often it should be used instead
+	 * of skipped by {@link Range#sample(Random)}. A {@link Hand} with a weight
+	 * of 1.0 will always be used, 0.5 half the time, 0.0 never.
+	 * </p>
+	 * 
 	 * @param weight
 	 *            The weight, as a decimal. This will define how often the
 	 *            specified hands will appear in the range on a call to
@@ -130,9 +144,15 @@ public class Range {
 	/**
 	 * Defines the specified weighted hands in this range.
 	 * 
+	 * <p>
+	 * The weight of a {@link Hand} defines how often it should be used instead
+	 * of skipped by {@link Range#sample(Random)}. A {@link Hand} with a weight
+	 * of 1.0 will always be used, 0.5 half the time, 0.0 never.
+	 * </p>
+	 * 
 	 * @param weight
 	 *            The weight, as a decimal. This will define how often the
-	 *            specified hands will appear in the range. TODO rephrase.
+	 *            specified hands will appear in the range.
 	 * @param hands
 	 *            The hands.
 	 * @return The {@link Range} context, for chaining.
@@ -142,8 +162,9 @@ public class Range {
 	}
 	
 	/**
-	 * Obtains whether or not the specified hand can appear within this range.
-	 *
+	 * Obtains whether or not the specified {@link Hand} can appear
+	 * within this range.
+	 * 
 	 * @param hand
 	 *            The hand.
 	 * @return The {@link Range} context, for chaining.
@@ -158,13 +179,13 @@ public class Range {
 	}
 
 	/**
-	 * Obtains the frequency at which the specified hand will appear within this
-	 * range, as a decimal.
+	 * Obtains the frequency at which the specified {@link Hand} will
+	 * appear within this {@link Range}, as a decimal.
 	 * 
 	 * @param hand
 	 *            The hand.
-	 * @return The frequency at which the specified hand will appear within this
-	 *         range, as a decimal.
+	 * @return The frequency at which the specified {@link Hand} will
+	 *         appear within this {@link Range}, as a decimal.
 	 */
 	public double weight(Hand hand) {
 		for (double weight : weighted.keySet()) {
@@ -176,13 +197,13 @@ public class Range {
 	}
 	
 	/**
-	 * Obtains a hand from this range, excluding weighted hands at their correct
-	 * frequencies.
+	 * Obtains a {@link Hand} from this {@link Range}, excluding weighted hands
+	 * at their associated frequencies.
 	 * 
 	 * @param random
 	 *            The random context to use to generate random numbers for
 	 *            deciding whether or not to include a specific weighted hand.
-	 * @return The sampled hand.
+	 * @return The sampled {@link Hand}.
 	 */
 	public Hand sample(Random random) {
 		if (constant.size() == 0) {
@@ -215,24 +236,25 @@ public class Range {
 	}
 
 	/**
-	 * Obtains a hand from this range, excluding weighted hands at their correct
-	 * frequencies.
+	 * Obtains a {@link Hand} from this {@link Range}, excluding
+	 * weighted hands at their correct frequencies.
 	 * 
 	 * <p>
 	 * uses the random number generator specified in {@link RandomContext}.
 	 * </p>
 	 * 
-	 * @return The sampled hand.
+	 * @return The sampled {@link Hand}.
 	 */
 	public Hand sample() {
 		return sample(RandomContext.get());
 	}
 
 	/**
-	 * Obtains an unmodifiable view containing all hands within this range
-	 * including weighted hands.
+	 * Obtains an unmodifiable view containing all hands within this
+	 * {@link Range} including weighted hands.
 	 * 
-	 * @return An unmodifiable view containing all hands within this range.
+	 * @return An unmodifiable view containing all hands within this
+	 *         {@link Range}.
 	 */
 	public Collection<Hand> all() {
 		List<Hand> hands = new ArrayList<>();
@@ -282,7 +304,7 @@ public class Range {
 		if (constant == null) {
 			if (other.constant != null)
 				return false;
-		} else if (!constant.equals(other.constant))
+		} else if (!constant.containsAll(other.constant))
 			return false;
 		if (weighted == null) {
 			if (other.weighted != null)

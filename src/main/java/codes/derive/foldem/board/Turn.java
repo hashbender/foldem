@@ -19,12 +19,12 @@ package codes.derive.foldem.board;
 import codes.derive.foldem.Card;
 
 /**
- * Represents a turn.
+ * Represents a turn in Texas Hold 'em.
  */
 public class Turn extends AbstractBoard {
 
 	/**
-	 * Constructs a new turn.
+	 * Constructs a new {@link Turn}.
 	 * 
 	 * @param cards
 	 *            The cards.

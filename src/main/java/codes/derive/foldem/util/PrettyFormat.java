@@ -23,9 +23,9 @@ import codes.derive.foldem.board.Board;
 
 /**
  * Contains functions for pretty string formatting cards, similar to the Deuces
- * Python evaluation library (https://github.com/worldveil/deuces).
+ * Python evaluation library (<a>https://github.com/worldveil/deuces</a>).
  */
-public class PrettyCards {
+public class PrettyFormat {
 
 	/**
 	 * Obtains the unicode character for the specified suit.
@@ -49,11 +49,11 @@ public class PrettyCards {
 	}
 
 	/**
-	 * Gets a pretty string representing the specified card.
+	 * Gets a pretty formatted string representing the specified {@link Card}.
 	 * 
 	 * @param card
 	 *            The card.
-	 * @return The pretty string for the specified card.
+	 * @return The pretty formatted string for the specified {@link Card}.
 	 */
 	public static String get(Card card) {
 		return new StringBuilder().append(Card.LABEL[card.getValue()])
@@ -61,11 +61,11 @@ public class PrettyCards {
 	}
 
 	/**
-	 * Gets a pretty string representing the specified hand.
+	 * Gets a pretty formatted string representing the specified {@link Hand}.
 	 * 
 	 * @param hand
 	 *            The hand.
-	 * @return The pretty string for the specified hand.
+	 * @return The pretty formatted string for the specified {@link Hand}.
 	 */
 	public static String get(Hand hand) {
 		StringBuilder bldr = new StringBuilder();
@@ -76,11 +76,11 @@ public class PrettyCards {
 	}
 
 	/**
-	 * Gets a pretty string representing the specified board.
+	 * Gets a pretty formatted string representing the specified {@link Board}.
 	 * 
 	 * @param board
 	 *            The board.
-	 * @return The pretty string for the specified board.
+	 * @return The pretty formatted string for the specified {@link Board}.
 	 */
 	public static String get(Board board) {
 		StringBuilder bldr = new StringBuilder();

@@ -17,7 +17,7 @@
 package codes.derive.foldem.board;
 
 /**
- * An enum representing a board street.
+ * An enum representing a board street in Texas Hold 'em.
  */
 public enum Street {
 

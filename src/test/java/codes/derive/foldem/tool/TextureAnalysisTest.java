@@ -16,13 +16,13 @@
  */
 package codes.derive.foldem.tool;
 
-import static codes.derive.foldem.Foldem.*;
+import static codes.derive.foldem.Poker.*;
 import static org.junit.Assert.*;
 
 import java.util.Map;
 
+import codes.derive.foldem.board.Range;
 import codes.derive.foldem.eval.HandValue;
-import codes.derive.foldem.range.Range;
 
 public class TextureAnalysisTest {
 	

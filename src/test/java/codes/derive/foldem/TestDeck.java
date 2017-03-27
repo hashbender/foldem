@@ -16,7 +16,7 @@
  */
 package codes.derive.foldem;
 
-import static codes.derive.foldem.Foldem.*;
+import static codes.derive.foldem.Poker.*;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;

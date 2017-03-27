@@ -16,7 +16,7 @@
  */
 package codes.derive.foldem.example;
 
-import static codes.derive.foldem.Foldem.*;
+import static codes.derive.foldem.Poker.*;
 
 /**
  * An example showing pretty print formatting of cards.

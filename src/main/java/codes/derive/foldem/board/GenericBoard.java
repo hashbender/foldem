@@ -19,7 +19,7 @@ package codes.derive.foldem.board;
 import codes.derive.foldem.Card;
 
 /**
- * A basic board type.
+ * A basic board type with a constructor that specifies the street.
  */
 public class GenericBoard extends AbstractBoard {
 
