@@ -10,6 +10,8 @@ import java.util.Map;
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
 import codes.derive.foldem.board.Street;
+import codes.derive.foldem.eval.DefaultEvaluator;
+import codes.derive.foldem.eval.HandValue;
 import codes.derive.foldem.range.Range;
 import codes.derive.foldem.tool.EquityCalculationBuilder;
 import codes.derive.foldem.tool.EquityCalculationBuilder.Equity;
@@ -296,6 +298,20 @@ public class Foldem {
 		return new Deck().shuffle(RandomContext.get());
 	}
 
+	/**
+	 * Finds the value of the specified {@link Hand} on the specified
+	 * {@link Board}.
+	 * 
+	 * @param hand
+	 *            The hand.
+	 * @param board
+	 *            The board.
+	 * @return The specified hand's value on the specified board.
+	 */
+	public static HandValue value(Hand hand, Board board) {
+		return new DefaultEvaluator().value(hand, board);
+	}
+	
 	/**
 	 * Obtains the equity that the specified hands have against each other,
 	 * returning them as keys mapped to their calculated equity.
