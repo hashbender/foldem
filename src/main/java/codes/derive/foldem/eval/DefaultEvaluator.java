@@ -172,4 +172,28 @@ public class DefaultEvaluator implements Evaluator {
 		return rank;
 	}
 
+	@Override
+	public HandValue value(Hand hand, Board board) {
+		int rank = rank(hand, board);
+		if (rank >= 6185) {
+			return HandValue.HIGH_CARD;  
+		} else if (rank >= 3325) {
+			return HandValue.PAIR;
+		} else if (rank >= 2467) {
+			return HandValue.TWO_PAIR;
+		} else if (rank >= 1609) {
+			return HandValue.THREE_OF_A_KIND;
+		} else if (rank >= 1599) {
+			return HandValue.STRAIGHT;
+		} else if (rank >= 322) {
+			return HandValue.FLUSH;
+		} else if (rank >= 166) {
+			return HandValue.FULL_HOUSE;
+		} else if (rank >= 10) {
+			return HandValue.FOUR_OF_A_KIND;
+		} else {
+			return HandValue.STRAIGHT_FLUSH;
+		}
+	}
+
 }
