@@ -205,14 +205,30 @@ public class Foldem {
 	 * Constructs a new {@link Board} using the specified cards.
 	 * 
 	 * <p>
-	 * Shorthand for {@link Boards#board(Card...).
+	 * Alias for {@link Boards#board(Card...)}.
 	 * </p>
 	 * 
 	 * @param cards
 	 *            The cards to use.
-	 * @return A new board using the specified cards.
+	 * @return A new {@link Board} using the specified cards.
 	 */
 	public static Board board(Card... cards) {
+		return Boards.board(cards);
+	}
+
+	/**
+	 * Constructs a new {@link Board} using the specified card shorthand.
+	 * 
+	 * <p>
+	 * Alias for {@link Boards#board(String)}.
+	 * </p>
+	 * 
+	 * @param cards
+	 *            The cards shorthand, see {@link Boards#board(String)} for
+	 *            information on formatting.
+	 * @return A new {@link Board} using the specified cards.
+	 */
+	public static Board board(String cards) {
 		return Boards.board(cards);
 	}
 
