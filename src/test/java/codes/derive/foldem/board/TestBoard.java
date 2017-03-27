@@ -15,6 +15,7 @@ public class TestBoard {
 	
 	@Test
 	public void testConversion() {
+		
 		Board board = Boards.board(card("Ac"), card("Ad"), card("Ah"));
 		
 		// flop -> turn
@@ -28,6 +29,14 @@ public class TestBoard {
 		// turn <- river
 		board = Boards.convert(board, Street.TURN);
 		assertEquals(Street.TURN, board.getStreet());
+	}
+	
+	@Test
+	public void testShorthand() {
+		Board a = Boards.board("AcAdAh");
+		assertEquals(true, a.cards().contains(card("Ac")));
+		assertEquals(true, a.cards().contains(card("Ad")));
+		assertEquals(true, a.cards().contains(card("Ah")));
 	}
 	
 }

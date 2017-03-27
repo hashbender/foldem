@@ -1,5 +1,7 @@
 package codes.derive.foldem.board;
 
+import static codes.derive.foldem.Foldem.*;
+
 import codes.derive.foldem.Card;
 import codes.derive.foldem.Deck;
 
@@ -9,11 +11,11 @@ import codes.derive.foldem.Deck;
 public class Boards {
 
 	/**
-	 * Constructs a new board containing the specified cards.
+	 * Constructs a new {@link Board} containing the specified cards.
 	 * 
 	 * @param cards
 	 *            The cards.
-	 * @return A board containing the specified card.
+	 * @return A {@link Board} containing the specified cards.
 	 */
 	public static Board board(Card... cards) {
 		for (Street street : Street.values()) {
@@ -22,6 +24,18 @@ public class Boards {
 			}
 		}
 		throw new IllegalArgumentException("No board for card count " + cards.length);
+	}
+	
+	/**
+	 * Constructs a new {@link Board} containing the specified cards represented
+	 * in shorthand.
+	 * 
+	 * @param cards
+	 *            The cards to use on the board.
+	 * @return A {@link Board} containing the specified cards.
+	 */
+	public static Board board(String shorthand) {
+		return board(cards(shorthand).toArray(new Card[0]));
 	}
 
 	/**
