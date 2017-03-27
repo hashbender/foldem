@@ -13,5 +13,12 @@ public class Constants {
 
 	/** The number of cards in a standard Hold'em hand. **/
 	public static final int HAND_SIZE = 2;
+
+	/** Contains an enumeration of off-suit card combinations. **/
+	public static final Suit[][] OFFSUIT_COMBINATIONS = {
+		{ Suit.SPADES, Suit.CLUBS }, { Suit.SPADES, Suit.HEARTS },
+		{ Suit.SPADES, Suit.DIAMONDS }, { Suit.CLUBS, Suit.HEARTS },
+		{ Suit.CLUBS, Suit.DIAMONDS }, { Suit.HEARTS, Suit.DIAMONDS } };
+
 	
 }

@@ -24,31 +24,43 @@ public class Range {
 
 	/**
 	 * Defines a hand in this range.
+	 * 
 	 * @param hand
-	 * 		The hand.
-	 * @return
-	 * 		The {@link Range} context, for chaining.
+	 *            The hand.
+	 * @return The {@link Range} context, for chaining.
 	 */
 	public Range define(Hand hand) {
 		if (contains(hand)) {
-			throw new IllegalArgumentException("Hand already exists within range");
+			throw new IllegalArgumentException(
+					"Hand already exists within range");
 		}
 		constant.add(hand);
-		return this; // TODO for contains defined
+		return this;
 	}
-	
+
 	/**
-	 * Defines a list of hands in this range.
+	 * Defines a series of hands in this range.
+	 * 
 	 * @param hands
-	 * 		The hands.
-	 * @return
-	 * 		The {@link Range} context, for chaining.
+	 *            The hands.
+	 * @return The {@link Range} context, for chaining.
 	 */
 	public Range define(Hand... hands) {
 		for (Hand hand : hands) {
 			define(hand);
 		}
 		return this;
+	}
+
+	/**
+	 * Defines a {@link Collection } of hands in this range.
+	 * 
+	 * @param hands
+	 *            The hands
+	 * @return The {@link Range} context, for chaining.
+	 */
+	public Range define(Collection<Hand> hands) {
+		return define(hands.toArray(new Hand[0]));
 	}
 
 	/**
@@ -86,7 +98,8 @@ public class Range {
 	 * 
 	 * @param weight
 	 *            The weight, as a decimal. This will define how often the
-	 *            specified hands will appear in the range. TODO rephrase.
+	 *            specified hands will appear in the range on a call to
+	 *            {@link Range#sample()}.
 	 * @param hands
 	 *            The hands.
 	 * @return The {@link Range} context, for chaining.
@@ -97,12 +110,24 @@ public class Range {
 		}
 		return this;
 	}
-
+	
+	/**
+	 * Defines the specified weighted hands in this range.
+	 * 
+	 * @param weight
+	 *            The weight, as a decimal. This will define how often the
+	 *            specified hands will appear in the range. TODO rephrase.
+	 * @param hands
+	 *            The hands.
+	 * @return The {@link Range} context, for chaining.
+	 */
+	public Range define(double weight, Collection<Hand> hands) {
+		return define(hands.toArray(new Hand[0]));
+	}
+	
 	/**
 	 * Obtains whether or not the specified hand can appear within this range.
-	 * Differs from (TODO explain distinction between contains(... and matches)
-	 * (Issue #5)
-	 * 
+	 *
 	 * @param hand
 	 *            The hand.
 	 * @return The {@link Range} context, for chaining.
@@ -133,22 +158,20 @@ public class Range {
 		}
 		return constant.contains(hand) ? 1.0 : 0;
 	}
-
-	public boolean match(Hand hand) {
-		if (constant.contains(hand)) {
-			return true;
-		}
-		for (double w : weighted.keySet()) {
-			if (weighted.get(w).contains(hand) && RandomContext.get().nextDouble() <= w) {
-				return true;
-			}
-		}
-		return false;
-	}
-
+	
+	/**
+	 * Obtains a hand from this range, excluding weighted hands at their correct
+	 * frequencies.
+	 * 
+	 * @param random
+	 *            The random context to use to generate random numbers for
+	 *            deciding whether or not to include a specific weighted hand.
+	 * @return The sampled hand.
+	 */
 	public Hand sample(Random random) {
 		if (constant.size() == 0) {
-			throw new IllegalStateException("There needs to be at least one constant hand");
+			throw new IllegalStateException(
+					"There needs to be at least one constant hand");
 		}
 
 		/*
@@ -174,11 +197,27 @@ public class Range {
 		 */
 		return candidates.get(random.nextInt(candidates.size()));
 	}
-	
+
+	/**
+	 * Obtains a hand from this range, excluding weighted hands at their correct
+	 * frequencies.
+	 * 
+	 * <p>
+	 * uses the random number generator specified in {@link RandomContext}.
+	 * </p>
+	 * 
+	 * @return The sampled hand.
+	 */
 	public Hand sample() {
 		return sample(RandomContext.get());
 	}
-	
+
+	/**
+	 * Obtains an unmodifiable view containing all hands within this range
+	 * including weighted hands.
+	 * 
+	 * @return An unmodifiable view containing all hands within this range.
+	 */
 	public Collection<Hand> all() {
 		List<Hand> hands = new ArrayList<>();
 		hands.addAll(constant);
@@ -187,7 +226,7 @@ public class Range {
 		}
 		return Collections.unmodifiableCollection(hands);
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder bldr = new StringBuilder().append(Range.class.getName());

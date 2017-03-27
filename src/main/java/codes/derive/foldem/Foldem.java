@@ -9,6 +9,10 @@ import java.util.Map;
 
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
+import codes.derive.foldem.board.Street;
+import codes.derive.foldem.eval.DefaultEvaluator;
+import codes.derive.foldem.eval.Evaluator;
+import codes.derive.foldem.eval.HandValue;
 import codes.derive.foldem.range.Range;
 import codes.derive.foldem.tool.EquityCalculationBuilder;
 import codes.derive.foldem.tool.EquityCalculationBuilder.Equity;
@@ -16,13 +20,13 @@ import codes.derive.foldem.util.PrettyCards;
 import codes.derive.foldem.util.RandomContext;
 
 /**
- * This class consists exclusively of static methods to assist in using this
- * library.
+ * This class consists of static methods, a lot of them just aliases, to aid in
+ * using this library.
  */
 public class Foldem {
 
 	/**
-	 * Constructs a card with the specified card value and suit.
+	 * Constructs a {@link Card} with the specified card value and suit.
 	 * 
 	 * @param value
 	 *            The card value, must be one of the card value constants
@@ -36,7 +40,7 @@ public class Foldem {
 	}
 
 	/**
-	 * Constructs a new card using the specified shorthand string. For
+	 * Constructs a new {@link Card} using the specified shorthand string. For
 	 * information on the shorthand format see
 	 * {@link codes.derive.foldem.Card#Card(String)}.
 	 * 
@@ -48,11 +52,27 @@ public class Foldem {
 	public static Card card(String text) {
 		return new Card(text);
 	}
+	
+	/**
+	 * Constructs a new {@link Card} dealt from the specified {@link Deck}.
+	 * 
+	 * <p>
+	 * Alias for {@link Deck.pop()}.
+	 * </p>
+	 * 
+	 * @param deck
+	 *            The deck to deal from
+	 * @return The card dealt from the specified deck.
+	 */
+	public static Card card(Deck deck) {
+		return deck.pop();
+	}
 
 	/**
-	 * Creates a collection containing an unordered enumeration of all cards.
+	 * Constructs a new {@link Collection} containing an unordered enumeration
+	 * of all cards.
 	 * 
-	 * @return A collection containing every card.
+	 * @return A {@link Collection} containing every card, in no specific order.
 	 */
 	public static Collection<Card> cards() {
 		List<Card> cards = new ArrayList<>();
@@ -65,7 +85,28 @@ public class Foldem {
 	}
 
 	/**
-	 * Constructs a new hand using the specified cards.
+	 * Creates a {@link Collection} containing cards for the specified
+	 * sequential shorthand. for example, "Ac2d3h4s", would return a
+	 * {@link Collection} containing the ace of spades, deuce of diamonds, trey
+	 * of hearts, and the four of spaces.
+	 * 
+	 * @param shorthand
+	 *            The shorthand.
+	 * @return A {@link Collection} containing the created cards.
+	 */
+	public static Collection<Card> cards(String shorthand) {
+		if (shorthand.length() % 2 != 0) {
+			throw new IllegalArgumentException("Invalid shorthand");
+		}
+		List<Card> cards = new ArrayList<>();
+		for (int i = 0; i < shorthand.length(); i += 2) {
+			cards.add(card(shorthand.substring(i, i + 2)));
+		}
+		return cards;
+	}
+
+	/**
+	 * Constructs a new {@link Hand} using the specified cards.
 	 * 
 	 * @param cards
 	 *            The cards to use in the created hand.
@@ -76,7 +117,19 @@ public class Foldem {
 	}
 
 	/**
-	 * Constructs a new hand using specified cards shorthand text. For
+	 * Constructs a new {@link Hand} by dealing it from the specified
+	 * {@link Deck}.
+	 * 
+	 * @param deck
+	 *            The deck to deal the hand from.
+	 * @return A hand containing cards dealt from the specified deck.
+	 */
+	public static Hand hand(Deck deck) {
+		return hand(deck.pop(), deck.pop());
+	}
+
+	/**
+	 * Constructs a new {@link Hand} using specified cards shorthand text. For
 	 * information on the format see
 	 * {@link codes.derive.foldem.Hand#Hand(String)}.
 	 * 
@@ -89,7 +142,77 @@ public class Foldem {
 	}
 
 	/**
-	 * Constructs a new empty range.
+	 * Constructs a new {@link Collection} containing a group of hands specified
+	 * by shorthand with no suit information.
+	 * 
+	 * <p>
+	 * The syntax is the same as creating hands, except you do not need to
+	 * specify suit information, a hand with each combination of suits will be
+	 * created for you. For example, shorthand "TT" would produce every
+	 * combination of a hand containing two tens in
+	 * </p>
+	 * 
+	 * <p>
+	 * Additionally, you can specify hands be suited using the "s" modifier.
+	 * This will produce only suited combinations of the specified hand. For
+	 * example, "TJs" would produce TJ of hearts, spaces, clubs and diamonds
+	 * only.
+	 * </p>
+	 * 
+	 * @param shorthand
+	 *            The shorthand to use to generate the hands.
+	 * @return A new {@link Collection } containing the hands specified in
+	 *         shorthand format.
+	 */
+	public static Collection<Hand> handGroup(String shorthand) {
+		List<Hand> hands = new ArrayList<>();
+
+		/*
+		 * Find the numeric values of the card labels provided.
+		 */
+		int a = -1, b = -1;
+		for (int i = 0; i < Card.LABEL.length; i++) {
+			if (Card.LABEL[i] == shorthand.charAt(0)) {
+				a = i;
+			}
+			if (Card.LABEL[i] == shorthand.charAt(1)) {
+				b = i;
+			}
+		}
+
+		/*
+		 * If our hand is suited.
+		 */
+		if (shorthand.length() == 3 && shorthand.charAt(2) == 's') {
+			if (a == b) {
+				throw new IllegalArgumentException(
+						"A hand cannot have identical cards of the same suit");
+			}
+			for (Suit suit : Suit.values()) {
+				hands.add(hand(card(a, suit), card(b, suit)));
+			}
+		} else {
+
+			/*
+			 * Add all off-suit combinations of the provided hand.
+			 */
+			for (Suit[] suits : Constants.OFFSUIT_COMBINATIONS) {
+				hands.add(hand(card(a, suits[0]), card(b, suits[1])));
+
+				/*
+				 * We only need to reverse the suits if A and B aren't
+				 * equivalent.
+				 */
+				if (a != b) {
+					hands.add(hand(card(a, suits[1]), card(b, suits[0])));
+				}
+			}
+		}
+		return hands;
+	}
+
+	/**
+	 * Constructs a new {@link Range} with no hands.
 	 * 
 	 * @return A new empty range.
 	 */
@@ -98,47 +221,98 @@ public class Foldem {
 	}
 
 	/**
-	 * Constructs a new range with the specified hands.
+	 * Constructs a new {@link Range} with the specified hands.
 	 * 
 	 * @param hands
 	 *            The hands.
 	 * @return The new range containing the specified hands.
 	 */
 	public static Range range(Hand... hands) {
-		return new Range().define(hands);
+		return range().define(hands);
 
 	}
 
 	/**
-	 * Constructs a new board using the specified cards.
+	 * Constructs a new {@link Board} using the specified cards.
+	 * 
+	 * <p>
+	 * Alias for {@link Boards#board(Card...)}.
+	 * </p>
 	 * 
 	 * @param cards
 	 *            The cards to use.
-	 * @return A new board using the specified cards.
+	 * @return A new {@link Board} using the specified cards.
 	 */
 	public static Board board(Card... cards) {
-		return Boards.board(cards); // TODO consider removing or moving other
-									// functions
+		return Boards.board(cards);
 	}
 
 	/**
-	 * Constructs a new unshuffled deck with no cards drawn.
+	 * Constructs a new {@link Board} using the specified card shorthand.
 	 * 
-	 * @return A new deck with no cards drawn.
+	 * <p>
+	 * Alias for {@link Boards#board(String)}.
+	 * </p>
+	 * 
+	 * @param cards
+	 *            The cards shorthand, see {@link Boards#board(String)} for
+	 *            information on formatting.
+	 * @return A new {@link Board} using the specified cards.
+	 */
+	public static Board board(String cards) {
+		return Boards.board(cards);
+	}
+	
+	/**
+	 * Constructs a new {@link Board}, dealing the cards from the specified
+	 * {@link Deck}.
+	 * 
+	 * <p>
+	 * Alias for {@link Boards#board(Deck, Street)}
+	 * </p>
+	 * 
+	 * @param deck
+	 *            The deck to deal from.
+	 * @param street
+	 *            The street to deal.
+	 * @return A new {@link Board} using cards from the specified {@link Deck}.
+	 */
+	public static Board board(Deck deck, Street street) {
+		return Boards.board(deck, street);
+	}
+
+	/**
+	 * Constructs a new {@link Deck}.
+	 * 
+	 * @return A new {@link Deck} with no cards drawn.
 	 */
 	public static Deck deck() {
 		return new Deck();
 	}
 
 	/**
-	 * Constructs a new deck and shuffles it, returning it as a result.
+	 * Constructs a new {@link Deck} and shuffles it.
 	 * 
-	 * @return The created shuffled deck.
+	 * @return A new shuffled {@link Deck} with no cards drawn.
 	 */
 	public static Deck shuffledDeck() {
 		return new Deck().shuffle(RandomContext.get());
 	}
 
+	/**
+	 * Finds the value of the specified {@link Hand} on the specified
+	 * {@link Board}.
+	 * 
+	 * @param hand
+	 *            The hand.
+	 * @param board
+	 *            The board.
+	 * @return The specified hand's value on the specified board.
+	 */
+	public static HandValue value(Hand hand, Board board) {
+		return new DefaultEvaluator().value(hand, board);
+	}
+	
 	/**
 	 * Obtains the equity that the specified hands have against each other,
 	 * returning them as keys mapped to their calculated equity.
@@ -167,36 +341,35 @@ public class Foldem {
 	}
 
 	/**
-	 * Obtains the equity that the specified hand groups have against each
-	 * other, returning them as keys mapped to their calculated equity. TODO
-	 * rename to range
+	 * Obtains the equity that the specified hand ranges have against each
+	 * other, returning them as keys mapped to their calculated equity.
 	 * 
-	 * @param hands
-	 *            The hand groups to calculate equity for.
-	 * @return The hand groups mapped to their calculated equity.
+	 * @param ranges
+	 *            The hand ranges to calculate equity for.
+	 * @return The hand ranges mapped to their calculated equity.
 	 */
-	public static Map<Range, Equity> equity(Range... groups) {
-		return calculationBuilder().calculate(groups);
+	public static Map<Range, Equity> equity(Range... ranges) {
+		return calculationBuilder().calculate(ranges);
 	}
 
 	/**
-	 * Obtains the equity that the specified hand groups have against each other
+	 * Obtains the equity that the specified hand ranges have against each other
 	 * on the specified board, returning them as keys mapped to their calculated
-	 * equities. TODO rename to range
+	 * equities.
 	 * 
 	 * @param board
 	 *            The board to calculate equity on.
-	 * @param groups
-	 *            The hand groups to calculate equity for
-	 * @return The hand groups mapped to their calculated equity.
+	 * @param ranges
+	 *            The hand ranges to calculate equity for
+	 * @return The hand ranges mapped to their calculated equity.
 	 */
-	public static Map<Range, Equity> equity(Board board, Range... groups) {
-		return calculationBuilder().useBoard(board).calculate(groups);
+	public static Map<Range, Equity> equity(Board board, Range... ranges) {
+		return calculationBuilder().useBoard(board).calculate(ranges);
 	}
 
 	/**
-	 * Formats the suit specified using pretty formatting. Is an alias for
-	 * {@link codes.derive.foldem.util.PrettyCards#get(Suit)}
+	 * Formats the {@link Suit} specified using pretty formatting. Is an alias
+	 * for {@link codes.derive.foldem.util.PrettyCards#get(Suit)}
 	 * 
 	 * @param suit
 	 *            The suit to format.
@@ -207,8 +380,8 @@ public class Foldem {
 	}
 
 	/**
-	 * Formats the card specified using pretty formatting. Is an alias for
-	 * {@link codes.derive.foldem.util.PrettyCards#get(Card)}
+	 * Formats the {@link Card} specified using pretty formatting. Is an alias
+	 * for {@link codes.derive.foldem.util.PrettyCards#get(Card)}
 	 * 
 	 * @param card
 	 *            The card to format.
@@ -231,8 +404,8 @@ public class Foldem {
 	}
 
 	/**
-	 * Formats the board specified using pretty formatting. Is an alias for
-	 * {@link codes.derive.foldem.util.PrettyCards#get(Board)}
+	 * Formats the {@link Board} specified using pretty formatting. Is an alias
+	 * for {@link codes.derive.foldem.util.PrettyCards#get(Board)}
 	 * 
 	 * @param board
 	 *            The board to format.
@@ -262,11 +435,6 @@ public class Foldem {
 	 * Represents the specified decimal as a percentage rounded to two decimal
 	 * places.
 	 * 
-	 * <p>
-	 * This may seem like a weird place to have this but it can be useful for
-	 * quickly generating percentages from equities.
-	 * </p>
-	 * 
 	 * @param d
 	 *            The decimal to convert.
 	 * @return The percentage.
@@ -277,9 +445,24 @@ public class Foldem {
 	}
 
 	/**
-	 * Creates a new equity calculator.
+	 * Constructs a new evaluator using the {@link DefaultEvaluator} type
+	 * provided with this library.
 	 * 
-	 * @return A new equity calculator.
+	 * <p>
+	 * Alias for {@link DefaultEvaluator#DefaultEvaluator}
+	 * </p>
+	 * 
+	 * @return An evaluator.
+	 */
+	public static Evaluator evaluator() {
+		return new DefaultEvaluator();
+	}
+
+	/**
+	 * Constructs a new {@link EquityCalculationBuilder}.
+	 * 
+	 * @return A new {@link EquityCalculationBuilder} for use in equity
+	 *         calculations.
 	 */
 	public static EquityCalculationBuilder calculationBuilder() {
 		return new EquityCalculationBuilder();

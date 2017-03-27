@@ -36,5 +36,19 @@ public class TestDefaultEvaluator {
 		}
 
 	}
+
+	@Test
+	public void testValueRanking() {
+		Evaluator eval = new DefaultEvaluator();		
+		assertEquals(HandValue.HIGH_CARD, eval.value(hand("AcTs"), board("2hQs4d")));
+		assertEquals(HandValue.PAIR, eval.value(hand("AcTs"), board("ThQs4d")));
+		assertEquals(HandValue.TWO_PAIR, eval.value(hand("AcTs"), board("ThAs4d")));
+		assertEquals(HandValue.THREE_OF_A_KIND, eval.value(hand("AcTs"), board("ThTd4d")));
+		assertEquals(HandValue.STRAIGHT, eval.value(hand("AcTs"), board("JdQsKd")));
+		assertEquals(HandValue.FLUSH, eval.value(hand("AcTc"), board("2cQc4c")));
+		assertEquals(HandValue.FULL_HOUSE, eval.value(hand("AcTs"), board("ThTdAh")));
+		assertEquals(HandValue.FOUR_OF_A_KIND, eval.value(hand("AcTs"), board("AsAhAd")));
+		assertEquals(HandValue.STRAIGHT_FLUSH, eval.value(hand("AcTc"), board("JcQcKc")));
+	}
 	
 }
