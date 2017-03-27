@@ -11,6 +11,7 @@ import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
 import codes.derive.foldem.board.Street;
 import codes.derive.foldem.eval.DefaultEvaluator;
+import codes.derive.foldem.eval.Evaluator;
 import codes.derive.foldem.eval.HandValue;
 import codes.derive.foldem.range.Range;
 import codes.derive.foldem.tool.EquityCalculationBuilder;
@@ -441,6 +442,20 @@ public class Foldem {
 	public static double percent(double d) {
 		return new BigDecimal(d * 100).setScale(2, RoundingMode.HALF_UP)
 				.doubleValue();
+	}
+
+	/**
+	 * Constructs a new evaluator using the {@link DefaultEvaluator} type
+	 * provided with this library.
+	 * 
+	 * <p>
+	 * Alias for {@link DefaultEvaluator#DefaultEvaluator}
+	 * </p>
+	 * 
+	 * @return An evaluator.
+	 */
+	public static Evaluator evaluator() {
+		return new DefaultEvaluator();
 	}
 
 	/**
