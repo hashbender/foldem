@@ -15,7 +15,7 @@ import codes.derive.foldem.tool.EquityCalculationBuilder.Equity;
 
 public class EquityCalculationTest {
 	
-	private static final double ERROR_MARGIN = 0.025;
+	private static final double ERROR_MARGIN = 0.015;
 	
 	/*
 	 * This test is currently disabled because it causes Travis to fail because
