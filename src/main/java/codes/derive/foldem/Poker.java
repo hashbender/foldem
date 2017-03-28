@@ -41,8 +41,7 @@ import codes.derive.foldem.util.RandomContext;
  */
 public class Poker {
 
-	private Poker() { /* No external instantiation */
-	}
+	private Poker() { /* No external instantiation */ }
 
 	/**
 	 * Constructs a {@link Card} with the specified card value and suit.
@@ -161,6 +160,27 @@ public class Poker {
 		return new Hand(cards);
 	}
 
+	/**
+	 * Constructs a new {@link java.util.Collection} containing an unordered
+	 * enumeration of all hands.
+	 * 
+	 * @return A {@link java.util.Collection} containing every possible
+	 *         {@link Hand}, in no specific order.
+	 * 
+	 */
+	public static Collection<Hand> hands() {
+		List<Hand> hands = new ArrayList<>();
+		for (Card a : cards()) {
+			for (Card b : cards()) {
+				if (a.equals(b)) {
+					continue;
+				}
+				hands.add(hand(a, b));
+			}
+		}
+		return hands;
+	}
+	
 	/**
 	 * Constructs a new {@link java.util.Collection} containing a group of hands
 	 * specified by shorthand with no suit information.
