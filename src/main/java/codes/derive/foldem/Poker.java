@@ -25,7 +25,6 @@ import java.util.Map;
 
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
-import codes.derive.foldem.board.Range;
 import codes.derive.foldem.board.Street;
 import codes.derive.foldem.eval.DefaultEvaluator;
 import codes.derive.foldem.eval.Evaluator;

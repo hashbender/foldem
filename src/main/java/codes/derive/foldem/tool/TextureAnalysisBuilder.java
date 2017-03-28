@@ -22,9 +22,9 @@ import java.util.Map;
 import java.util.Random;
 
 import codes.derive.foldem.Hand;
+import codes.derive.foldem.Range;
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
-import codes.derive.foldem.board.Range;
 import codes.derive.foldem.board.Street;
 import codes.derive.foldem.eval.DefaultEvaluator;
 import codes.derive.foldem.eval.Evaluator;
@@ -102,18 +102,12 @@ public class TextureAnalysisBuilder {
 		/*
 		 * Begin running simulations.
 		 */
-		for (int i = 0; i < sampleSize; i++) {
-
-			/*
-			 * Generate a hand from a sample in our range.
-			 */
-			Hand hand = range.sample(random);
+		for (Hand hand : range.all()) {
 			
 			/*
-			 * If our hand collides with the board, try again.
+			 * If our hand collides with the board, skip it.
 			 */
 			if (!Collections.disjoint(hand.cards(), board.cards())) {
-				i -= 1;
 				continue;
 			}
 
@@ -121,7 +115,7 @@ public class TextureAnalysisBuilder {
 			 * Find the value of our hand and add it to our results.
 			 */
 			HandValue value = evaluator.value(hand, board);
-			results.put(value, results.get(value) + 1.0);
+			results.put(value, (results.get(value) + range.weight(hand)));
 		}
 
 		/*

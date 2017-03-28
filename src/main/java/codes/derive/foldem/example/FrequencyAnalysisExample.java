@@ -4,7 +4,7 @@ import static codes.derive.foldem.Poker.*;
 
 import java.util.Map;
 
-import codes.derive.foldem.board.Range;
+import codes.derive.foldem.Range;
 import codes.derive.foldem.eval.HandValue;
 import codes.derive.foldem.tool.TextureAnalysisBuilder;
 

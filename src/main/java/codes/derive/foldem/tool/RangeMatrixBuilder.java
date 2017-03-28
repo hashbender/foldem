@@ -26,7 +26,7 @@ import java.awt.image.BufferedImage;
 import java.util.Collection;
 
 import codes.derive.foldem.Hand;
-import codes.derive.foldem.board.Range;
+import codes.derive.foldem.Range;
 
 /**
  * A type that can generate images containing each hand in a range and its

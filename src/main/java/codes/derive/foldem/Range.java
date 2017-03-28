@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Fold'em.  If not, see <http://www.gnu.org/licenses/>.
  */
-package codes.derive.foldem.board;
+package codes.derive.foldem;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import codes.derive.foldem.Hand;
 import codes.derive.foldem.util.RandomContext;
 
 /**

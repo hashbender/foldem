@@ -21,8 +21,8 @@ import static codes.derive.foldem.Poker.*;
 import java.util.Map;
 
 import codes.derive.foldem.Hand;
+import codes.derive.foldem.Range;
 import codes.derive.foldem.board.Board;
-import codes.derive.foldem.board.Range;
 import codes.derive.foldem.tool.EquityCalculationBuilder;
 import codes.derive.foldem.tool.EquityCalculationBuilder.Equity;
 
