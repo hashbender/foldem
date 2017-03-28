@@ -25,8 +25,8 @@ import java.util.Map;
 //import org.junit.Test;
 
 import codes.derive.foldem.Hand;
+import codes.derive.foldem.Range;
 import codes.derive.foldem.board.Boards;
-import codes.derive.foldem.board.Range;
 import codes.derive.foldem.tool.EquityCalculationBuilder.Equity;
 
 public class EquityCalculationTest {

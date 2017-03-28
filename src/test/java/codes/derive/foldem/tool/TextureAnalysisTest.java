@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 
 import java.util.Map;
 
-import codes.derive.foldem.board.Range;
+import codes.derive.foldem.Range;
 import codes.derive.foldem.eval.HandValue;
 
 public class TextureAnalysisTest {
