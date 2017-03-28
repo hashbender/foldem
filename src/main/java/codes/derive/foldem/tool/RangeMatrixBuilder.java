@@ -23,16 +23,10 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 
-import javax.imageio.ImageIO;
-
-import codes.derive.foldem.Card;
 import codes.derive.foldem.Hand;
 import codes.derive.foldem.board.Range;
-import codes.derive.foldem.util.RandomContext;
 
 /**
  * A type that can generate images containing each hand in a range and its
