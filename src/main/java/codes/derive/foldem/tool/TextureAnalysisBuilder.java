@@ -68,8 +68,7 @@ public class TextureAnalysisBuilder {
 		}
 
 		/*
-		 * Make sure we have at least one hand in our range that is disjoint
-		 * from the pre-set board.
+		 * Collect hands that are usable with this board.
 		 */
 		List<Hand> usable = new ArrayList<>();
 		for (Hand hand : range.all()) {
@@ -77,6 +76,10 @@ public class TextureAnalysisBuilder {
 				usable.add(hand);
 			}
 		}
+		
+		/*
+		 * If there are no usable hands we cannot do analysis.
+		 */
 		if (usable.size() == 0) {
 			throw new IllegalArgumentException("No viable hands in range to use on the board");
 		}
@@ -90,20 +93,24 @@ public class TextureAnalysisBuilder {
 		}
 
 		/*
-		 * Begin running simulations.
+		 * Apply every hand to the results.
 		 */
 		for (Hand hand : usable) {
 			
 			/*
-			 * Find the value of our hand
+			 * Find the value of our hand.
 			 */
 			HandValue value = evaluator.value(hand, board);
 			
 			/*
-			 * Apply it to our results at its weight.
+			 * Apply it to our results at its respective weight.
 			 */
 			results.put(value, results.get(value) + range.weight(hand) / usable.size());
 		}
+		
+		/*
+		 * Return our results.
+		 */
 		return results;
 	}
 	
