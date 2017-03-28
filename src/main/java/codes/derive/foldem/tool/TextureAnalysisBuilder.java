@@ -16,15 +16,16 @@
  */
 package codes.derive.foldem.tool;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import codes.derive.foldem.Hand;
+import codes.derive.foldem.Range;
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
-import codes.derive.foldem.board.Range;
 import codes.derive.foldem.board.Street;
 import codes.derive.foldem.eval.DefaultEvaluator;
 import codes.derive.foldem.eval.Evaluator;
@@ -45,9 +46,6 @@ public class TextureAnalysisBuilder {
 
 	/* The board to use. */
 	private Board board = Boards.board();
-
-	/* The sample size to use. */
-	private int sampleSize = DEFAULT_SAMPLE_SIZE;
 
 	/* The evaluator to use. */
 	private Evaluator evaluator = DEFAULT_EVALUATOR;
@@ -70,22 +68,24 @@ public class TextureAnalysisBuilder {
 		}
 
 		/*
-		 * Make sure we have at least one hand in our range that is disjoint
-		 * from the pre-set board.
+		 * Collect hands that are usable with this board.
 		 */
-		boolean usable = false;
+		List<Hand> usable = new ArrayList<>();
 		for (Hand hand : range.all()) {
 			if (Collections.disjoint(hand.cards(), board.cards())) {
-				usable = true;
-				break;
+				usable.add(hand);
 			}
 		}
-		if (!usable) {
+		
+		/*
+		 * If there are no usable hands we cannot do analysis.
+		 */
+		if (usable.size() == 0) {
 			throw new IllegalArgumentException("No viable hands in range to use on the board");
 		}
 
 		/*
-		 * Initialize our results map.
+		 * Initialize a map that will contain our results.
 		 */
 		Map<HandValue, Double> results = new HashMap<>();
 		for (HandValue value : HandValue.values()) {
@@ -93,60 +93,27 @@ public class TextureAnalysisBuilder {
 		}
 
 		/*
-		 * Create a Random context for deck shuffling that uses a hash of our
-		 * input for seeding. This allows for output continuity between
-		 * calculations.
+		 * Apply every hand to the results.
 		 */
-		Random random = new Random(range.hashCode());
-
-		/*
-		 * Begin running simulations.
-		 */
-		for (int i = 0; i < sampleSize; i++) {
-
-			/*
-			 * Generate a hand from a sample in our range.
-			 */
-			Hand hand = range.sample(random);
+		for (Hand hand : usable) {
 			
 			/*
-			 * If our hand collides with the board, try again.
-			 */
-			if (!Collections.disjoint(hand.cards(), board.cards())) {
-				i -= 1;
-				continue;
-			}
-
-			/*
-			 * Find the value of our hand and add it to our results.
+			 * Find the value of our hand.
 			 */
 			HandValue value = evaluator.value(hand, board);
-			results.put(value, results.get(value) + 1.0);
+			
+			/*
+			 * Apply it to our results at its respective weight.
+			 */
+			results.put(value, results.get(value) + range.weight(hand) / usable.size());
 		}
-
+		
 		/*
-		 * Divide our results by the sample size to get their frequency.
+		 * Return our results.
 		 */
-		for (HandValue value : results.keySet()) {
-			results.put(value, results.get(value) / sampleSize);
-		}
-
 		return results;
 	}
-
-	/**
-	 * Sets the number of boards to simulate for analysis. By default this value
-	 * is specified by {@link TextureAnalysisBuilder#DEFAULT_SAMPLE_SIZE}.
-	 * 
-	 * @param sampleSize
-	 *            The number of boards to simulate for analysis.
-	 * @return The {@link EquityCalculationBuilder} instance, for chaining.
-	 */
-	public TextureAnalysisBuilder useSampleSize(int sampleSize) {
-		this.sampleSize = sampleSize;
-		return this;
-	}
-
+	
 	/**
 	 * Sets the {@link Evaluator} to be used to evaluate hand values during
 	 * simulations. By default this value is specified by

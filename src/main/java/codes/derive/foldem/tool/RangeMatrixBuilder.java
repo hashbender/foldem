@@ -26,7 +26,7 @@ import java.awt.image.BufferedImage;
 import java.util.Collection;
 
 import codes.derive.foldem.Hand;
-import codes.derive.foldem.board.Range;
+import codes.derive.foldem.Range;
 
 /**
  * A type that can generate images containing each hand in a range and its
@@ -127,8 +127,8 @@ public class RangeMatrixBuilder {
 				 * Calculate the position of the label.
 				 */
 				FontMetrics metrics = g.getFontMetrics();
-				int labelX = drawX + (boxSize - metrics.stringWidth(label)) / 2;
-				int labelY = drawY + (boxSize + metrics.getAscent()) / 2;
+				int labelX = drawX + 1 + (boxSize - 1 - metrics.stringWidth(label)) / 2;
+				int labelY = drawY + 1 + (boxSize - 1 + metrics.getMaxAscent()) / 2;
 				
 				/*
 				 * Draw the label.

@@ -31,9 +31,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import codes.derive.foldem.Card;
 import codes.derive.foldem.Deck;
 import codes.derive.foldem.Hand;
+import codes.derive.foldem.Range;
 import codes.derive.foldem.board.Board;
 import codes.derive.foldem.board.Boards;
-import codes.derive.foldem.board.Range;
 import codes.derive.foldem.board.Street;
 import codes.derive.foldem.eval.DefaultEvaluator;
 import codes.derive.foldem.eval.Evaluator;
@@ -59,7 +59,7 @@ public class EquityCalculationBuilder {
 	/* The sample size to use for simulations. */
 	private int sampleSize = DEFAULT_SAMPLE_SIZE;
 
-	/* The evaluator to use for simulations */
+	/* The evaluator to use for simulations. */
 	private Evaluator evaluator = DEFAULT_EVALUATOR;
 
 	/**
