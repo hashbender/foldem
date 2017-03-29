@@ -8,6 +8,10 @@ import codes.derive.foldem.Range;
 import codes.derive.foldem.eval.HandValue;
 import codes.derive.foldem.tool.TextureAnalysisBuilder;
 
+/**
+ * An example that shows some basic usage of
+ * {@link codes.derive.foldem.tool.TextureAnalysisBuilder}.
+ */
 public class FrequencyAnalysisExample {
 
 	public static void main(String... args) {

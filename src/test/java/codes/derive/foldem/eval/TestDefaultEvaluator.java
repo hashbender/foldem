@@ -32,7 +32,7 @@ public class TestDefaultEvaluator {
 	
 	@Test
 	public void testEvaluation() {
-	
+		
 		// create a board for our test cases
 		Board board = Boards.board(card("As"), card("2d"), card("7h"));
 				
