@@ -195,7 +195,7 @@ public class Poker {
 	 * Additionally, you can specify hands be suited using the "s" modifier.
 	 * This will produce only suited combinations of the specified hand. For
 	 * example, "TJs" would produce TJ of hearts, spaces, clubs and diamonds
-	 * only. Conversely "TJo" would produce only off-suited hands. TODO
+	 * only. Conversely "TJo" would produce only off-suited hands.
 	 * </p>
 	 * 
 	 * @param shorthand
@@ -218,20 +218,27 @@ public class Poker {
 				b = i;
 			}
 		}
+		int length = shorthand.length();
 
 		/*
-		 * If our hand is suited.
+		 * Include suited hands if we have not specified any specific suit
+		 * information or if we have specified to include suited hands.
 		 */
-		if (shorthand.length() == 3 && shorthand.charAt(2) == 's') {
-			if (a == b) {
+		if (length == 2 || (length == 3 && shorthand.charAt(2) == 's')) {
+			if (a == b && length == 3) {
 				throw new IllegalArgumentException(
 						"A hand cannot have identical cards of the same suit");
 			}
 			for (Suit suit : Suit.values()) {
 				hands.add(hand(card(a, suit), card(b, suit)));
 			}
-		} else {
+		}
 
+		/*
+		 * Included non-suited hands if we have not specified any specific suit
+		 * information or if we have specified to include non-suited hands.
+		 */
+		if (length == 2 || (length == 3 && shorthand.charAt(2) == 'o')) {
 			/*
 			 * Add all off-suit combinations of the provided hand.
 			 */
