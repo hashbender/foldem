@@ -4,17 +4,18 @@
 A Java framework for Texas Hold 'em designed with an emphasis on simplicity and ease of use.
 
 ![generated](https://cloud.githubusercontent.com/assets/22860251/24421063/72424652-1451-11e7-9f28-fe91c256f4f3.png)
+
 ## Features
 - Hand evaluator
 - Equity calculation for both hands and ranges for any number of players
 - High level types for working with ranges
 - String based notation of cards and hands
 - Pretty text format, [like in Deuces](https://github.com/worldveil/deuces)
-- [Image-based hand matrices](https://cloud.githubusercontent.com/assets/22860251/24349083/7085e25a-133a-11e7-8649-f0a3ab6bcd58.png)
+- [Useful visualization tools](https://cloud.githubusercontent.com/assets/22860251/24349083/7085e25a-133a-11e7-8649-f0a3ab6bcd58.png)
 - Post flop analysis for hand value probabilities
 
 ## Installation
-Fold'em project is available in the [JCenter](https://bintray.com/bintray/jcenter) repository. You can also compile it locally using Gradle. Directions for both of these options have been included below.
+Fold'em is available on [JCenter](https://bintray.com/bintray/jcenter). You can also compile it locally using Gradle. Directions have been provided below on how to best include Fold'em in your project.
 
 ### Maven
 Add the following dependency to your `pom.xml` file to add the library to your project:
@@ -34,7 +35,7 @@ You can include Fold'em using the following directive:
 compile 'codes.derive:foldem:1.0.0'
 ```
 
-If you would like to compile Fold'em locally, you can simply run the following commands:
+If you would like to compile Fold'em locally using Gradle, you can simply run the following commands:
 ```
 git clone https://github.com/ableiten/foldem/
 cd foldem
