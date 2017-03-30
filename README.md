@@ -14,13 +14,24 @@ A Java framework for Texas Hold 'em designed with an emphasis on simplicity and 
 - Post flop analysis for hand value probabilities
 
 ## Getting Fold'em
-This project may available in the [Maven](TODO) Central Repository shortly. (TODO)
-
-### Gradle
-TODO
+This project is available in the [JCenter](https://bintray.com/bintray/jcenter) repository.
 
 ### Maven
-TODO
+Add the following dependency to your `pom.xml` file to add the library to your project:
+```
+<dependency>
+	<groupId>codes.derive</groupId>
+	<artifactId>foldem</artifactId>
+	<version>1.0.0</version>
+	<type>pom</type>
+</dependency>
+```
+
+### Gradle
+You know the drill:
+```
+compile 'codes.derive:foldem:1.0.0'
+```
 
 ## Documentation
 A Javadoc for Fold'em is available [here](TODO). Additionally some examples have been provided in this repository [here](/src/main/java/codes/derive/foldem/examples). An effort has been made to keep this library as simple as possible to use. Some more basic usage examples have been provided in the section below.
