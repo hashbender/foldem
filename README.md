@@ -9,12 +9,12 @@ A Java framework for Texas Hold 'em designed with an emphasis on simplicity and 
 - Equity calculation for both hands and ranges for any number of players
 - High level types for working with ranges
 - String based notation of cards and hands
-- Pretty text format (like in [Deuces](https://github.com/worldveil/deuces))
-- Ranges represented as [images](https://cloud.githubusercontent.com/assets/22860251/24349083/7085e25a-133a-11e7-8649-f0a3ab6bcd58.png)
+- Pretty text format, [like in Deuces](https://github.com/worldveil/deuces)
+- [Image-based hand matrices](https://cloud.githubusercontent.com/assets/22860251/24349083/7085e25a-133a-11e7-8649-f0a3ab6bcd58.png)
 - Post flop analysis for hand value probabilities
 
-## Getting Fold'em
-This project is available in the [JCenter](https://bintray.com/bintray/jcenter) repository.
+## Installation
+Fold'em project is available in the [JCenter](https://bintray.com/bintray/jcenter) repository. You can also compile it locally using Gradle. Directions for both of these options have been included below.
 
 ### Maven
 Add the following dependency to your `pom.xml` file to add the library to your project:
@@ -28,9 +28,17 @@ Add the following dependency to your `pom.xml` file to add the library to your p
 ```
 
 ### Gradle
-You know the drill:
+
+You can include Fold'em using the following directive:
 ```
 compile 'codes.derive:foldem:1.0.0'
+```
+
+If you would like to compile Fold'em locally, you can simply run the following commands:
+```
+git clone https://github.com/ableiten/foldem/
+cd foldem
+./gradlew build
 ```
 
 ## Documentation
@@ -158,6 +166,8 @@ for (HandValue value : frequencies.keySet()) {
  */
 
 ```
+
+If you're looking for specific functionality or looking to expand on existing functionality it is suggested that you check out the Javadoc. A great effort has been made to keep the Javadoc as informative and coherent as possible.
 
 ### More About
 *Fold'em is a GPL licensed module in a larger proprietary project with functionality similar to projects like [CREV](http://gtorangebuilder.com/). Among other things, it includes high-level types for representing and working game trees as well as improvements on this library such as faster implementations of `codes.derive.foldem.eval.Evaluator`.*
