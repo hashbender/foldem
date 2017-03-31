@@ -74,7 +74,7 @@ public class Poker {
 	 * Constructs a new {@link Card} dealt from the specified {@link Deck}.
 	 * 
 	 * <p>
-	 * Alias for {@link Deck.pop()}.
+	 * Alias for {@link Deck#pop()}.
 	 * </p>
 	 * 
 	 * @param deck

@@ -18,7 +18,7 @@
  * Main package for Fold'em.
  * 
  * <p>
- * The easiest way to use this library is through the {@link Poker} class, which contains static methods for working with the main high-level types.
+ * The easiest way to use this library is through the {@link codes.derive.foldem.Poker} class, which contains static methods for working with the main high-level types.
  * </p>
  * 
  */

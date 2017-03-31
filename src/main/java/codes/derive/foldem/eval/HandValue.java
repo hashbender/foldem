@@ -75,7 +75,7 @@ public enum HandValue {
 	}
 
 	/**
-	 * Compares this {@link Hand} value to another {@link Hand} value.
+	 * Compares this {@link HandValue} value to another {@link HandValue} value.
 	 * 
 	 * @param v
 	 *            The value to compare to.

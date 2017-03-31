@@ -46,8 +46,8 @@ public class Boards {
 	 * Constructs a new {@link Board} containing the specified cards represented
 	 * in shorthand.
 	 * 
-	 * @param cards
-	 *            The cards to use on the board.
+	 * @param shorthand
+	 *            The cards to use on the board, specified as shorthand.
 	 * @return A {@link Board} containing the specified cards.
 	 */
 	public static Board board(String shorthand) {
