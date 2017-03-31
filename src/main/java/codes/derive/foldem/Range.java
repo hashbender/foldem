@@ -205,9 +205,17 @@ public class Range {
 	 * @return The sampled {@link Hand}.
 	 */
 	public Hand sample(Random random) {
-		if (constant.size() == 0) {
-			throw new IllegalStateException(
-					"There needs to be at least one constant hand");
+		
+		/*
+		 * Make sure we're going to have enough hands to sample at correct
+		 * frequencies.
+		 */
+		double weightTotal = 1.0 * constant.size();
+		for (Double weight : weighted.keySet()) {
+			weightTotal += weight;
+		}
+		if (weightTotal < 1.0) {
+			throw new IllegalStateException("Too few hands for accurate sample");
 		}
 
 		/*
