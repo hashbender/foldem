@@ -3,7 +3,7 @@
 
 A Java framework for Texas Hold 'em designed with an emphasis on simplicity and ease of use.
 
-**Warning:** This library is still experimental, you may into a few bugs. If you do it would be appreciated if you report them on the [Issues](https://github.com/ableiten/foldem/issues) page.
+**Warning:** This library is still experimental, you may run into a few bugs. If you do it would be appreciated if you report them on the [Issues](https://github.com/ableiten/foldem/issues) page.
 
 ![generated](https://cloud.githubusercontent.com/assets/22860251/24421063/72424652-1451-11e7-9f28-fe91c256f4f3.png)
 
