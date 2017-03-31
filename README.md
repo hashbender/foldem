@@ -1,5 +1,5 @@
 # Fold'em
-[![Build Status](https://travis-ci.com/ableiten/foldem.svg?token=BhqqkCqh5epy6HEo9gsq&branch=master)](https://travis-ci.com/ableiten/foldem) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+[![Build Status](https://travis-ci.com/ableiten/foldem.svg?token=BhqqkCqh5epy6HEo9gsq&branch=master)](https://travis-ci.com/ableiten/foldem) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0) [![Javadocs](http://javadoc.io/badge/codes.derive/foldem.svg)](http://javadoc.io/doc/codes.derive/foldem)
 
 A Java framework for Texas Hold 'em designed with an emphasis on simplicity and ease of use.
 
@@ -8,14 +8,16 @@ A Java framework for Texas Hold 'em designed with an emphasis on simplicity and 
 ## Features
 - Hand evaluator
 - Equity calculation for both hands and ranges for any number of players
-- High level types for working with ranges
-- String based notation of cards and hands
-- Pretty text format, [like in Deuces](https://github.com/worldveil/deuces)
-- [Useful visualization tools](https://cloud.githubusercontent.com/assets/22860251/24349083/7085e25a-133a-11e7-8649-f0a3ab6bcd58.png)
+- Range representation and modelling
+- Detailed documentation, with [numerous examples provided](https://github.com/ableiten/foldem/tree/master/src/main/java/codes/derive/foldem/example)
+- Convenient package layout and helper classes, allowing most simple things to be done in 2 or less lines
+- Shorthand based notation of cards and hands using the de facto standard adopted by most poker players
+- Output formatting similar to that in [Deuces](https://github.com/worldveil/deuces)
+- [Visualization tools](https://cloud.githubusercontent.com/assets/22860251/24349083/7085e25a-133a-11e7-8649-f0a3ab6bcd58.png)
 - Post flop analysis for hand value probabilities
 
 ## Installation
-Fold'em is available on [JCenter](https://bintray.com/bintray/jcenter). You can also compile it locally using Gradle. Directions have been provided below on how to best include Fold'em in your project.
+Fold'em is available on both [JCenter](https://bintray.com/bintray/jcenter) and [Maven Central](https://mvnrepository.com/). You can also build it locally using Gradle. Directions have been provided below on how to best include Fold'em in your project.
 
 ### Maven
 Add the following dependency to your `pom.xml` file to add the library to your project:
@@ -43,7 +45,7 @@ cd foldem
 ```
 
 ## Documentation
-A Javadoc for Fold'em is available [here](TODO). Additionally some examples have been provided in this repository [here](/src/main/java/codes/derive/foldem/examples). An effort has been made to keep this library as simple as possible to use. Some more basic usage examples have been provided in the section below.
+A Javadoc for Fold'em is available [here](http://javadoc.io/doc/codes.derive/foldem/1.0.1). Additionally some examples have been provided in this repository [here](/src/main/java/codes/derive/foldem/example). An effort has been made to keep this library as simple as possible to use. Some more basic usage examples have been provided in the section below.
 
 ### Basic Usage Guide
 Most of this project's functionality is provided in the `codes.derive.foldem` package. In this package there is a helper class called `Poker` containing static functions for creating and working with the data types this project exposes. (TODO move links to point to Javadoc once its up)
@@ -168,7 +170,7 @@ for (HandValue value : frequencies.keySet()) {
 
 ```
 
-If you're looking for specific functionality or looking to expand on existing functionality it is suggested that you check out the Javadoc. A great effort has been made to keep the Javadoc as informative and coherent as possible.
+If you're looking for specific functionality or looking to expand on existing functionality it is suggested that you check out [the Javadoc](http://javadoc.io/doc/codes.derive/foldem/1.0.1). A great effort has been made to keep the Javadoc as informative and coherent as possible.
 
 ### More About
 *Fold'em is a GPL licensed module in a larger proprietary project with functionality similar to projects like [CREV](http://gtorangebuilder.com/). Among other things, it includes high-level types for representing and working game trees as well as improvements on this library such as faster implementations of `codes.derive.foldem.eval.Evaluator`.*
